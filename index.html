@@ -1148,7 +1148,36 @@
             let newScale = imageModalState.scale * factor;
             newScale = Math.min(Math.max(newScale, 0.5), 5);
             imageModalState.scale = newScale;
+            clampTranslation();
             updateImageTransform();
+        }
+
+        function clampTranslation() {
+            const wrapper = document.getElementById('modal-image-wrapper');
+            const img = document.getElementById('modal-image');
+            if (!wrapper || !img) return;
+
+            if (imageModalState.scale <= 1) {
+                imageModalState.translateX = 0;
+                imageModalState.translateY = 0;
+                return;
+            }
+
+            const naturalWidth = img.naturalWidth;
+            const naturalHeight = img.naturalHeight;
+            if (naturalWidth === 0 || naturalHeight === 0) return;
+
+            const scaledWidth = naturalWidth * imageModalState.scale;
+            const scaledHeight = naturalHeight * imageModalState.scale;
+
+            const containerWidth = wrapper.clientWidth;
+            const containerHeight = wrapper.clientHeight;
+
+            const maxTranslateX = Math.max(0, (scaledWidth - containerWidth) / 2);
+            const maxTranslateY = Math.max(0, (scaledHeight - containerHeight) / 2);
+
+            imageModalState.translateX = Math.min(Math.max(imageModalState.translateX, -maxTranslateX), maxTranslateX);
+            imageModalState.translateY = Math.min(Math.max(imageModalState.translateY, -maxTranslateY), maxTranslateY);
         }
 
         function updateImageTransform() {
@@ -1199,6 +1228,7 @@
                     const dy = e.clientY - imageModalState.startY;
                     imageModalState.translateX = imageModalState.lastTranslateX + dx;
                     imageModalState.translateY = imageModalState.lastTranslateY + dy;
+                    clampTranslation();
                     updateImageTransform();
                 } else if (imageModalState.pointers.size === 2) {
                     const pointers = Array.from(imageModalState.pointers.values());
@@ -1209,6 +1239,7 @@
                         let newScale = imageModalState.initialScale * (distance / imageModalState.initialDistance);
                         newScale = Math.min(Math.max(newScale, 0.5), 5);
                         imageModalState.scale = newScale;
+                        clampTranslation();
                         updateImageTransform();
                     }
                 }
@@ -1243,6 +1274,14 @@
                     zoomImage(1.5);
                 }
                 lastTap = now;
+            });
+
+            // Resize handler to clamp translation
+            window.addEventListener('resize', () => {
+                if (document.getElementById('image-modal').classList.contains('show')) {
+                    clampTranslation();
+                    updateImageTransform();
+                }
             });
         }
 
