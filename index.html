@@ -66,6 +66,7 @@
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes glowPulse { 0%,100% { box-shadow: 0 0 20px var(--primary-glow); } 50% { box-shadow: 0 0 40px var(--primary-glow), 0 0 60px var(--primary-glow); } }
         @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes wave { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
         .fade-in { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .slide-in-up { animation: slideInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
@@ -901,7 +902,7 @@
             { id: 4, type: 'multiple', question: 'Khi mô tả Điện toán đám mây, điều nào sau đây sẽ được coi là ưu điểm? (Chọn ba)', options: ['Tiết kiệm chi phí (Cost Saving)', 'Sao lưu và Khôi phục (Back-up and Restore)', 'Bảo mật (Security)', 'Tính di động (Mobility)', 'Băng thông cao hơn (Higher Bandwidth)', 'Hỗ trợ tốt hơn (Better Support)'], correct: [0, 1, 3], explanation: 'Ưu điểm: Tiết kiệm chi phí, Sao lưu và Khôi phục dữ liệu, và Tính di động.' },
             { id: 5, type: 'multiple', question: 'Khi mô tả điện toán đám mây, tùy chọn nào sau đây sẽ được coi là nhược điểm? (Chọn ba)', options: ['Bảo mật (Security)', 'Dung lượng lưu trữ (Storage Capacity)', 'Hỗ trợ máy tính để bàn (Desktop Support)', 'Kết nối (Connectivity)', 'Độ tin cậy (Reliability)', 'Tính di động (Mobility)'], correct: [0, 2, 3], explanation: 'Nhược điểm: Bảo mật, Hỗ trợ máy tính để bàn, và Kết nối.' },
             { id: 6, type: 'multiple', question: 'Hai điểm khác biệt nào phân biệt giữa máy in laser và máy in phun? (Chọn 2)', options: ['Máy in laser sử dụng mực in và máy in phun sử dụng Toner', 'Máy in phun phù hợp hơn để in số lượng lớn và máy in laser thích hợp hơn để in số lượng ít', 'Máy in phun phù hợp hơn để in số lượng ít và máy in laser phù hợp hơn để in số lượng nhiều', 'Máy in laser sử dụng toner và máy in phun sử dụng mực in (Ink)'], correct: [2, 3], explanation: 'Máy in laser dùng toner, in số lượng lớn. Máy in phun dùng mực in, in số lượng ít, màu sắc đa dạng.' },
-            { id: 7, type: 'multiple', question: 'Làm cách nào bạn có thể xác nhận rằng bạn đã kết nối thành công với thiết bị in? (Chọn hai)', options: ['Đối với máy in mạng, hãy ping thiết bị in', 'Đối với máy in mạng, hãy kết nối lại cáp ethernet', 'Đối với máy in cục bộ, hãy đảm bảo rằng cáp máy in đã được cắm vào máy tính của bạn', 'Đối với máy in cục bộ, hãy xác nhận trạng thái sẵn sàng trong hàng đợi của hệ điều hành'], correct: [0, 2], explanation: 'Ping kiểm tra kết nối mạng. Kiểm tra cáp đảm bảo kết nối vật lý.' },
+            { id: 7, type: 'multiple', question: 'Làm cách nào bạn có thể xác nhận rằng bạn đã kết nối thành công với thiết bị in? (Chọn hai)', options: ['Đối với máy in mạng, hãy ping thiết bị in', 'Đối với máy in mạng, hãy kết nối lại cáp ethernet', 'Đối với máy in cục bộ, hãy đảm bảo rằng cáp máy in đã được cắm vào máy tính của bạn', 'Đối với máy in cục bộ, hãy xác nhận trạng thái sẵn sàng trong hàng đợi của hệ điều hành'], correct: [0, 3], explanation: 'Ping kiểm tra kết nối mạng. Xác nhận trạng thái sẵn sàng trong hàng đợi kiểm tra kết nối máy in cục bộ.' },
             { id: 8, type: 'matching', question: 'Khớp từng cáp với thiết bị mà nó thường kết nối. Kéo thả các thẻ vào ô trống tương ứng.', pairs: [ { left: 'HDMI', right: 'Máy truyền hình (Television)', icon: 'hdmi' }, { left: 'Audio', right: 'Loa (Speakers)', icon: 'audio' }, { left: 'CAT6', right: 'Chuyển mạch (Switch)', icon: 'cat6' }, { left: 'USB', right: 'Bàn phím (Keyboard)', icon: 'usb' } ], correct: [0, 1, 2, 3], explanation: 'HDMI kết nối máy truyền hình, Audio kết nối loa, CAT6 kết nối mạng (switch), USB kết nối bàn phím.' },
             { id: 9, type: 'multiple', question: 'Xác định hai cách để phân biệt danh tính kỹ thuật số cá nhân của bạn với danh tính kỹ thuật số chuyên nghiệp của bạn? (Chọn 2)', options: ['Tạo biệt hiệu hoặc bí danh cho các bài đăng trên các diễn đàn và blog giải trí, nhưng sử dụng tên thật của bạn cho các bài đăng trong các diễn đàn và blog kỹ thuật', 'Không bao giờ đăng ảnh', 'Chỉ theo dõi các chính trị gia, vận động viên chuyên nghiệp và người nổi tiếng trên Twitter', 'Sử dụng LinkedIn cho các mục đích chuyên nghiệp và Facebook cho các bài đăng cá nhân'], correct: [0, 3], explanation: 'Sử dụng bí danh cho giải trí và tên thật cho công việc. LinkedIn cho chuyên nghiệp, Facebook cho cá nhân.' },
             { id: 10, type: 'single', question: 'Một nhóm bạn của bạn đang thảo luận về một diễn viên hài. Sau nhiều lần thuyết phục, giáo viên đồng ý chứng minh thí nghiệm Mentos và Coke trong giờ ăn trưa. Bạn quay video. Bạn muốn chia sẻ video với các bạn cùng lớp theo cách thể hiện phép xã giao kỹ thuật số tốt. Bạn nên làm gì?', options: ['Cho giáo viên khoa học xem video và yêu cầu họ chia sẻ video đó với lớp của bạn', 'Gửi video cho nhóm bạn bè và hướng dẫn họ không chia sẻ', 'Tải video lên mạng xã hội và chọn cài đặt bảo mật chỉ bạn bè xem', 'Tải video lên mạng xã hội với quyền xem công khai'], correct: [0], explanation: 'Cần sự cho phép của giáo viên trước khi chia sẻ video có hình ảnh của họ.' },
@@ -1379,7 +1380,7 @@
             }
         }, 800);
 
-        // ============ KEYBOARD NAVIGATION (Fixed) ============
+        // ============ KEYBOARD NAVIGATION ============
         document.addEventListener('keydown', function(e) {
             // Bỏ qua nếu đang focus vào ô input/textarea (trừ radio/checkbox)
             const tag = document.activeElement.tagName;
@@ -1401,22 +1402,41 @@
                 return;
             }
             if (e.key === 'Enter') {
-                // Nếu đang focus vào nút button, để nút tự xử lý
-                if (tag === 'BUTTON') return;
+                if (tag === 'BUTTON') return; // Let buttons handle Enter naturally
 
-                // Trong chế độ luyện tập, chưa kiểm tra -> Enter để kiểm tra
-                if (appState.mode === 'practice' && !appState.isReview && !appState.isChecked[currentQuestionId()]) {
-                    e.preventDefault();
-                    checkAnswer();
+                if (appState.isReview) {
+                    // Trong chế độ xem lại, Enter chuyển câu hoặc quay lại menu
+                    if (appState.currentQuestionIndex < questions.length - 1) {
+                        e.preventDefault();
+                        nextQuestion();
+                    } else {
+                        e.preventDefault();
+                        resetApp();
+                    }
                     return;
                 }
-                // Trong chế độ thi thử hoặc đã kiểm tra -> Enter để qua câu tiếp hoặc hoàn thành
-                if (appState.currentQuestionIndex < questions.length - 1) {
-                    e.preventDefault();
-                    nextQuestion();
-                } else {
-                    e.preventDefault();
-                    calculateResult();
+
+                if (appState.mode === 'practice') {
+                    if (!appState.isChecked[currentQuestionId()]) {
+                        e.preventDefault();
+                        checkAnswer();
+                    } else {
+                        if (appState.currentQuestionIndex < questions.length - 1) {
+                            e.preventDefault();
+                            nextQuestion();
+                        } else {
+                            e.preventDefault();
+                            calculateResult(); // Hoàn thành
+                        }
+                    }
+                } else { // Chế độ thi thử
+                    if (appState.currentQuestionIndex < questions.length - 1) {
+                        e.preventDefault();
+                        nextQuestion();
+                    } else {
+                        e.preventDefault();
+                        calculateResult(); // Nộp bài
+                    }
                 }
             }
         });
