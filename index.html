@@ -1109,7 +1109,7 @@
             card.classList.add('fade-in');
 
             if (q.type === 'matching') initMatchingDrag(q);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Đã xoá window.scrollTo({ top: 0, behavior: 'smooth' }); để tránh tự động kéo lên mục lục trên điện thoại
         }
 
         function renderMatching(q) {
