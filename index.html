@@ -818,7 +818,7 @@
     <div id="start-screen">
         <div class="start-logo">IC3</div>
         <h1>Ôn Tập IC3 GS6 Level 2</h1>
-        <p>IC3 GS6 Level 2. Images coming soon!</p>
+        <p>IC3 GS6 Level 2. Images coming soon</p>
         <div class="mode-buttons">
             <button class="btn-mode" onclick="startApp('practice')">
                 <span class="mode-title">Luyện Tập</span>
@@ -1358,6 +1358,27 @@
                 devtoolsOpen = false;
             }
         }, 800);
+
+        // ============ KEYBOARD NAVIGATION ============
+        document.addEventListener('keydown', function(e) {
+            // Only handle if no input is focused (radio/checkbox/select) to avoid conflicts
+            const tag = document.activeElement.tagName;
+            if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevQuestion();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextQuestion();
+            } else if (e.key === 'Enter') {
+                // Only trigger "Kiểm Tra" in practice mode and if not yet checked
+                if (appState.mode === 'practice' && !appState.isChecked[currentQuestionId()]) {
+                    e.preventDefault();
+                    checkAnswer();
+                }
+            }
+        });
     </script>
 </body>
 </html>
