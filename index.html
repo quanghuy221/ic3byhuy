@@ -844,6 +844,9 @@
             align-items: center;
             overflow: hidden;
             cursor: grab;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
         }
         #image-modal .modal-image-wrapper.grabbing {
             cursor: grabbing;
@@ -856,6 +859,7 @@
             will-change: transform;
             user-select: none;
             -webkit-user-drag: none;
+            pointer-events: none; /* Let wrapper handle events */
         }
         #image-modal .modal-close {
             position: absolute;
@@ -988,7 +992,7 @@
     <!-- IMAGE MODAL -->
     <div id="image-modal">
         <div class="modal-image-wrapper" id="modal-image-wrapper">
-            <img id="modal-image" src="" alt="Zoomed Image">
+            <img id="modal-image" src="" alt="Zoomed Image" draggable="false">
         </div>
         <button class="modal-close" onclick="closeImageModal()">×</button>
         <div class="modal-controls">
@@ -1690,6 +1694,13 @@
             const tag = document.activeElement.tagName;
             const inputType = document.activeElement.type;
             if (tag === 'TEXTAREA' || (tag === 'INPUT' && inputType === 'text')) return;
+
+            if (e.key === 'Escape') {
+                if (document.getElementById('image-modal').classList.contains('show')) {
+                    closeImageModal();
+                }
+                return;
+            }
 
             if (e.key === 'ArrowLeft') {
                 if (appState.currentQuestionIndex > 0) {
