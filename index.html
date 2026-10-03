@@ -57,7 +57,6 @@
             overflow-x: hidden;
         }
 
-        /* ============ ANIMATIONS ============ */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInFast { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -67,14 +66,12 @@
         @keyframes glowPulse { 0%,100% { box-shadow: 0 0 20px var(--primary-glow); } 50% { box-shadow: 0 0 40px var(--primary-glow), 0 0 60px var(--primary-glow); } }
         @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes wave { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        @keyframes zoomPop { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+        @keyframes zoomPop { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes glowRing { 0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.5); } 100% { box-shadow: 0 0 0 12px rgba(79, 70, 229, 0); } }
 
         .fade-in { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .slide-in-up { animation: slideInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
-        /* ============ DEVTOOLS WARNING ============ */
         #devtools-warning {
             display: none;
             position: fixed;
@@ -91,7 +88,6 @@
             padding: 30px;
             backdrop-filter: blur(20px);
         }
-
         #devtools-warning.show { display: flex; animation: fadeInFast 0.3s ease; }
         .warning-lock { font-size: 5rem; margin-bottom: 30px; animation: float 2s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(245, 158, 11, 0.8)); }
         .warning-title { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 15px; background: linear-gradient(90deg, #F59E0B, #EF4444, #F59E0B); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradientShift 3s ease infinite; }
@@ -99,7 +95,6 @@
         .warning-bar { width: 280px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; position: relative; }
         .warning-bar::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, #F59E0B, #EF4444, #F59E0B, transparent); animation: wave 1.5s linear infinite; background-size: 200% 100%; }
 
-        /* ============ START SCREEN ============ */
         #start-screen {
             display: flex;
             flex-direction: column;
@@ -112,47 +107,33 @@
             overflow: hidden;
             z-index: 10;
         }
-
         #start-screen::before {
             content: '';
             position: absolute;
-            width: 500px;
-            height: 500px;
+            width: 500px; height: 500px;
             background: radial-gradient(circle, rgba(79, 70, 229, 0.15), transparent 70%);
-            top: -200px;
-            left: -200px;
+            top: -200px; left: -200px;
             animation: float 8s ease-in-out infinite;
         }
-
         #start-screen::after {
             content: '';
             position: absolute;
-            width: 400px;
-            height: 400px;
+            width: 400px; height: 400px;
             background: radial-gradient(circle, rgba(16, 185, 129, 0.12), transparent 70%);
-            bottom: -150px;
-            right: -150px;
+            bottom: -150px; right: -150px;
             animation: float 10s ease-in-out infinite reverse;
         }
-
         .start-logo {
-            width: 100px;
-            height: 100px;
+            width: 100px; height: 100px;
             background: linear-gradient(135deg, var(--primary), #8B5CF6);
             border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; color: white; font-weight: 800;
             margin-bottom: 25px;
             box-shadow: 0 20px 40px -10px var(--primary-glow);
             animation: fadeIn 0.6s ease-out, glowPulse 3s ease-in-out infinite;
-            position: relative;
-            z-index: 1;
+            position: relative; z-index: 1;
         }
-
         #start-screen h1 {
             font-size: clamp(1.8rem, 5vw, 2.5rem);
             font-weight: 800;
@@ -163,56 +144,37 @@
             background-clip: text;
             animation: fadeIn 0.7s ease-out, gradientShift 4s ease infinite;
             margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
+            position: relative; z-index: 1;
         }
-
         #start-screen p {
             color: var(--text-sub);
             margin-bottom: 40px;
             font-size: clamp(0.95rem, 2.5vw, 1.1rem);
             animation: fadeIn 0.9s ease-out;
             max-width: 500px;
-            position: relative;
-            z-index: 1;
+            position: relative; z-index: 1;
         }
-
         .mode-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            width: 100%;
-            max-width: 420px;
+            display: flex; flex-direction: column; gap: 18px;
+            width: 100%; max-width: 420px;
             animation: fadeIn 1.1s ease-out;
-            position: relative;
-            z-index: 1;
+            position: relative; z-index: 1;
         }
-
-        @media (min-width: 600px) {
-            .mode-buttons { flex-direction: row; max-width: 620px; }
-        }
-
+        @media (min-width: 600px) { .mode-buttons { flex-direction: row; max-width: 620px; } }
         .btn-mode {
             background-color: #FFFFFF;
             border: 2px solid var(--primary);
             color: var(--primary);
             padding: 22px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.1rem; font-weight: 600;
             border-radius: var(--radius);
             cursor: pointer;
             transition: var(--transition);
             box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            flex: 1;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            flex: 1; text-align: center;
+            position: relative; overflow: hidden;
         }
-
         .btn-mode:hover {
             background-color: var(--primary);
             color: #FFFFFF;
@@ -220,49 +182,34 @@
             box-shadow: 0 20px 30px -10px var(--primary-glow);
             border-color: var(--primary);
         }
-
         .btn-mode .mode-title { font-weight: 700; font-size: 1.2rem; display: block; }
         .btn-mode .mode-desc { font-size: 0.85rem; font-weight: 400; opacity: 0.8; display: block; }
 
-        /* ============ MAIN LAYOUT ============ */
         #main-screen {
             display: none;
             flex: 1;
             max-width: 1400px;
             margin: 0 auto;
             width: 100%;
-            padding: 20px;
-            gap: 20px;
+            padding: 20px; gap: 20px;
             flex-direction: column;
         }
+        @media (min-width: 992px) { #main-screen { flex-direction: row; padding: 30px; } }
 
-        @media (min-width: 992px) {
-            #main-screen {
-                flex-direction: row;
-                padding: 30px;
-            }
-        }
-
-        /* ============ SIDEBAR ============ */
         #sidebar {
             width: 100%;
             background: var(--bg-card);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            display: flex; flex-direction: column; gap: 15px;
             animation: slideInUp 0.5s ease-out;
             overflow: hidden;
         }
-
         @media (min-width: 992px) {
             #sidebar {
-                width: 320px;
-                flex-shrink: 0;
-                position: sticky;
-                top: 30px;
+                width: 320px; flex-shrink: 0;
+                position: sticky; top: 30px;
                 max-height: calc(100vh - 60px);
                 overflow-y: auto;
             }
@@ -270,18 +217,13 @@
             #sidebar::-webkit-scrollbar-track { background: transparent; }
             #sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
         }
-
         .sidebar-header {
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-size: 1.1rem; font-weight: 700;
             padding-bottom: 12px;
             border-bottom: 2px solid var(--border);
             color: var(--primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
         }
-
         .progress-badge {
             font-size: 0.85rem;
             color: var(--primary);
@@ -290,7 +232,6 @@
             padding: 4px 12px;
             border-radius: 20px;
         }
-
         .question-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
@@ -298,11 +239,7 @@
             padding: 5px 0;
             overflow: hidden;
         }
-
-        @media (min-width: 992px) { 
-            .question-grid { grid-template-columns: repeat(5, 1fr); } 
-        }
-
+        @media (min-width: 992px) { .question-grid { grid-template-columns: repeat(5, 1fr); } }
         .q-btn {
             aspect-ratio: 1;
             border: 2px solid var(--border);
@@ -312,16 +249,12 @@
             color: var(--text-sub);
             cursor: pointer;
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
             padding: 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-
         .q-btn:hover {
             border-color: var(--primary);
             color: var(--primary);
@@ -329,7 +262,6 @@
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 6px 12px rgba(79, 70, 229, 0.2);
         }
-
         .q-btn.active {
             background: linear-gradient(135deg, var(--primary), #8B5CF6);
             border-color: var(--primary);
@@ -337,26 +269,20 @@
             transform: scale(1.1);
             box-shadow: 0 0 15px var(--primary-glow);
         }
-
         .q-btn.correct-ans { background: var(--success-bg); border-color: var(--success); color: var(--success); }
         .q-btn.wrong-ans { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
 
-        /* ============ CONTENT ============ */
         #content { flex: 1; display: flex; flex-direction: column; gap: 20px; }
-
         .question-card {
             background: var(--bg-card);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             padding: 25px;
             animation: fadeIn 0.4s ease-out;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
             min-height: 500px;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
         }
-
         .question-card::before {
             content: '';
             position: absolute;
@@ -365,22 +291,14 @@
             background: linear-gradient(180deg, var(--primary), #8B5CF6);
             border-radius: var(--radius) 0 0 var(--radius);
         }
-
         @media (min-width: 768px) { .question-card { padding: 35px; } }
-
         .question-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; padding-bottom: 15px;
             border-bottom: 2px solid var(--border);
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-wrap: wrap; gap: 10px;
         }
-
         .question-number { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
-
         .question-type {
             font-size: 0.8rem;
             color: var(--primary);
@@ -389,18 +307,13 @@
             border-radius: 20px;
             font-weight: 600;
         }
-
         .question-text {
-            font-size: 1.05rem;
-            font-weight: 500;
-            margin-bottom: 25px;
-            line-height: 1.7;
+            font-size: 1.05rem; font-weight: 500;
+            margin-bottom: 25px; line-height: 1.7;
         }
 
-        /* ============ IMAGE ============ */
         .question-image-container {
-            width: 100%;
-            max-width: 600px;
+            width: 100%; max-width: 600px;
             margin: 0 auto 25px;
             border-radius: var(--radius-sm);
             overflow: hidden;
@@ -410,32 +323,22 @@
             animation: fadeIn 0.5s ease-out;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .question-image-container:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-xl);
         }
-
         .question-image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: contain;
+            width: 100%; height: auto;
+            display: block; object-fit: contain;
             max-height: 400px;
             cursor: pointer;
             transition: filter 0.3s ease;
         }
-        .question-image-container img:hover {
-            filter: brightness(1.05);
-        }
+        .question-image-container img:hover { filter: brightness(1.05); }
 
-        /* ============ OPTIONS ============ */
         .options-list { display: flex; flex-direction: column; gap: 12px; }
-
         .option-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
+            display: flex; align-items: flex-start; gap: 14px;
             padding: 16px 20px;
             border: 2px solid var(--border);
             border-radius: var(--radius-sm);
@@ -444,75 +347,55 @@
             background: var(--bg-main);
             position: relative;
         }
-
         .option-item:hover {
             border-color: #A5B4FC;
             background: var(--primary-light);
             transform: translateX(6px);
         }
-
         .option-item.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
         .option-item.correct { border-color: var(--success); background: var(--success-bg); animation: pulse 0.4s ease; }
         .option-item.wrong { border-color: var(--danger); background: var(--danger-bg); animation: shake 0.5s ease; }
-
         .option-item input[type="radio"],
         .option-item input[type="checkbox"] {
             margin-top: 4px;
             accent-color: var(--primary);
             width: 20px; height: 20px;
-            cursor: pointer;
-            flex-shrink: 0;
+            cursor: pointer; flex-shrink: 0;
         }
-
         .option-label { flex: 1; cursor: pointer; font-weight: 500; }
 
-        /* ============ MATRIX ============ */
         .matrix-grid { display: flex; flex-direction: column; gap: 15px; }
-
         .matrix-row {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            display: flex; flex-direction: column; gap: 12px;
             padding: 16px;
             border: 2px solid var(--border);
             border-radius: var(--radius-sm);
             background: var(--bg-main);
             transition: var(--transition);
         }
-
         .matrix-row:hover { border-color: #A5B4FC; box-shadow: 0 4px 12px rgba(79,70,229,0.08); }
-
         @media (min-width: 600px) {
             .matrix-row { flex-direction: row; align-items: center; justify-content: space-between; }
             .matrix-statement { flex: 1; margin-right: 20px; }
             .matrix-options { display: flex; gap: 15px; flex-shrink: 0; }
         }
-
         .matrix-statement { font-weight: 500; font-size: 0.95rem; }
-
         .matrix-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex; align-items: center; gap: 8px;
             cursor: pointer;
             padding: 10px 18px;
             border-radius: var(--radius-sm);
             border: 2px solid var(--border);
             background: white;
             transition: var(--transition);
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.9rem; font-weight: 600;
         }
-
         .matrix-option:hover { border-color: var(--primary); background: var(--primary-light); transform: scale(1.03); }
         .matrix-option input { accent-color: var(--primary); cursor: pointer; width: 16px; height: 16px; }
 
-        /* ============ MATCHING ============ */
         .match-container { display: flex; flex-direction: column; gap: 20px; }
-
         .match-instruction {
-            font-size: 0.9rem;
-            color: var(--text-sub);
+            font-size: 0.9rem; color: var(--text-sub);
             text-align: center;
             padding: 10px;
             background: var(--primary-light);
@@ -520,11 +403,8 @@
             font-weight: 500;
             animation: slideInUp 0.4s ease;
         }
-
         .match-pool {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            display: flex; flex-wrap: wrap; gap: 10px;
             padding: 15px;
             background: linear-gradient(135deg, #F9FAFB, #EEF2FF);
             border: 2px dashed var(--border);
@@ -533,32 +413,25 @@
             justify-content: center;
             transition: var(--transition);
         }
-
         .match-pool:hover { border-color: var(--primary); }
-
         .drag-chip {
             background: white;
             border: 2px solid var(--primary);
             color: var(--primary);
             padding: 10px 16px;
             border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.9rem; font-weight: 600;
             cursor: grab;
             transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
             box-shadow: 0 2px 8px rgba(79,70,229,0.15);
             touch-action: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            display: flex; align-items: center; gap: 6px;
             position: relative;
             animation: fadeIn 0.4s ease;
         }
-
         .drag-chip:active { cursor: grabbing; }
         .drag-chip:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 15px rgba(79,70,229,0.25); }
         .drag-chip.dragging { opacity: 0.3; }
-
         .drag-ghost {
             position: fixed;
             pointer-events: none;
@@ -571,157 +444,95 @@
             color: var(--primary);
             padding: 10px 16px;
             border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 0.9rem; font-weight: 600;
+            display: flex; align-items: center; gap: 6px;
         }
-
         .match-rows { display: flex; flex-direction: column; gap: 12px; }
-
         .match-row {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: flex; flex-direction: column; gap: 10px;
             padding: 14px;
             border: 2px solid var(--border);
             border-radius: var(--radius-sm);
             background: var(--bg-main);
             transition: var(--transition);
         }
-
         .match-row.drop-active { border-color: var(--primary); background: var(--primary-light); transform: scale(1.01); }
-
-        @media (min-width: 600px) {
-            .match-row { flex-direction: row; align-items: center; gap: 20px; }
-        }
-
-        .match-left-visual {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-            min-width: 0;
-        }
-
+        @media (min-width: 600px) { .match-row { flex-direction: row; align-items: center; gap: 20px; } }
+        .match-left-visual { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
         .match-icon {
             width: 44px; height: 44px;
             background: linear-gradient(135deg, var(--primary), #8B5CF6);
             border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; color: white; font-weight: 700; font-size: 1rem;
             box-shadow: 0 4px 10px rgba(79,70,229,0.25);
         }
-
         .match-icon svg { width: 24px; height: 24px; fill: white; }
-
         .match-left-text { font-weight: 700; font-size: 0.95rem; }
-
         .drop-slot {
-            flex: 1;
-            min-height: 46px;
+            flex: 1; min-height: 46px;
             border: 2px dashed var(--border);
             border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: white;
             transition: var(--transition);
-            padding: 8px;
-            min-width: 0;
+            padding: 8px; min-width: 0;
         }
-
         .drop-slot:hover { border-color: var(--primary); background: var(--primary-light); }
         .drop-slot.filled { border-style: solid; border-color: var(--success); background: var(--success-bg); }
         .drop-slot.correct-drop { border-color: var(--success); background: var(--success-bg); }
         .drop-slot.wrong-drop { border-color: var(--danger); background: var(--danger-bg); animation: shake 0.5s ease; }
         .drop-slot.drop-active { border-color: var(--primary); background: var(--primary-light); border-style: solid; transform: scale(1.02); }
-
-        .drop-slot .placeholder {
-            color: var(--text-sub);
-            font-size: 0.85rem;
-            opacity: 0.6;
-        }
-
+        .drop-slot .placeholder { color: var(--text-sub); font-size: 0.85rem; opacity: 0.6; }
         .drop-slot .placed-chip {
             background: var(--primary);
             color: white;
             padding: 8px 14px;
             border-radius: 16px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 0.85rem; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
             max-width: 100%;
             animation: fadeIn 0.3s ease;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            overflow: hidden; text-overflow: ellipsis;
         }
-
         .drop-slot .placed-chip .remove-x {
             background: rgba(255,255,255,0.3);
             border-radius: 50%;
             width: 18px; height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer;
-            font-size: 0.7rem;
-            font-weight: 700;
+            font-size: 0.7rem; font-weight: 700;
             flex-shrink: 0;
             transition: var(--transition);
         }
-
         .drop-slot .placed-chip .remove-x:hover { background: rgba(255,255,255,0.6); }
 
-        /* ============ BUTTONS ============ */
         .actions { display: flex; gap: 15px; margin-top: auto; padding-top: 20px; justify-content: flex-end; flex-wrap: wrap; }
-
         .btn {
             padding: 13px 28px;
             border-radius: var(--radius-sm);
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
-            border: none;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
+            border: none; font-size: 0.95rem;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            position: relative; overflow: hidden;
         }
-
         .btn::after {
             content: '';
-            position: absolute;
-            inset: 0;
+            position: absolute; inset: 0;
             background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
             transform: scale(0);
             transition: transform 0.5s ease;
         }
-
         .btn:active::after { transform: scale(2); transition: transform 0s; }
-
         .btn-primary { background: linear-gradient(135deg, var(--primary), #6366F1); color: white; box-shadow: 0 4px 15px rgba(79,70,229,0.35); }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(79,70,229,0.45); }
-
         .btn-secondary { background: var(--bg-main); color: var(--text-main); border: 2px solid var(--border); }
         .btn-secondary:hover { background: #E5E7EB; transform: translateY(-3px); }
-
         .btn-success { background: linear-gradient(135deg, var(--success), #059669); color: white; box-shadow: 0 4px 15px rgba(16,185,129,0.35); }
         .btn-success:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(16,185,129,0.45); }
 
-        /* ============ FEEDBACK ============ */
         .feedback-box {
             margin-top: 25px;
             padding: 20px;
@@ -729,39 +540,27 @@
             animation: slideInUp 0.5s ease-out;
             display: none;
         }
-
         .feedback-box.show { display: block; }
         .feedback-box.correct { background: var(--success-bg); border: 2px solid var(--success-border); }
         .feedback-box.wrong { background: var(--danger-bg); border: 2px solid var(--danger-border); }
-
         .feedback-title {
-            font-weight: 800;
-            font-size: 1.05rem;
+            font-weight: 800; font-size: 1.05rem;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: flex; align-items: center; gap: 10px;
         }
-
         .feedback-title::before {
             content: '';
             width: 24px; height: 24px;
             border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            color: white;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; color: white;
         }
-
         .feedback-box.correct .feedback-title { color: var(--success); }
         .feedback-box.correct .feedback-title::before { content: '✓'; background: var(--success); }
         .feedback-box.wrong .feedback-title { color: var(--danger); }
         .feedback-box.wrong .feedback-title::before { content: '✗'; background: var(--danger); }
-
         .explanation-text { color: var(--text-main); font-size: 0.95rem; line-height: 1.7; }
 
-        /* ============ RESULT ============ */
         #result-screen {
             display: none;
             flex-direction: column;
@@ -771,44 +570,35 @@
             padding: 20px;
             text-align: center;
         }
-
         .result-card {
             background: var(--bg-card);
             padding: 40px;
             border-radius: var(--radius);
             box-shadow: var(--shadow-xl);
-            max-width: 500px;
-            width: 100%;
+            max-width: 500px; width: 100%;
             animation: fadeIn 0.6s ease-out;
         }
-
         .result-status-icon {
             font-size: 5rem;
             margin-bottom: 20px;
             font-weight: bold;
             animation: pulse 1.2s infinite;
         }
-
         .result-status-icon.pass { color: var(--success); }
         .result-status-icon.fail { color: var(--danger); animation: shake 0.6s ease; }
-
         .result-message { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; }
         .result-message.pass { color: var(--success); }
         .result-message.fail { color: var(--danger); }
-
         .score-circle {
             width: 160px; height: 160px;
             border-radius: 50%;
             background: conic-gradient(var(--primary) 0%, var(--border) 0%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             margin: 0 auto 25px;
             position: relative;
             transition: background 1s ease-out;
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
-
         .score-circle::before {
             content: '';
             position: absolute;
@@ -816,12 +606,9 @@
             border-radius: 50%;
             background: var(--bg-card);
         }
-
         .score-text { position: relative; font-size: 2.2rem; font-weight: 800; color: var(--text-main); }
-
         .result-stats { font-size: 1.05rem; margin-bottom: 12px; color: var(--text-sub); }
         .result-stats strong { color: var(--primary); font-weight: 800; }
-
         .footer { text-align: center; padding: 20px; font-size: 0.85rem; color: var(--text-sub); opacity: 0.4; margin-top: auto; width: 100%; }
 
         /* ============ IMAGE MODAL ============ */
@@ -854,6 +641,7 @@
             touch-action: none;
             user-select: none;
             -webkit-user-select: none;
+            will-change: transform;
         }
         #image-modal .modal-image-wrapper.grabbing {
             cursor: grabbing;
@@ -864,28 +652,28 @@
             object-fit: contain;
             transform-origin: center center;
             will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             user-select: none;
             -webkit-user-drag: none;
             pointer-events: none;
-            transition: transform 0.05s linear;
+            image-rendering: -webkit-optimize-contrast;
+            /* No transition by default to allow smooth dragging */
         }
+        /* Only smooth zoom via button/wheel */
         #image-modal img.smooth-zoom {
-            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
         }
         #image-modal .modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 20px; right: 20px;
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.1);
             color: white;
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             border-radius: 50%;
             font-size: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             z-index: 10;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -919,14 +707,11 @@
             background: rgba(255,255,255,0.08);
             border: 1px solid rgba(255,255,255,0.1);
             color: white;
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             border-radius: 50%;
             font-size: 22px;
             font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             flex-shrink: 0;
@@ -937,14 +722,10 @@
             border-color: rgba(255,255,255,0.25);
             box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
         }
-        #image-modal .modal-controls button:active {
-            transform: scale(0.92);
-        }
+        #image-modal .modal-controls button:active { transform: scale(0.92); }
         #image-modal .modal-controls button svg {
-            width: 22px;
-            height: 22px;
-            fill: none;
-            stroke: white;
+            width: 22px; height: 22px;
+            fill: none; stroke: white;
             stroke-width: 2.2;
             stroke-linecap: round;
             stroke-linejoin: round;
@@ -957,9 +738,7 @@
             text-align: center;
             padding: 0 14px;
             height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: rgba(255,255,255,0.06);
             border-radius: 40px;
             border: 1px solid rgba(255,255,255,0.08);
@@ -969,10 +748,9 @@
             transition: background 0.2s ease;
         }
         #image-modal .zoom-percentage.pulse {
-            animation: zoomPop 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: zoomPop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ============ MOBILE ============ */
         @media (max-width: 600px) {
             .actions { flex-direction: column; }
             .btn { width: 100%; }
@@ -984,40 +762,16 @@
             .drag-chip { font-size: 0.8rem; padding: 8px 12px; }
             .drop-slot { min-height: 42px; }
             .question-card { min-height: 400px; padding: 20px 15px; }
-
-            #image-modal .modal-controls {
-                bottom: 20px;
-                gap: 6px;
-                padding: 6px;
-            }
-            #image-modal .modal-controls button {
-                width: 44px;
-                height: 44px;
-                font-size: 18px;
-            }
-            #image-modal .modal-controls button svg {
-                width: 20px;
-                height: 20px;
-            }
-            #image-modal .zoom-percentage {
-                min-width: 60px;
-                font-size: 0.85rem;
-                height: 44px;
-                padding: 0 8px;
-            }
-            #image-modal .modal-close {
-                top: 15px;
-                right: 15px;
-                width: 42px;
-                height: 42px;
-                font-size: 22px;
-            }
+            #image-modal .modal-controls { bottom: 20px; gap: 6px; padding: 6px; }
+            #image-modal .modal-controls button { width: 44px; height: 44px; font-size: 18px; }
+            #image-modal .modal-controls button svg { width: 20px; height: 20px; }
+            #image-modal .zoom-percentage { min-width: 60px; font-size: 0.85rem; height: 44px; padding: 0 8px; }
+            #image-modal .modal-close { top: 15px; right: 15px; width: 42px; height: 42px; font-size: 22px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- DEVTOOLS WARNING -->
     <div id="devtools-warning">
         <div class="warning-lock">🔒</div>
         <div class="warning-title">CẢNH BÁO BẢO MẬT</div>
@@ -1025,7 +779,6 @@
         <div class="warning-bar"></div>
     </div>
 
-    <!-- START SCREEN -->
     <div id="start-screen">
         <div class="start-logo">IC3</div>
         <h1>Ôn Tập IC3 GS6 Level 2</h1>
@@ -1042,7 +795,6 @@
         </div>
     </div>
 
-    <!-- MAIN SCREEN -->
     <div id="main-screen">
         <aside id="sidebar">
             <div class="sidebar-header">
@@ -1059,7 +811,6 @@
         </main>
     </div>
 
-    <!-- RESULT SCREEN -->
     <div id="result-screen">
         <div class="result-card">
             <h2 style="color: var(--primary); margin-bottom: 20px;">Kết Quả Bài Làm</h2>
@@ -1075,18 +826,17 @@
         </div>
     </div>
 
-    <!-- IMAGE MODAL -->
     <div id="image-modal">
         <div class="modal-image-wrapper" id="modal-image-wrapper">
             <img id="modal-image" src="" alt="Zoomed Image" draggable="false">
         </div>
         <button class="modal-close" onclick="closeImageModal()" aria-label="Đóng">✕</button>
         <div class="modal-controls">
-            <button onclick="zoomImage(0.98)" aria-label="Thu nhỏ">
+            <button onclick="zoomAtCenter(0.8)" aria-label="Thu nhỏ">
                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
             </button>
             <div class="zoom-percentage" id="zoom-percentage">100%</div>
-            <button onclick="zoomImage(1.02)" aria-label="Phóng to">
+            <button onclick="zoomAtCenter(1.25)" aria-label="Phóng to">
                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
             </button>
             <button onclick="resetImageZoom()" aria-label="Đặt lại">
@@ -1141,33 +891,9 @@
             { id: 13, type: 'multiple', question: 'Hai tài nguyên nào có thể dạy bạn cách sử dụng một tính năng trong chương trình phần mềm? (Chọn hai)', options: ['Diễn đàn trực tuyến dành riêng để thảo luận về chương trình', 'Hướng dẫn cài đặt kèm theo phần mềm', 'Lệnh Help có trong chương trình', 'Đường dây điện thoại Hỗ trợ Kỹ thuật do nhà xuất bản phần mềm cung cấp'], correct: [0, 2], explanation: 'Diễn đàn trực tuyến và lệnh Help là nguồn tài nguyên phổ biến để học cách sử dụng phần mềm.' },
             { id: 14, type: 'multiple', question: 'Hai tài nguyên nào là tài nguyên cộng đồng có thể dạy bạn sử dụng một tính năng trong chương trình phần mềm? (Chọn hai)', options: ['Blogs', 'Wikipedia', 'Diễn đàn (Forums)', 'Hướng dẫn cài đặt (Installation instructions)'], correct: [0, 2], explanation: 'Blogs và Diễn đàn là tài nguyên cộng đồng, nơi người dùng chia sẻ kinh nghiệm.' },
             { id: 15, type: 'multiple', question: 'Bạn đang tìm kiếm hình ảnh trên Google. Cụ thể, bạn đang tìm kiếm clip art về một con thỏ mà bạn có thể sử dụng trên một trang web mà không cần liên hệ với họa sĩ để xin phép. Hai bộ lọc nào sẽ thu hẹp kết quả tìm kiếm của bạn để chỉ hiển thị clip art có sẵn để sử dụng mà không có sự cho phép của họa sĩ? (Chọn hai)', options: ['Thời gian (Time)', 'Quyền sử dụng (Usage Rights)', 'Màu sắc (Color)', 'Thể loại (Type)'], correct: [1, 3], explanation: 'Bộ lọc Quyền sử dụng và Thể loại giúp tìm hình ảnh miễn phí bản quyền.' },
-            { 
-                id: 16, 
-                type: 'single', 
-                question: 'Bạn muốn giảm độ sáng của màn hình trên máy tính. Nhấp vào tính năng cho phép bạn điều chỉnh cài đặt độ sáng trên máy tính Windows này.', 
-                options: ['Display', 'System', 'Devices', 'Network & Internet', 'Personalization'], 
-                correct: [0], 
-                explanation: 'Trong Windows 10, độ sáng màn hình được điều chỉnh trong System -> Display.',
-                image: 'anh1.png'
-            },
-            { 
-                id: 17, 
-                type: 'single', 
-                question: 'Bạn muốn thay đổi độ tương phản của màn hình trên máy tính. Nhấp vào tính năng sẽ cho phép bạn điều chỉnh cài đặt độ tương phản trên máy tính Windows này.', 
-                options: ['System', 'Devices', 'Ease of Access', 'Update & Security'], 
-                correct: [2], 
-                explanation: 'Độ tương phản (High contrast) được điều chỉnh trong Ease of Access.',
-                image: 'anh2.png'
-            },
-            { 
-                id: 18, 
-                type: 'single', 
-                question: 'Bạn đang sử dụng điện thoại Android và muốn thay đổi độ tương phản. Nhấp vào tính năng sẽ cho phép bạn điều chỉnh độ tương phản trên điện thoại này.', 
-                options: ['Accessibility', 'Display', 'Sound', 'Battery'], 
-                correct: [0], 
-                explanation: 'Trên Android, độ tương phản được điều chỉnh trong Accessibility (Trợ năng).',
-                image: 'anh3.png'
-            },
+            { id: 16, type: 'single', question: 'Bạn muốn giảm độ sáng của màn hình trên máy tính. Nhấp vào tính năng cho phép bạn điều chỉnh cài đặt độ sáng trên máy tính Windows này.', options: ['Display', 'System', 'Devices', 'Network & Internet', 'Personalization'], correct: [0], explanation: 'Trong Windows 10, độ sáng màn hình được điều chỉnh trong System -> Display.', image: 'anh1.png' },
+            { id: 17, type: 'single', question: 'Bạn muốn thay đổi độ tương phản của màn hình trên máy tính. Nhấp vào tính năng sẽ cho phép bạn điều chỉnh cài đặt độ tương phản trên máy tính Windows này.', options: ['System', 'Devices', 'Ease of Access', 'Update & Security'], correct: [2], explanation: 'Độ tương phản (High contrast) được điều chỉnh trong Ease of Access.', image: 'anh2.png' },
+            { id: 18, type: 'single', question: 'Bạn đang sử dụng điện thoại Android và muốn thay đổi độ tương phản. Nhấp vào tính năng sẽ cho phép bạn điều chỉnh độ tương phản trên điện thoại này.', options: ['Accessibility', 'Display', 'Sound', 'Battery'], correct: [0], explanation: 'Trên Android, độ tương phản được điều chỉnh trong Accessibility (Trợ năng).', image: 'anh3.png' },
             { id: 19, type: 'matrix', question: 'Giáo viên của bạn đã giao cho bạn một nhiệm vụ để xác nhận quan điểm của kết quả tìm kiếm và tạo tác kỹ thuật số. Đối với mỗi tuyên bố về quan điểm xác thực, hãy chọn Đúng (Yes) nếu tuyên bố đúng hoặc Sai (No) nếu tuyên bố sai.', rows: ['Những câu chuyện được tải bởi mạng lưới truyền thông luôn luôn thể hiện cả hai mặt và một góc nhìn bình đẳng', 'Một khuynh hướng cảm tính ủng hộ hình đăng xã hội, chủ nghĩa tự do và các ý tưởng cách mạng', 'Thành kiến của cánh hữu ủng hộ các doanh nghiệp tư do, quyền sở hữu tư nhân và các ý tưởng bảo thủ về mặt xã hội', 'Tất cả các câu chuyện đăng trên internet đều có quan điểm trung lập'], correct: [1, 0, 0, 1], explanation: 'Truyền thông có thể có khuynh hướng (thành kiến tự do hoặc bảo thủ), nhưng không phải luôn thể hiện cả hai mặt bình đẳng và không phải tất cả câu chuyện đều trung lập.' },
             { id: 20, type: 'matrix', question: 'Trong khi nghiên cứu một chủ đề bạn không biết gì, kết quả tìm kiếm của bạn mang lại một số bài báo thuyết phục. Làm thế nào để bạn biết liệu bất kỳ bài báo nào trong số này là thiên vị? Đối với mỗi phát biểu về việc đánh giá sự thiên vị của kết quả tìm kiếm, chọn Đúng (Yes) nếu nó là không thiên vị hoặc Sai (No) nếu nó thiên vị.', rows: ['Tác giả của bài báo đưa ra những lập luận ngang nhau của cả hai quan điểm', 'Bài báo đã được đăng trên một tạp chí uy tín, được đánh giá chuyên nghiệp', 'Kiểm tra các bài viết trên mediabiasfactcheck.com hoặc newsfactsnetwork.com', 'Kiểm tra ác độ thịnh hành của bài viết và số lượt thích trên mạng xã hội', 'Bài báo đã được xuất bản bởi một trong những nguồn truyền thông được liệt kê trên biểu đồ thiên vị truyền thông (Media Bias Chart)'], correct: [0, 0, 0, 1, 0], explanation: 'Đánh giá dựa trên lập luận, nguồn uy tín, fact-check, và biểu đồ thiên vị. Số lượt thích không đánh giá được tính xác thực.' },
             { id: 21, type: 'matrix', question: 'Bạn đang tìm kiếm các dữ kiện để hỗ trợ một bài thuyết trình mà bạn đang xây dựng cho lớp khoa học của mình. Bạn tìm thấy một nghiên cứu của khoa học liên quan đến chủ đề của bạn. Làm thế nào để bạn biết liệu nghiên cứu có đáng tin cậy hay không? Đối với mỗi tuyên bố, hãy chọn Đúng (Yes) nếu bạn nên cân nhắc khi xác định độ tin cậy của nghiên cứu hoặc Sai (No) nếu không.', rows: ['Chuyên môn và uy tín của nhà báo', 'Có bao nhiêu người đã chia sẻ nghiên cứu trên mạng xã hội', 'Bạn có thể tìm và truy cập các nguồn', 'Nhà báo sử dụng kính địa phương'], correct: [0, 1, 0, 1], explanation: 'Cần xem xét chuyên môn, uy tín và khả năng truy cập nguồn. Số lượt chia sẻ và kính địa phương không quyết định độ tin cậy.' },
@@ -1200,9 +926,11 @@
         let questions = [];
         let appState = { mode: 'practice', currentQuestionIndex: 0, userAnswers: {}, isChecked: {}, shuffledRightMaps: {}, isReview: false };
 
-        // ============ IMAGE MODAL STATE ============
+        /* ============================================================
+           IMAGE MODAL STATE - Smooth zoom at cursor point
+           ============================================================ */
         const imageModalState = {
-            scale: 0.98, // Scale gốc = 98% (hiển thị là 100%)
+            scale: 1.0,
             translateX: 0,
             translateY: 0,
             isDragging: false,
@@ -1212,20 +940,29 @@
             lastTranslateY: 0,
             pointers: new Map(),
             initialDistance: 0,
-            initialScale: 0.98,
+            initialScale: 1.0,
             initialTranslateX: 0,
             initialTranslateY: 0,
+            initialMidpointX: 0,
+            initialMidpointY: 0,
+            // Smooth animation state
+            targetScale: 1.0,
+            targetTranslateX: 0,
+            targetTranslateY: 0,
+            animationId: null,
+            isAnimating: false,
+            wheelTimeout: null,
         };
 
-        const BASE_SCALE = 0.98; // Scale hiển thị là 100%
-        const MIN_SCALE = 0.98;  // Tối thiểu = 100%
-        const MAX_SCALE = 5.0;   // Tối đa = ~510%
+        const MIN_SCALE = 1.0;
+        const MAX_SCALE = 6.0;
+        const SMOOTH_FACTOR = 0.18; // Độ mượt khi animate (0.15 - 0.25)
 
         function openImageModal(src) {
             const modal = document.getElementById('image-modal');
             const img = document.getElementById('modal-image');
             img.src = src;
-            resetImageZoom();
+            resetImageZoom(true);
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
         }
@@ -1234,52 +971,91 @@
             const modal = document.getElementById('image-modal');
             modal.classList.remove('show');
             document.body.style.overflow = '';
+            if (imageModalState.animationId) {
+                cancelAnimationFrame(imageModalState.animationId);
+                imageModalState.animationId = null;
+            }
+            if (imageModalState.wheelTimeout) {
+                clearTimeout(imageModalState.wheelTimeout);
+                imageModalState.wheelTimeout = null;
+            }
         }
 
-        function resetImageZoom() {
-            const img = document.getElementById('modal-image');
-            img.classList.add('smooth-zoom');
-            imageModalState.scale = BASE_SCALE;
+        function resetImageZoom(immediate = false) {
+            imageModalState.scale = 1.0;
             imageModalState.translateX = 0;
             imageModalState.translateY = 0;
-            updateImageTransform();
+            imageModalState.targetScale = 1.0;
+            imageModalState.targetTranslateX = 0;
+            imageModalState.targetTranslateY = 0;
+            if (immediate) {
+                applyImageTransform();
+            } else {
+                startImageAnimation();
+            }
             updateZoomPercentage();
-            setTimeout(() => img.classList.remove('smooth-zoom'), 340);
         }
 
-        function zoomImage(factor) {
+        // Apply transform immediately
+        function applyImageTransform() {
             const img = document.getElementById('modal-image');
-            img.classList.add('smooth-zoom');
+            if (!img) return;
+            img.style.transform = `translate3d(${imageModalState.translateX}px, ${imageModalState.translateY}px, 0) scale(${imageModalState.scale})`;
+        }
 
-            const oldScale = imageModalState.scale;
-            let newScale = oldScale * factor;
-            newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
+        // Smooth animation loop
+        function startImageAnimation() {
+            if (imageModalState.animationId) return;
+            imageModalState.isAnimating = true;
 
-            // Giữ vị trí tương đối khi zoom
-            const ratio = newScale / oldScale;
-            imageModalState.translateX = imageModalState.translateX * ratio;
-            imageModalState.translateY = imageModalState.translateY * ratio;
-            imageModalState.scale = newScale;
+            const animate = () => {
+                const s = imageModalState;
+                const dxS = s.targetScale - s.scale;
+                const dxX = s.targetTranslateX - s.translateX;
+                const dxY = s.targetTranslateY - s.translateY;
 
-            // Nếu scale <= BASE, đưa về giữa
-            if (newScale <= BASE_SCALE) {
-                imageModalState.translateX = 0;
-                imageModalState.translateY = 0;
+                // Check if reached target
+                if (Math.abs(dxS) < 0.0005 && Math.abs(dxX) < 0.1 && Math.abs(dxY) < 0.1) {
+                    s.scale = s.targetScale;
+                    s.translateX = s.targetTranslateX;
+                    s.translateY = s.targetTranslateY;
+                    applyImageTransform();
+                    s.isAnimating = false;
+                    s.animationId = null;
+                    return;
+                }
+
+                // Lerp toward target
+                s.scale += dxS * SMOOTH_FACTOR;
+                s.translateX += dxX * SMOOTH_FACTOR;
+                s.translateY += dxY * SMOOTH_FACTOR;
+
+                applyImageTransform();
+                s.animationId = requestAnimationFrame(animate);
+            };
+
+            imageModalState.animationId = requestAnimationFrame(animate);
+        }
+
+        // Cập nhật target và chạy animation
+        function setImageTarget(scale, tx, ty, animate = true) {
+            imageModalState.targetScale = scale;
+            imageModalState.targetTranslateX = tx;
+            imageModalState.targetTranslateY = ty;
+            if (animate) {
+                startImageAnimation();
             } else {
-                clampTranslation();
+                imageModalState.scale = scale;
+                imageModalState.translateX = tx;
+                imageModalState.translateY = ty;
+                applyImageTransform();
             }
-
-            updateImageTransform();
-            updateZoomPercentage();
-
-            setTimeout(() => img.classList.remove('smooth-zoom'), 340);
         }
 
         function updateZoomPercentage() {
             const el = document.getElementById('zoom-percentage');
             if (el) {
-                // Hiển thị: 98% → 100%, các tỉ lệ khác theo tỉ lệ đó
-                const displayPercent = Math.round(imageModalState.scale / BASE_SCALE * 100);
+                const displayPercent = Math.round(imageModalState.targetScale * 100);
                 el.textContent = displayPercent + '%';
                 el.classList.remove('pulse');
                 void el.offsetWidth;
@@ -1287,61 +1063,140 @@
             }
         }
 
-        function clampTranslation() {
+        // Core math: zoom at a specific point in container coordinates
+        function zoomAtPoint(factor, containerX, containerY, animate = true) {
             const wrapper = document.getElementById('modal-image-wrapper');
-            const img = document.getElementById('modal-image');
-            if (!wrapper || !img) return;
-
-            if (imageModalState.scale <= BASE_SCALE) {
-                imageModalState.translateX = 0;
-                imageModalState.translateY = 0;
-                return;
-            }
-
-            const naturalWidth = img.naturalWidth;
-            const naturalHeight = img.naturalHeight;
-            if (naturalWidth === 0 || naturalHeight === 0) return;
+            if (!wrapper) return;
 
             const containerWidth = wrapper.clientWidth;
             const containerHeight = wrapper.clientHeight;
 
-            const ratio = Math.min(containerWidth / naturalWidth, containerHeight / naturalHeight);
-            const baseDisplayedWidth = naturalWidth * ratio;
-            const baseDisplayedHeight = naturalHeight * ratio;
+            // Chuyển tọa độ chuột thành tọa độ tương đối so với tâm container
+            const cx = containerX - containerWidth / 2;
+            const cy = containerY - containerHeight / 2;
 
-            const displayedWidth = baseDisplayedWidth * imageModalState.scale / BASE_SCALE;
-            const displayedHeight = baseDisplayedHeight * imageModalState.scale / BASE_SCALE;
+            // Sử dụng target values để tính toán chính xác
+            const oldScale = imageModalState.targetScale;
+            let newScale = oldScale * factor;
+            newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
 
-            const maxTranslateX = Math.max(0, (displayedWidth - containerWidth) / 2);
-            const maxTranslateY = Math.max(0, (displayedHeight - containerHeight) / 2);
+            if (newScale === oldScale) return;
 
-            imageModalState.translateX = Math.min(Math.max(imageModalState.translateX, -maxTranslateX), maxTranslateX);
-            imageModalState.translateY = Math.min(Math.max(imageModalState.translateY, -maxTranslateY), maxTranslateY);
+            // Điểm trong hệ tọa độ ảnh (không đổi khi zoom)
+            // Công thức: p = (c - t) / s
+            // => t' = c - p * s'
+            const px = (cx - imageModalState.targetTranslateX) / oldScale;
+            const py = (cy - imageModalState.targetTranslateY) / oldScale;
+
+            let newTx = cx - px * newScale;
+            let newTy = cy - py * newScale;
+
+            // Clamp translation
+            const clamped = clampTranslationValues(newScale, newTx, newTy, wrapper, document.getElementById('modal-image'));
+            newTx = clamped.tx;
+            newTy = clamped.ty;
+
+            // Nếu scale <= MIN, đưa về giữa
+            if (newScale <= MIN_SCALE) {
+                newTx = 0;
+                newTy = 0;
+            }
+
+            setImageTarget(newScale, newTx, newTy, animate);
+            updateZoomPercentage();
         }
 
-        function updateImageTransform() {
+        function clampTranslationValues(scale, tx, ty, wrapper, img) {
+            if (!wrapper || !img) return { tx, ty };
+            if (scale <= MIN_SCALE) return { tx: 0, ty: 0 };
+
+            const naturalWidth = img.naturalWidth;
+            const naturalHeight = img.naturalHeight;
+            if (naturalWidth === 0 || naturalHeight === 0) return { tx, ty };
+
+            const containerWidth = wrapper.clientWidth;
+            const containerHeight = wrapper.clientHeight;
+
+            const fitRatio = Math.min(containerWidth / naturalWidth, containerHeight / naturalHeight);
+            const baseDisplayedWidth = naturalWidth * fitRatio;
+            const baseDisplayedHeight = naturalHeight * fitRatio;
+
+            const displayedWidth = baseDisplayedWidth * scale;
+            const displayedHeight = baseDisplayedHeight * scale;
+
+            const maxTx = Math.max(0, (displayedWidth - containerWidth) / 2);
+            const maxTy = Math.max(0, (displayedHeight - containerHeight) / 2);
+
+            return {
+                tx: Math.min(Math.max(tx, -maxTx), maxTx),
+                ty: Math.min(Math.max(ty, -maxTy), maxTy),
+            };
+        }
+
+        function clampCurrentTranslation() {
+            const wrapper = document.getElementById('modal-image-wrapper');
             const img = document.getElementById('modal-image');
-            // Chuyển đổi scale hiển thị: scale thực / BASE_SCALE
-            const visualScale = imageModalState.scale / BASE_SCALE;
-            img.style.transform = `translate3d(${imageModalState.translateX}px, ${imageModalState.translateY}px, 0) scale(${visualScale})`;
+            const clamped = clampTranslationValues(imageModalState.targetScale, imageModalState.targetTranslateX, imageModalState.targetTranslateY, wrapper, img);
+            imageModalState.targetTranslateX = clamped.tx;
+            imageModalState.targetTranslateY = clamped.ty;
+        }
+
+        // Zoom at center (dùng cho các nút +, -, reset)
+        function zoomAtCenter(factor) {
+            const wrapper = document.getElementById('modal-image-wrapper');
+            if (!wrapper) return;
+            zoomAtPoint(factor, wrapper.clientWidth / 2, wrapper.clientHeight / 2, true);
         }
 
         function initImageModalEvents() {
             const wrapper = document.getElementById('modal-image-wrapper');
             if (!wrapper) return;
 
-            // Mouse wheel zoom
+            // === MOUSE WHEEL ZOOM AT CURSOR ===
             wrapper.addEventListener('wheel', (e) => {
                 e.preventDefault();
-                const factor = e.deltaY > 0 ? 0.96 : 1.04;
-                zoomImage(factor);
+                const rect = wrapper.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                // Tính factor dựa trên deltaY (mượt hơn)
+                let factor = 1;
+                if (e.deltaMode === 0) {
+                    // Pixel mode
+                    factor = Math.pow(1.0015, -e.deltaY);
+                } else if (e.deltaMode === 1) {
+                    // Line mode
+                    factor = Math.pow(1.05, -e.deltaY);
+                } else {
+                    // Page mode
+                    factor = Math.pow(1.2, -e.deltaY);
+                }
+
+                // Giới hạn factor để không nhảy quá nhanh
+                factor = Math.min(Math.max(factor, 0.7), 1.4);
+
+                zoomAtPoint(factor, mouseX, mouseY, true);
             }, { passive: false });
 
-            // Pointer events
+            // === POINTER EVENTS ===
             wrapper.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
                 e.preventDefault();
-                wrapper.setPointerCapture(e.pointerId);
+                try { wrapper.setPointerCapture(e.pointerId); } catch(err) {}
+
                 imageModalState.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+                // Dừng animation khi bắt đầu tương tác trực tiếp
+                if (imageModalState.animationId) {
+                    cancelAnimationFrame(imageModalState.animationId);
+                    imageModalState.animationId = null;
+                    imageModalState.isAnimating = false;
+                }
+                // Đồng bộ target = current để tương tác trực tiếp
+                imageModalState.targetScale = imageModalState.scale;
+                imageModalState.targetTranslateX = imageModalState.translateX;
+                imageModalState.targetTranslateY = imageModalState.translateY;
+
                 if (imageModalState.pointers.size === 1) {
                     imageModalState.isDragging = true;
                     imageModalState.startX = e.clientX;
@@ -1358,6 +1213,13 @@
                     imageModalState.initialScale = imageModalState.scale;
                     imageModalState.initialTranslateX = imageModalState.translateX;
                     imageModalState.initialTranslateY = imageModalState.translateY;
+
+                    // Midpoint in container coords
+                    const rect = wrapper.getBoundingClientRect();
+                    const midX = (pointers[0].x + pointers[1].x) / 2 - rect.left;
+                    const midY = (pointers[0].y + pointers[1].y) / 2 - rect.top;
+                    imageModalState.initialMidpointX = midX - rect.width / 2;
+                    imageModalState.initialMidpointY = midY - rect.height / 2;
                 }
             });
 
@@ -1367,31 +1229,56 @@
                 imageModalState.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
                 if (imageModalState.pointers.size === 1 && imageModalState.isDragging) {
+                    // === DRAG ===
                     const dx = e.clientX - imageModalState.startX;
                     const dy = e.clientY - imageModalState.startY;
-                    imageModalState.translateX = imageModalState.lastTranslateX + dx;
-                    imageModalState.translateY = imageModalState.lastTranslateY + dy;
-                    clampTranslation();
-                    updateImageTransform();
+                    const newTx = imageModalState.lastTranslateX + dx;
+                    const newTy = imageModalState.lastTranslateY + dy;
+
+                    const clamped = clampTranslationValues(imageModalState.scale, newTx, newTy, wrapper, document.getElementById('modal-image'));
+                    imageModalState.translateX = clamped.tx;
+                    imageModalState.translateY = clamped.ty;
+                    imageModalState.targetTranslateX = clamped.tx;
+                    imageModalState.targetTranslateY = clamped.ty;
+                    imageModalState.targetScale = imageModalState.scale;
+                    applyImageTransform();
                 } else if (imageModalState.pointers.size === 2) {
+                    // === PINCH ZOOM ===
                     const pointers = Array.from(imageModalState.pointers.values());
                     const dx = pointers[0].x - pointers[1].x;
                     const dy = pointers[0].y - pointers[1].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
+
                     if (imageModalState.initialDistance > 0) {
                         let newScale = imageModalState.initialScale * (distance / imageModalState.initialDistance);
                         newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
+
+                        const rect = wrapper.getBoundingClientRect();
+                        const midX = (pointers[0].x + pointers[1].x) / 2 - rect.left;
+                        const midY = (pointers[0].y + pointers[1].y) / 2 - rect.top;
+                        const cx = midX - rect.width / 2;
+                        const cy = midY - rect.height / 2;
+
                         const ratio = newScale / imageModalState.initialScale;
-                        imageModalState.translateX = imageModalState.initialTranslateX * ratio;
-                        imageModalState.translateY = imageModalState.initialTranslateY * ratio;
-                        imageModalState.scale = newScale;
-                        if (newScale <= BASE_SCALE) {
-                            imageModalState.translateX = 0;
-                            imageModalState.translateY = 0;
-                        } else {
-                            clampTranslation();
+                        let newTx = cx - (imageModalState.initialMidpointX - imageModalState.initialTranslateX) * ratio;
+                        let newTy = cy - (imageModalState.initialMidpointY - imageModalState.initialTranslateY) * ratio;
+
+                        const clamped = clampTranslationValues(newScale, newTx, newTy, wrapper, document.getElementById('modal-image'));
+                        newTx = clamped.tx;
+                        newTy = clamped.ty;
+
+                        if (newScale <= MIN_SCALE) {
+                            newTx = 0;
+                            newTy = 0;
                         }
-                        updateImageTransform();
+
+                        imageModalState.scale = newScale;
+                        imageModalState.translateX = newTx;
+                        imageModalState.translateY = newTy;
+                        imageModalState.targetScale = newScale;
+                        imageModalState.targetTranslateX = newTx;
+                        imageModalState.targetTranslateY = newTy;
+                        applyImageTransform();
                         updateZoomPercentage();
                     }
                 }
@@ -1400,9 +1287,14 @@
             const endPointer = (e) => {
                 if (!imageModalState.pointers.has(e.pointerId)) return;
                 imageModalState.pointers.delete(e.pointerId);
+
                 if (imageModalState.pointers.size === 0) {
                     imageModalState.isDragging = false;
                     wrapper.classList.remove('grabbing');
+                    // Đồng bộ target = current sau khi drag
+                    imageModalState.targetScale = imageModalState.scale;
+                    imageModalState.targetTranslateX = imageModalState.translateX;
+                    imageModalState.targetTranslateY = imageModalState.translateY;
                 } else if (imageModalState.pointers.size === 1) {
                     const remaining = Array.from(imageModalState.pointers.values())[0];
                     imageModalState.isDragging = true;
@@ -1415,18 +1307,23 @@
 
             wrapper.addEventListener('pointerup', endPointer);
             wrapper.addEventListener('pointercancel', endPointer);
-            wrapper.addEventListener('pointerout', endPointer);
 
-            // Double-tap to zoom
+            // === DOUBLE-TAP TO ZOOM ===
             let lastTap = 0;
             wrapper.addEventListener('touchend', (e) => {
                 const now = Date.now();
                 if (now - lastTap < 300 && imageModalState.pointers.size === 0) {
                     e.preventDefault();
-                    if (imageModalState.scale < BASE_SCALE * 1.9) {
-                        zoomImage(2 / (imageModalState.scale / BASE_SCALE));
+                    const rect = wrapper.getBoundingClientRect();
+                    const touch = e.changedTouches[0];
+                    const touchX = touch.clientX - rect.left;
+                    const touchY = touch.clientY - rect.top;
+
+                    if (imageModalState.scale < 2.0) {
+                        zoomAtPoint(2.0 / imageModalState.scale, touchX, touchY, true);
                     } else {
-                        resetImageZoom();
+                        // Zoom về giữa
+                        zoomAtPoint(MIN_SCALE / imageModalState.scale, rect.width / 2, rect.height / 2, true);
                     }
                 }
                 lastTap = now;
@@ -1434,13 +1331,16 @@
 
             window.addEventListener('resize', () => {
                 if (document.getElementById('image-modal').classList.contains('show')) {
-                    clampTranslation();
-                    updateImageTransform();
+                    clampCurrentTranslation();
+                    imageModalState.scale = imageModalState.targetScale;
+                    imageModalState.translateX = imageModalState.targetTranslateX;
+                    imageModalState.translateY = imageModalState.targetTranslateY;
+                    applyImageTransform();
                 }
             });
         }
 
-        // ============ EXISTING FUNCTIONS ============
+        /* ============ EXISTING FUNCTIONS ============ */
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1853,7 +1753,6 @@
             }
         }
 
-        // ============ ANTI-CHEAT ============
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('selectstart', e => e.preventDefault());
         document.addEventListener('dragstart', e => { if (e.target.tagName !== 'DIV' || !e.target.classList.contains('drag-chip')) e.preventDefault(); });
@@ -1886,7 +1785,6 @@
             }
         }, 800);
 
-        // ============ KEYBOARD NAVIGATION ============
         document.addEventListener('keydown', function(e) {
             const tag = document.activeElement.tagName;
             const inputType = document.activeElement.type;
@@ -1952,7 +1850,6 @@
             }
         });
 
-        // ============ INIT ============
         document.addEventListener('DOMContentLoaded', () => {
             initImageModalEvents();
         });
