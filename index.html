@@ -67,8 +67,9 @@
         @keyframes glowPulse { 0%,100% { box-shadow: 0 0 20px var(--primary-glow); } 50% { box-shadow: 0 0 40px var(--primary-glow), 0 0 60px var(--primary-glow); } }
         @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes wave { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        @keyframes zoomPop { 0% { transform: scale(0.7); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes zoomPop { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes glowRing { 0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.5); } 100% { box-shadow: 0 0 0 12px rgba(79, 70, 229, 0); } }
 
         .fade-in { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .slide-in-up { animation: slideInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
@@ -869,7 +870,7 @@
             transition: transform 0.05s linear;
         }
         #image-modal img.smooth-zoom {
-            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
         }
         #image-modal .modal-close {
             position: absolute;
@@ -934,6 +935,7 @@
             background: rgba(255,255,255,0.25);
             transform: scale(1.1);
             border-color: rgba(255,255,255,0.25);
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
         }
         #image-modal .modal-controls button:active {
             transform: scale(0.92);
@@ -964,10 +966,10 @@
             user-select: none;
             letter-spacing: 0.3px;
             font-variant-numeric: tabular-nums;
-            transition: all 0.2s ease;
+            transition: background 0.2s ease;
         }
         #image-modal .zoom-percentage.pulse {
-            animation: zoomPop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: zoomPop 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* ============ MOBILE ============ */
@@ -1080,11 +1082,11 @@
         </div>
         <button class="modal-close" onclick="closeImageModal()" aria-label="Đóng">✕</button>
         <div class="modal-controls">
-            <button onclick="zoomImage(0.8)" aria-label="Thu nhỏ">
+            <button onclick="zoomImage(0.98)" aria-label="Thu nhỏ">
                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
             </button>
             <div class="zoom-percentage" id="zoom-percentage">100%</div>
-            <button onclick="zoomImage(1.25)" aria-label="Phóng to">
+            <button onclick="zoomImage(1.02)" aria-label="Phóng to">
                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
             </button>
             <button onclick="resetImageZoom()" aria-label="Đặt lại">
@@ -1200,7 +1202,7 @@
 
         // ============ IMAGE MODAL STATE ============
         const imageModalState = {
-            scale: 1,
+            scale: 0.98, // Scale gốc = 98% (hiển thị là 100%)
             translateX: 0,
             translateY: 0,
             isDragging: false,
@@ -1210,13 +1212,14 @@
             lastTranslateY: 0,
             pointers: new Map(),
             initialDistance: 0,
-            initialScale: 1,
+            initialScale: 0.98,
             initialTranslateX: 0,
             initialTranslateY: 0,
         };
 
-        const MIN_SCALE = 0.5;
-        const MAX_SCALE = 5;
+        const BASE_SCALE = 0.98; // Scale hiển thị là 100%
+        const MIN_SCALE = 0.98;  // Tối thiểu = 100%
+        const MAX_SCALE = 5.0;   // Tối đa = ~510%
 
         function openImageModal(src) {
             const modal = document.getElementById('image-modal');
@@ -1236,12 +1239,12 @@
         function resetImageZoom() {
             const img = document.getElementById('modal-image');
             img.classList.add('smooth-zoom');
-            imageModalState.scale = 1;
+            imageModalState.scale = BASE_SCALE;
             imageModalState.translateX = 0;
             imageModalState.translateY = 0;
             updateImageTransform();
             updateZoomPercentage();
-            setTimeout(() => img.classList.remove('smooth-zoom'), 320);
+            setTimeout(() => img.classList.remove('smooth-zoom'), 340);
         }
 
         function zoomImage(factor) {
@@ -1252,14 +1255,14 @@
             let newScale = oldScale * factor;
             newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
 
-            // Scale translation theo tỉ lệ để ảnh giữ nguyên vị trí tương đối
+            // Giữ vị trí tương đối khi zoom
             const ratio = newScale / oldScale;
             imageModalState.translateX = imageModalState.translateX * ratio;
             imageModalState.translateY = imageModalState.translateY * ratio;
             imageModalState.scale = newScale;
 
-            // Nếu scale <= 1, đưa về giữa hoàn toàn
-            if (newScale <= 1) {
+            // Nếu scale <= BASE, đưa về giữa
+            if (newScale <= BASE_SCALE) {
                 imageModalState.translateX = 0;
                 imageModalState.translateY = 0;
             } else {
@@ -1269,13 +1272,15 @@
             updateImageTransform();
             updateZoomPercentage();
 
-            setTimeout(() => img.classList.remove('smooth-zoom'), 320);
+            setTimeout(() => img.classList.remove('smooth-zoom'), 340);
         }
 
         function updateZoomPercentage() {
             const el = document.getElementById('zoom-percentage');
             if (el) {
-                el.textContent = Math.round(imageModalState.scale * 100) + '%';
+                // Hiển thị: 98% → 100%, các tỉ lệ khác theo tỉ lệ đó
+                const displayPercent = Math.round(imageModalState.scale / BASE_SCALE * 100);
+                el.textContent = displayPercent + '%';
                 el.classList.remove('pulse');
                 void el.offsetWidth;
                 el.classList.add('pulse');
@@ -1287,7 +1292,7 @@
             const img = document.getElementById('modal-image');
             if (!wrapper || !img) return;
 
-            if (imageModalState.scale <= 1) {
+            if (imageModalState.scale <= BASE_SCALE) {
                 imageModalState.translateX = 0;
                 imageModalState.translateY = 0;
                 return;
@@ -1297,20 +1302,16 @@
             const naturalHeight = img.naturalHeight;
             if (naturalWidth === 0 || naturalHeight === 0) return;
 
-            // Kích thước container
             const containerWidth = wrapper.clientWidth;
             const containerHeight = wrapper.clientHeight;
 
-            // Kích thước ảnh hiển thị với object-fit: contain (chưa scale)
             const ratio = Math.min(containerWidth / naturalWidth, containerHeight / naturalHeight);
             const baseDisplayedWidth = naturalWidth * ratio;
             const baseDisplayedHeight = naturalHeight * ratio;
 
-            // Kích thước sau khi scale
-            const displayedWidth = baseDisplayedWidth * imageModalState.scale;
-            const displayedHeight = baseDisplayedHeight * imageModalState.scale;
+            const displayedWidth = baseDisplayedWidth * imageModalState.scale / BASE_SCALE;
+            const displayedHeight = baseDisplayedHeight * imageModalState.scale / BASE_SCALE;
 
-            // Giới hạn translate
             const maxTranslateX = Math.max(0, (displayedWidth - containerWidth) / 2);
             const maxTranslateY = Math.max(0, (displayedHeight - containerHeight) / 2);
 
@@ -1320,7 +1321,9 @@
 
         function updateImageTransform() {
             const img = document.getElementById('modal-image');
-            img.style.transform = `translate3d(${imageModalState.translateX}px, ${imageModalState.translateY}px, 0) scale(${imageModalState.scale})`;
+            // Chuyển đổi scale hiển thị: scale thực / BASE_SCALE
+            const visualScale = imageModalState.scale / BASE_SCALE;
+            img.style.transform = `translate3d(${imageModalState.translateX}px, ${imageModalState.translateY}px, 0) scale(${visualScale})`;
         }
 
         function initImageModalEvents() {
@@ -1330,7 +1333,7 @@
             // Mouse wheel zoom
             wrapper.addEventListener('wheel', (e) => {
                 e.preventDefault();
-                const factor = e.deltaY > 0 ? 0.9 : 1.1;
+                const factor = e.deltaY > 0 ? 0.96 : 1.04;
                 zoomImage(factor);
             }, { passive: false });
 
@@ -1382,7 +1385,7 @@
                         imageModalState.translateX = imageModalState.initialTranslateX * ratio;
                         imageModalState.translateY = imageModalState.initialTranslateY * ratio;
                         imageModalState.scale = newScale;
-                        if (newScale <= 1) {
+                        if (newScale <= BASE_SCALE) {
                             imageModalState.translateX = 0;
                             imageModalState.translateY = 0;
                         } else {
@@ -1420,8 +1423,8 @@
                 const now = Date.now();
                 if (now - lastTap < 300 && imageModalState.pointers.size === 0) {
                     e.preventDefault();
-                    if (imageModalState.scale < 1.9) {
-                        zoomImage(2 / imageModalState.scale);
+                    if (imageModalState.scale < BASE_SCALE * 1.9) {
+                        zoomImage(2 / (imageModalState.scale / BASE_SCALE));
                     } else {
                         resetImageZoom();
                     }
@@ -1429,7 +1432,6 @@
                 lastTap = now;
             });
 
-            // Resize handler
             window.addEventListener('resize', () => {
                 if (document.getElementById('image-modal').classList.contains('show')) {
                     clampTranslation();
