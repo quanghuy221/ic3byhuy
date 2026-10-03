@@ -288,7 +288,6 @@
             border-radius: 20px;
         }
 
-        /* ============ QUESTION GRID OPTIMIZATION ============ */
         .question-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
@@ -393,6 +392,33 @@
             font-weight: 500;
             margin-bottom: 25px;
             line-height: 1.7;
+        }
+
+        /* ============ IMAGE ============ */
+        .question-image-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 25px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--border);
+            background: #FFFFFF;
+            animation: fadeIn 0.5s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .question-image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .question-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            max-height: 400px;
         }
 
         /* ============ OPTIONS ============ */
@@ -911,9 +937,33 @@
             { id: 13, type: 'multiple', question: 'Hai tài nguyên nào có thể dạy bạn cách sử dụng một tính năng trong chương trình phần mềm? (Chọn hai)', options: ['Diễn đàn trực tuyến dành riêng để thảo luận về chương trình', 'Hướng dẫn cài đặt kèm theo phần mềm', 'Lệnh Help có trong chương trình', 'Đường dây điện thoại Hỗ trợ Kỹ thuật do nhà xuất bản phần mềm cung cấp'], correct: [0, 2], explanation: 'Diễn đàn trực tuyến và lệnh Help là nguồn tài nguyên phổ biến để học cách sử dụng phần mềm.' },
             { id: 14, type: 'multiple', question: 'Hai tài nguyên nào là tài nguyên cộng đồng có thể dạy bạn sử dụng một tính năng trong chương trình phần mềm? (Chọn hai)', options: ['Blogs', 'Wikipedia', 'Diễn đàn (Forums)', 'Hướng dẫn cài đặt (Installation instructions)'], correct: [0, 2], explanation: 'Blogs và Diễn đàn là tài nguyên cộng đồng, nơi người dùng chia sẻ kinh nghiệm.' },
             { id: 15, type: 'multiple', question: 'Bạn đang tìm kiếm hình ảnh trên Google. Cụ thể, bạn đang tìm kiếm clip art về một con thỏ mà bạn có thể sử dụng trên một trang web mà không cần liên hệ với họa sĩ để xin phép. Hai bộ lọc nào sẽ thu hẹp kết quả tìm kiếm của bạn để chỉ hiển thị clip art có sẵn để sử dụng mà không có sự cho phép của họa sĩ? (Chọn hai)', options: ['Thời gian (Time)', 'Quyền sử dụng (Usage Rights)', 'Màu sắc (Color)', 'Thể loại (Type)'], correct: [1, 3], explanation: 'Bộ lọc Quyền sử dụng và Thể loại giúp tìm hình ảnh miễn phí bản quyền.' },
-            { id: 16, type: 'single', question: 'Bạn muốn giảm độ sáng của màn hình trên máy tính. Nhấp vào tính năng cho phép bạn điều chỉnh cài đặt độ sáng trên máy tính Windows này.', options: ['Display', 'System', 'Devices', 'Network & Internet', 'Personalization'], correct: [0], explanation: 'Trong Windows 10, độ sáng màn hình được điều chỉnh trong System -> Display.' },
-            { id: 17, type: 'single', question: 'Bạn muốn thay đổi độ tương phản của màn hình trên máy tính. Nhấp vào tính năng sẽ cho phép bạn điều chỉnh cài đặt độ tương phản trên máy tính Windows này.', options: ['System', 'Devices', 'Ease of Access', 'Update & Security'], correct: [2], explanation: 'Độ tương phản (High contrast) được điều chỉnh trong Ease of Access.' },
-            { id: 18, type: 'single', question: 'Bạn đang sử dụng điện thoại Android và muốn thay đổi độ tương phản. Nhấp vào tính năng sẽ cho phép bạn điều chỉnh độ tương phản trên điện thoại này.', options: ['Accessibility', 'Display', 'Sound', 'Battery'], correct: [0], explanation: 'Trên Android, độ tương phản được điều chỉnh trong Accessibility (Trợ năng).' },
+            { 
+                id: 16, 
+                type: 'single', 
+                question: 'Bạn muốn giảm độ sáng của màn hình trên máy tính. Nhấp vào tính năng cho phép bạn điều chỉnh cài đặt độ sáng trên máy tính Windows này.', 
+                options: ['Display', 'System', 'Devices', 'Network & Internet', 'Personalization'], 
+                correct: [0], 
+                explanation: 'Trong Windows 10, độ sáng màn hình được điều chỉnh trong System -> Display.',
+                image: 'anh1.png'
+            },
+            { 
+                id: 17, 
+                type: 'single', 
+                question: 'Bạn muốn thay đổi độ tương phản của màn hình trên máy tính. Nhấp vào tính năng sẽ cho phép bạn điều chỉnh cài đặt độ tương phản trên máy tính Windows này.', 
+                options: ['System', 'Devices', 'Ease of Access', 'Update & Security'], 
+                correct: [2], 
+                explanation: 'Độ tương phản (High contrast) được điều chỉnh trong Ease of Access.',
+                image: 'anh2.png'
+            },
+            { 
+                id: 18, 
+                type: 'single', 
+                question: 'Bạn đang sử dụng điện thoại Android và muốn thay đổi độ tương phản. Nhấp vào tính năng sẽ cho phép bạn điều chỉnh độ tương phản trên điện thoại này.', 
+                options: ['Accessibility', 'Display', 'Sound', 'Battery'], 
+                correct: [0], 
+                explanation: 'Trên Android, độ tương phản được điều chỉnh trong Accessibility (Trợ năng).',
+                image: 'anh3.png'
+            },
             { id: 19, type: 'matrix', question: 'Giáo viên của bạn đã giao cho bạn một nhiệm vụ để xác nhận quan điểm của kết quả tìm kiếm và tạo tác kỹ thuật số. Đối với mỗi tuyên bố về quan điểm xác thực, hãy chọn Đúng (Yes) nếu tuyên bố đúng hoặc Sai (No) nếu tuyên bố sai.', rows: ['Những câu chuyện được tải bởi mạng lưới truyền thông luôn luôn thể hiện cả hai mặt và một góc nhìn bình đẳng', 'Một khuynh hướng cảm tính ủng hộ hình đăng xã hội, chủ nghĩa tự do và các ý tưởng cách mạng', 'Thành kiến của cánh hữu ủng hộ các doanh nghiệp tư do, quyền sở hữu tư nhân và các ý tưởng bảo thủ về mặt xã hội', 'Tất cả các câu chuyện đăng trên internet đều có quan điểm trung lập'], correct: [1, 0, 0, 1], explanation: 'Truyền thông có thể có khuynh hướng (thành kiến tự do hoặc bảo thủ), nhưng không phải luôn thể hiện cả hai mặt bình đẳng và không phải tất cả câu chuyện đều trung lập.' },
             { id: 20, type: 'matrix', question: 'Trong khi nghiên cứu một chủ đề bạn không biết gì, kết quả tìm kiếm của bạn mang lại một số bài báo thuyết phục. Làm thế nào để bạn biết liệu bất kỳ bài báo nào trong số này là thiên vị? Đối với mỗi phát biểu về việc đánh giá sự thiên vị của kết quả tìm kiếm, chọn Đúng (Yes) nếu nó là không thiên vị hoặc Sai (No) nếu nó thiên vị.', rows: ['Tác giả của bài báo đưa ra những lập luận ngang nhau của cả hai quan điểm', 'Bài báo đã được đăng trên một tạp chí uy tín, được đánh giá chuyên nghiệp', 'Kiểm tra các bài viết trên mediabiasfactcheck.com hoặc newsfactsnetwork.com', 'Kiểm tra ác độ thịnh hành của bài viết và số lượt thích trên mạng xã hội', 'Bài báo đã được xuất bản bởi một trong những nguồn truyền thông được liệt kê trên biểu đồ thiên vị truyền thông (Media Bias Chart)'], correct: [0, 0, 0, 1, 0], explanation: 'Đánh giá dựa trên lập luận, nguồn uy tín, fact-check, và biểu đồ thiên vị. Số lượt thích không đánh giá được tính xác thực.' },
             { id: 21, type: 'matrix', question: 'Bạn đang tìm kiếm các dữ kiện để hỗ trợ một bài thuyết trình mà bạn đang xây dựng cho lớp khoa học của mình. Bạn tìm thấy một nghiên cứu của khoa học liên quan đến chủ đề của bạn. Làm thế nào để bạn biết liệu nghiên cứu có đáng tin cậy hay không? Đối với mỗi tuyên bố, hãy chọn Đúng (Yes) nếu bạn nên cân nhắc khi xác định độ tin cậy của nghiên cứu hoặc Sai (No) nếu không.', rows: ['Chuyên môn và uy tín của nhà báo', 'Có bao nhiêu người đã chia sẻ nghiên cứu trên mạng xã hội', 'Bạn có thể tìm và truy cập các nguồn', 'Nhà báo sử dụng kính địa phương'], correct: [0, 1, 0, 1], explanation: 'Cần xem xét chuyên môn, uy tín và khả năng truy cập nguồn. Số lượt chia sẻ và kính địa phương không quyết định độ tin cậy.' },
@@ -1075,6 +1125,11 @@
 
             let typeText = q.type === 'single' ? 'Chọn 1 đáp án' : q.type === 'multiple' ? 'Chọn nhiều đáp án' : q.type === 'matrix' ? 'Đúng / Sai' : 'Kéo thả ghép nối';
             let html = `<div class="question-header"><span class="question-number">Câu hỏi ${index + 1}</span><span class="question-type">${typeText}</span></div>`;
+
+            // Render image if exists
+            if (q.image) {
+                html += `<div class="question-image-container"><img src="${q.image}" alt="Câu hỏi ${index + 1}" onerror="this.style.display='none'"></div>`;
+            }
 
             html += `<div class="question-text">${q.question}</div>`;
 
@@ -1382,7 +1437,6 @@
 
         // ============ KEYBOARD NAVIGATION ============
         document.addEventListener('keydown', function(e) {
-            // Bỏ qua nếu đang focus vào ô input/textarea (trừ radio/checkbox)
             const tag = document.activeElement.tagName;
             const inputType = document.activeElement.type;
             if (tag === 'TEXTAREA' || (tag === 'INPUT' && inputType === 'text')) return;
@@ -1402,10 +1456,9 @@
                 return;
             }
             if (e.key === 'Enter') {
-                if (tag === 'BUTTON') return; // Let buttons handle Enter naturally
+                if (tag === 'BUTTON') return;
 
                 if (appState.isReview) {
-                    // Trong chế độ xem lại, Enter chuyển câu hoặc quay lại menu
                     if (appState.currentQuestionIndex < questions.length - 1) {
                         e.preventDefault();
                         nextQuestion();
@@ -1426,16 +1479,16 @@
                             nextQuestion();
                         } else {
                             e.preventDefault();
-                            calculateResult(); // Hoàn thành
+                            calculateResult();
                         }
                     }
-                } else { // Chế độ thi thử
+                } else {
                     if (appState.currentQuestionIndex < questions.length - 1) {
                         e.preventDefault();
                         nextQuestion();
                     } else {
                         e.preventDefault();
-                        calculateResult(); // Nộp bài
+                        calculateResult();
                     }
                 }
             }
