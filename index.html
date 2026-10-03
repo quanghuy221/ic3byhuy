@@ -1129,8 +1129,6 @@
             resetImageZoom();
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
-            // Prevent default on wheel to avoid zooming page
-            modal.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
         }
 
         function closeImageModal() {
@@ -1162,6 +1160,14 @@
             const wrapper = document.getElementById('modal-image-wrapper');
             if (!wrapper) return;
 
+            // Mouse wheel zoom
+            wrapper.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                zoomImage(delta);
+            }, { passive: false });
+
+            // Pointer events for drag & pinch
             wrapper.addEventListener('pointerdown', (e) => {
                 e.preventDefault();
                 wrapper.setPointerCapture(e.pointerId);
@@ -1215,7 +1221,6 @@
                     imageModalState.isDragging = false;
                     wrapper.classList.remove('grabbing');
                 } else if (imageModalState.pointers.size === 1) {
-                    // Reset drag start for remaining pointer
                     const remaining = Array.from(imageModalState.pointers.values())[0];
                     imageModalState.isDragging = true;
                     imageModalState.startX = remaining.x;
