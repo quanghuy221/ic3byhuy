@@ -67,6 +67,8 @@
         @keyframes glowPulse { 0%,100% { box-shadow: 0 0 20px var(--primary-glow); } 50% { box-shadow: 0 0 40px var(--primary-glow), 0 0 60px var(--primary-glow); } }
         @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes wave { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes zoomPop { 0% { transform: scale(0.7); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
         .fade-in { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .slide-in-up { animation: slideInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
@@ -420,6 +422,10 @@
             object-fit: contain;
             max-height: 400px;
             cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+        .question-image-container img:hover {
+            filter: brightness(1.05);
         }
 
         /* ============ OPTIONS ============ */
@@ -859,11 +865,11 @@
             will-change: transform;
             user-select: none;
             -webkit-user-drag: none;
-            pointer-events: none; /* Let wrapper handle events */
+            pointer-events: none;
             transition: transform 0.05s linear;
         }
         #image-modal img.smooth-zoom {
-            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
         }
         #image-modal .modal-close {
             position: absolute;
@@ -881,13 +887,14 @@
             justify-content: center;
             cursor: pointer;
             z-index: 10;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
+            line-height: 1;
         }
         #image-modal .modal-close:hover {
             background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
+            transform: rotate(90deg) scale(1.1);
         }
         #image-modal .modal-controls {
             position: absolute;
@@ -896,15 +903,16 @@
             transform: translateX(-50%);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             z-index: 10;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.55);
             padding: 8px;
             border-radius: 60px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            animation: slideUpFade 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         #image-modal .modal-controls button {
             background: rgba(255,255,255,0.08);
@@ -919,22 +927,23 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             flex-shrink: 0;
         }
         #image-modal .modal-controls button:hover {
             background: rgba(255,255,255,0.25);
-            transform: scale(1.08);
+            transform: scale(1.1);
+            border-color: rgba(255,255,255,0.25);
         }
         #image-modal .modal-controls button:active {
-            transform: scale(0.95);
+            transform: scale(0.92);
         }
         #image-modal .modal-controls button svg {
             width: 22px;
             height: 22px;
             fill: none;
             stroke: white;
-            stroke-width: 2;
+            stroke-width: 2.2;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -942,19 +951,23 @@
             color: white;
             font-size: 0.95rem;
             font-weight: 700;
-            min-width: 90px;
+            min-width: 80px;
             text-align: center;
-            padding: 0 16px;
+            padding: 0 14px;
             height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.06);
             border-radius: 40px;
             border: 1px solid rgba(255,255,255,0.08);
             user-select: none;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             font-variant-numeric: tabular-nums;
+            transition: all 0.2s ease;
+        }
+        #image-modal .zoom-percentage.pulse {
+            animation: zoomPop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* ============ MOBILE ============ */
@@ -972,19 +985,23 @@
 
             #image-modal .modal-controls {
                 bottom: 20px;
-                gap: 8px;
+                gap: 6px;
                 padding: 6px;
             }
             #image-modal .modal-controls button {
-                width: 42px;
-                height: 42px;
+                width: 44px;
+                height: 44px;
                 font-size: 18px;
             }
+            #image-modal .modal-controls button svg {
+                width: 20px;
+                height: 20px;
+            }
             #image-modal .zoom-percentage {
-                min-width: 70px;
+                min-width: 60px;
                 font-size: 0.85rem;
-                height: 42px;
-                padding: 0 10px;
+                height: 44px;
+                padding: 0 8px;
             }
             #image-modal .modal-close {
                 top: 15px;
@@ -1010,7 +1027,7 @@
     <div id="start-screen">
         <div class="start-logo">IC3</div>
         <h1>Ôn Tập IC3 GS6 Level 2</h1>
-        <p>IC3 GS6 Level 2. Images uploaded!</p>
+        <p>IC3 GS6 Level 2. Images Uploaded!</p>
         <div class="mode-buttons">
             <button class="btn-mode" onclick="startApp('practice')">
                 <span class="mode-title">Luyện Tập</span>
@@ -1194,6 +1211,8 @@
             pointers: new Map(),
             initialDistance: 0,
             initialScale: 1,
+            initialTranslateX: 0,
+            initialTranslateY: 0,
         };
 
         const MIN_SCALE = 0.5;
@@ -1222,7 +1241,7 @@
             imageModalState.translateY = 0;
             updateImageTransform();
             updateZoomPercentage();
-            setTimeout(() => img.classList.remove('smooth-zoom'), 300);
+            setTimeout(() => img.classList.remove('smooth-zoom'), 320);
         }
 
         function zoomImage(factor) {
@@ -1233,10 +1252,8 @@
             let newScale = oldScale * factor;
             newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
 
-            // Tỉ lệ thay đổi scale
+            // Scale translation theo tỉ lệ để ảnh giữ nguyên vị trí tương đối
             const ratio = newScale / oldScale;
-
-            // Scale translation theo tỉ lệ để ảnh luôn ở giữa tương đối
             imageModalState.translateX = imageModalState.translateX * ratio;
             imageModalState.translateY = imageModalState.translateY * ratio;
             imageModalState.scale = newScale;
@@ -1252,13 +1269,16 @@
             updateImageTransform();
             updateZoomPercentage();
 
-            setTimeout(() => img.classList.remove('smooth-zoom'), 300);
+            setTimeout(() => img.classList.remove('smooth-zoom'), 320);
         }
 
         function updateZoomPercentage() {
             const el = document.getElementById('zoom-percentage');
             if (el) {
                 el.textContent = Math.round(imageModalState.scale * 100) + '%';
+                el.classList.remove('pulse');
+                void el.offsetWidth;
+                el.classList.add('pulse');
             }
         }
 
@@ -1281,16 +1301,16 @@
             const containerWidth = wrapper.clientWidth;
             const containerHeight = wrapper.clientHeight;
 
-            // Kích thước ảnh sau khi scale
-            const scaledWidth = naturalWidth * imageModalState.scale;
-            const scaledHeight = naturalHeight * imageModalState.scale;
-
-            // Kích thước ảnh thực tế hiển thị (object-fit: contain)
+            // Kích thước ảnh hiển thị với object-fit: contain (chưa scale)
             const ratio = Math.min(containerWidth / naturalWidth, containerHeight / naturalHeight);
-            const displayedWidth = naturalWidth * ratio * imageModalState.scale;
-            const displayedHeight = naturalHeight * ratio * imageModalState.scale;
+            const baseDisplayedWidth = naturalWidth * ratio;
+            const baseDisplayedHeight = naturalHeight * ratio;
 
-            // Giới hạn translate dựa trên kích thước thực tế hiển thị
+            // Kích thước sau khi scale
+            const displayedWidth = baseDisplayedWidth * imageModalState.scale;
+            const displayedHeight = baseDisplayedHeight * imageModalState.scale;
+
+            // Giới hạn translate
             const maxTranslateX = Math.max(0, (displayedWidth - containerWidth) / 2);
             const maxTranslateY = Math.max(0, (displayedHeight - containerHeight) / 2);
 
@@ -1400,7 +1420,11 @@
                 const now = Date.now();
                 if (now - lastTap < 300 && imageModalState.pointers.size === 0) {
                     e.preventDefault();
-                    zoomImage(imageModalState.scale < 2 ? 2 / imageModalState.scale : 1 / imageModalState.scale);
+                    if (imageModalState.scale < 1.9) {
+                        zoomImage(2 / imageModalState.scale);
+                    } else {
+                        resetImageZoom();
+                    }
                 }
                 lastTap = now;
             });
@@ -1545,7 +1569,6 @@
             let typeText = q.type === 'single' ? 'Chọn 1 đáp án' : q.type === 'multiple' ? 'Chọn nhiều đáp án' : q.type === 'matrix' ? 'Đúng / Sai' : 'Kéo thả ghép nối';
             let html = `<div class="question-header"><span class="question-number">Câu hỏi ${index + 1}</span><span class="question-type">${typeText}</span></div>`;
 
-            // Render image if exists
             if (q.image) {
                 html += `<div class="question-image-container"><img src="${q.image}" alt="Câu hỏi ${index + 1}" class="clickable-image" data-src="${q.image}" onerror="this.style.display='none'"></div>`;
             }
@@ -1609,7 +1632,6 @@
 
             if (q.type === 'matching') initMatchingDrag(q);
 
-            // Attach click event to image for modal
             const img = card.querySelector('.clickable-image');
             if (img) {
                 img.addEventListener('click', function() {
