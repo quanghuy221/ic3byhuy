@@ -41,7 +41,6 @@ body{
 @keyframes slideUpFade{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes checkPop{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.15);opacity:1}100%{transform:scale(1);opacity:1}}
 @keyframes blob{0%,100%{border-radius:42% 58% 70% 30%/45% 45% 55% 55%}50%{border-radius:58% 42% 30% 70%/55% 55% 45% 45%}}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 @keyframes bounceIn{0%{transform:scale(.3);opacity:0}50%{transform:scale(1.05)}70%{transform:scale(.95)}100%{transform:scale(1);opacity:1}}
 @keyframes ringPulse{0%{box-shadow:0 0 0 0 var(--primary-glow)}70%{box-shadow:0 0 0 20px rgba(79,70,229,0)}100%{box-shadow:0 0 0 0 rgba(79,70,229,0)}}
 
@@ -128,6 +127,15 @@ body{
 .btn-profile:hover{transform:translateY(-3px);box-shadow:0 16px 32px -10px var(--primary-glow)}
 .btn-profile:active{transform:translateY(-1px) scale(.99)}
 .btn-profile:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-profile-clear{
+  background:#fff;color:var(--danger);border:2px solid rgba(239,68,68,.35);
+  box-shadow:none;margin-top:10px;font-size:.9rem;padding:13px;
+}
+.btn-profile-clear:hover{
+  background:var(--danger);color:#fff;border-color:var(--danger);
+  box-shadow:0 10px 20px -8px rgba(239,68,68,.5);transform:translateY(-3px);
+}
+.btn-profile-clear svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ============ START SCREEN ============ */
 #start-screen{
@@ -223,9 +231,19 @@ body{
   width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));
   display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1rem;flex-shrink:0;
 }
-.sidebar-user .su-info{line-height:1.25;min-width:0}
+.sidebar-user .su-info{line-height:1.25;min-width:0;flex:1}
 .sidebar-user .su-info strong{font-size:.88rem;display:block;color:var(--text-main);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sidebar-user .su-info span{font-size:.74rem;color:var(--text-sub);font-weight:500}
+.logout-btn{
+  width:34px;height:34px;border-radius:9px;
+  border:1px solid rgba(239,68,68,.25);
+  background:rgba(239,68,68,.08);color:var(--danger);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:var(--transition);
+}
+.logout-btn:hover{background:var(--danger);color:#fff;border-color:var(--danger);transform:scale(1.08) rotate(-4deg)}
+.logout-btn:active{transform:scale(.94)}
+.logout-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .sidebar-header{
   font-size:1.08rem;font-weight:800;padding-bottom:12px;
   border-bottom:2px solid var(--border);color:var(--primary);
@@ -581,17 +599,21 @@ body{
     <p>Vui lòng nhập thông tin để bắt đầu ôn tập</p>
     <div class="profile-field">
       <label>Họ và tên</label>
-      <input type="text" id="p-name" placeholder="VD: Dương Đào Quang Huy" maxlength="40" autocomplete="off">
+      <input type="text" id="p-name" placeholder="VD: Nguyễn Quang Huy" maxlength="40" autocomplete="off">
     </div>
     <div class="profile-field">
       <label>Lớp</label>
-      <input type="text" id="p-class" placeholder="VD: 7A4" maxlength="20" autocomplete="off">
+      <input type="text" id="p-class" placeholder="VD: 11A1" maxlength="20" autocomplete="off">
     </div>
     <div class="profile-field">
       <label>Tổ</label>
-      <input type="text" id="p-group" placeholder="VD: Tổ 1" maxlength="20" autocomplete="off">
+      <input type="text" id="p-group" placeholder="VD: Tổ 3" maxlength="20" autocomplete="off">
     </div>
     <button class="btn-profile" id="p-submit" onclick="saveProfile()">Bắt Đầu Ôn Tập →</button>
+    <button class="btn-profile btn-profile-clear" id="p-clear" onclick="clearProfileCache()">
+      <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+      Xóa Dữ Liệu Đã Lưu
+    </button>
   </div>
 </div>
 
@@ -628,6 +650,9 @@ body{
         <strong id="sidebar-name">Học sinh</strong>
         <span id="sidebar-meta">Lớp — Tổ</span>
       </div>
+      <button class="logout-btn" onclick="logout()" title="Đăng xuất" aria-label="Đăng xuất">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
     </div>
     <div class="sidebar-header">
       <span>Mục Lục Câu Hỏi</span>
@@ -837,6 +862,45 @@ function saveProfile(){
   try{ localStorage.setItem('ic3_profile', JSON.stringify(userProfile)); }catch(e){}
   applyProfileToUI();
   goToStartScreen();
+}
+
+function clearProfileCache(){
+  if(!confirm('Xóa toàn bộ dữ liệu đã lưu (tên, lớp, tổ)?\nBạn sẽ cần nhập lại từ đầu.')) return;
+  try{ localStorage.removeItem('ic3_profile'); }catch(e){}
+  userProfile = { name:'', className:'', group:'' };
+  document.getElementById('p-name').value = '';
+  document.getElementById('p-class').value = '';
+  document.getElementById('p-group').value = '';
+  updateProfileAvatar();
+  document.getElementById('p-submit').textContent = 'Bắt Đầu Ôn Tập →';
+  const card = document.querySelector('.profile-card');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'bounceIn .5s ease';
+}
+
+function logout(){
+  if(!confirm('Bạn có chắc muốn đăng xuất?\nDữ liệu tên/lớp/tổ sẽ bị xóa và bạn cần nhập lại.')) return;
+  try{ localStorage.removeItem('ic3_profile'); }catch(e){}
+  userProfile = { name:'', className:'', group:'' };
+  document.getElementById('p-name').value = '';
+  document.getElementById('p-class').value = '';
+  document.getElementById('p-group').value = '';
+  updateProfileAvatar();
+  document.getElementById('p-submit').textContent = 'Bắt Đầu Ôn Tập →';
+  // reset app state
+  appState.userAnswers = {};
+  appState.isChecked = {};
+  appState.isReview = false;
+  appState.currentQuestionIndex = 0;
+  questions = [];
+  document.getElementById('question-grid').innerHTML = '';
+  document.getElementById('question-card').innerHTML = '';
+  // show profile
+  document.getElementById('profile-screen').style.display = 'flex';
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'none';
 }
 
 function applyProfileToUI(){
@@ -1102,7 +1166,6 @@ function initImageModalEvents(){
   wrapper.addEventListener('pointerup', endPointer);
   wrapper.addEventListener('pointercancel', endPointer);
 
-  /* Double-tap */
   let lastTapTime = 0, lastTapX = 0, lastTapY = 0;
   wrapper.addEventListener('pointerup', e=>{
     if(e.pointerType === 'mouse') return;
@@ -1406,7 +1469,7 @@ function initMatchingDrag(q){
 }
 
 /* ============================================================
-   DRAG & AUTO-SCROLL (OPTIMIZED FAST)
+   DRAG & AUTO-SCROLL (SIÊU NHANH + MƯỢT)
    ============================================================ */
 let dragContext = null;
 let autoScrollRAF = null;
@@ -1440,12 +1503,13 @@ function startDrag(e){
 }
 
 function startAutoScroll(){
-  const EDGE_ZONE = 170;      // vùng nhạy ở mép màn hình
-  const MAX_SPEED = 220;      // tốc độ tối đa px/frame (nhanh hơn 5x bản cũ)
-  const ACCEL = 0.35;         // gia tốc mượt
+  /* TỐI ƯU: vùng nhạy rộng, tốc độ max cao, gia tốc tức thời → kéo xuống cuối trang cực nhanh */
+  const EDGE_ZONE = 220;       // vùng nhạy ở mép màn hình (rộng hơn)
+  const MAX_SPEED = 950;       // tốc độ tối đa px/frame (siêu nhanh)
+  const ACCEL = 0.55;          // gia tốc mượt, gần như tức thời
 
   function tick(){
-    if(!dragContext){ autoScrollRAF = null; return; }
+    if(!dragContext){ autoScrollRAF = null; autoScrollVelocity = 0; return; }
     const y = dragContext.lastClientY;
     const vh = window.innerHeight;
     let targetSpeed = 0;
@@ -1453,17 +1517,19 @@ function startAutoScroll(){
     if(y < EDGE_ZONE){
       const dist = EDGE_ZONE - y;
       const ratio = Math.min(1, dist / EDGE_ZONE);
-      targetSpeed = -MAX_SPEED * Math.pow(ratio, 1.15);
+      // Đường cong mượt, đạt max nhanh
+      targetSpeed = -MAX_SPEED * Math.pow(ratio, 0.85);
     } else if(y > vh - EDGE_ZONE){
       const dist = y - (vh - EDGE_ZONE);
       const ratio = Math.min(1, dist / EDGE_ZONE);
-      targetSpeed = MAX_SPEED * Math.pow(ratio, 1.15);
+      targetSpeed = MAX_SPEED * Math.pow(ratio, 0.85);
     }
 
-    // Làm mượt vận tốc (acceleration)
+    // Làm mượt vận tốc (dùng exponential smoothing với ACCEL cao)
     autoScrollVelocity += (targetSpeed - autoScrollVelocity) * ACCEL;
 
-    if(Math.abs(autoScrollVelocity) > 0.4){
+    // Ngưỡng thấp → di chuyển ngay khi có chút vận tốc
+    if(Math.abs(autoScrollVelocity) > 0.3){
       window.scrollBy(0, autoScrollVelocity);
     } else if(targetSpeed === 0){
       autoScrollVelocity = 0;
@@ -1666,6 +1732,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initImageModalEvents();
   if(userProfile.name){
     applyProfileToUI();
+    // Nếu đã có profile → hiển thị start screen luôn
+    document.getElementById('profile-screen').style.display = 'none';
+    document.getElementById('start-screen').style.display = 'flex';
   }
 });
 </script>
