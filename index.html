@@ -1106,7 +1106,7 @@ body{
   </button>
   <div class="start-logo">IC3</div>
   <h1>Ôn Tập IC3 GS6 Level 2</h1>
-  <p class="subtitle">IC3 GS6 Level 2 · UI Update soon!</p>
+  <p class="subtitle">IC3 GS6 Level 2 · Images Uploaded!</p>
   <div class="user-chip" id="user-chip">
     <div class="mini-avatar" id="user-mini-avatar">Q</div>
     <div class="user-info">
@@ -1878,7 +1878,7 @@ function renderSidebar(){
   grid.appendChild(frag);
 }
 
-/* ✅ FIX: Click q-btn → chuyển câu + BLUR để Enter hoạt động đúng */
+/* Click q-btn → chuyển câu + BLUR để Enter hoạt động đúng */
 document.getElementById('question-grid').addEventListener('click', e=>{
   const btn = e.target.closest('.q-btn');
   if(!btn) return;
@@ -1887,7 +1887,6 @@ document.getElementById('question-grid').addEventListener('click', e=>{
     appState.currentQuestionIndex = idx;
     renderQuestion();
   }
-  /* Blur ngay để không giữ focus → Enter sau đó sẽ trigger action thay vì button */
   btn.blur();
 });
 
@@ -2057,6 +2056,7 @@ function initMatchingDrag(q){
 
 /* ============================================================
    DRAG & AUTO-SCROLL — TỐC ĐỘ VỪA PHẢI
+   MAX 400 px/frame: không quá nhanh, không quá chậm
    ============================================================ */
 let dragContext = null;
 let autoScrollRAF = null;
@@ -2110,10 +2110,10 @@ function startDrag(e){
 }
 
 function startAutoScroll(){
-  /* TỐC ĐỘ VỪA PHẢI */
-  const EDGE_ZONE = 200;
-  const MAX_SPEED = 550;
-  const MIN_SPEED_START = 3;
+  /* TỐC ĐỘ VỪA PHẢI — không quá nhanh, không quá chậm */
+  const EDGE_ZONE = 190;        // vùng nhạy ở mép
+  const MAX_SPEED = 400;        // tốc độ tối đa vừa phải
+  const MIN_SPEED_START = 2.5;  // khởi đầu nhẹ nhàng
 
   function tick(){
     if(!dragContext){ autoScrollRAF = null; autoScrollVelocity = 0; return; }
@@ -2123,13 +2123,15 @@ function startAutoScroll(){
 
     if(y < EDGE_ZONE){
       const ratio = Math.min(1, (EDGE_ZONE - y) / EDGE_ZONE);
-      targetSpeed = -(MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.1));
+      // pow 1.15: lên tốc độ mượt, không vọt
+      targetSpeed = -(MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.15));
     } else if(y > vh - EDGE_ZONE){
       const ratio = Math.min(1, (y - (vh - EDGE_ZONE)) / EDGE_ZONE);
-      targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.1);
+      targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.15);
     }
 
-    autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.65;
+    // Smoothing 0.55 → chuyển tốc độ êm, mượt mà
+    autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.55;
 
     if(Math.abs(autoScrollVelocity) > 0.3){
       window.scrollBy(0, autoScrollVelocity);
@@ -2335,14 +2337,13 @@ setInterval(()=>{
 }, 800);
 
 /* ============================================================
-   KEYBOARD NAV — ✅ FIX: Enter hoạt động đúng sau khi click q-btn
+   KEYBOARD NAV
    ============================================================ */
 document.addEventListener('keydown', function(e){
   const tag = document.activeElement.tagName;
   const inputType = document.activeElement.type;
   const activeEl = document.activeElement;
 
-  /* Bỏ qua khi đang nhập liệu */
   if(tag === 'TEXTAREA' || (tag === 'INPUT' && (inputType === 'text' || !inputType))) return;
 
   if(e.key === 'Escape'){
@@ -2352,7 +2353,6 @@ document.addEventListener('keydown', function(e){
 
   if(!questions.length) return;
 
-  /* Chỉ xử lý khi màn hình main đang mở */
   const mainVisible = document.getElementById('main-screen').style.display !== 'none';
   if(!mainVisible) return;
 
@@ -2366,17 +2366,10 @@ document.addEventListener('keydown', function(e){
   }
 
   if(e.key === 'Enter'){
-    /* ✅ FIX:
-       - Nếu đang focus vào BUTTON là action button (Kiểm Tra, Tiếp Theo...) → để browser tự click, không xử lý
-       - Nếu đang focus vào BUTTON là q-btn (mục lục) → blur nó và VẪN xử lý Enter như bình thường
-       - Nếu không focus vào button nào → xử lý bình thường
-    */
     if(tag === 'BUTTON'){
       if(activeEl && activeEl.classList && activeEl.classList.contains('q-btn')){
-        /* q-btn: blur để không chặn action, rồi xử lý tiếp */
         activeEl.blur();
       } else {
-        /* Action button khác → để browser tự trigger click */
         return;
       }
     }
