@@ -1999,8 +1999,8 @@ function initMatchingDrag(q){
 }
 
 /* ============================================================
-   DRAG & AUTO-SCROLL — CỰC KỲ CHẬM RÃI 🐌🐌🐌
-   MAX 45 px/frame: siêu chậm, êm ái, như trượt trên băng
+   DRAG & AUTO-SCROLL — SIÊU CHẬM RÃI NHẤT 🐌🐌🐌🐌
+   MAX 32 px/frame: cực cực chậm, êm ái như mây trôi
    ============================================================ */
 let dragContext = null;
 let autoScrollRAF = null;
@@ -2054,10 +2054,10 @@ function startDrag(e){
 }
 
 function startAutoScroll(){
-  /* 🐌🐌🐌 TỐC ĐỘ CỰC KỲ CHẬM RÃI */
-  const EDGE_ZONE = 150;        // vùng nhạy
-  const MAX_SPEED = 45;         // tốc độ tối đa cực chậm (giảm ~45% bản trước)
-  const MIN_SPEED_START = 0.3;  // khởi đầu siêu rất nhẹ
+  /* 🐌🐌🐌🐌 TỐC ĐỘ SIÊU CỰC CHẬM RÃI */
+  const EDGE_ZONE = 145;        // vùng nhạy
+  const MAX_SPEED = 32;         // tốc độ tối đa cực chậm (giảm ~30% bản trước)
+  const MIN_SPEED_START = 0.2;  // khởi đầu siêu rất rất nhẹ
 
   function tick(){
     if(!dragContext){ autoScrollRAF = null; autoScrollVelocity = 0; return; }
@@ -2067,17 +2067,17 @@ function startAutoScroll(){
 
     if(y < EDGE_ZONE){
       const ratio = Math.min(1, (EDGE_ZONE - y) / EDGE_ZONE);
-      // pow 1.7: tăng tốc siêu chậm, cực êm, như trượt nhẹ
-      targetSpeed = -(MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.7));
+      // pow 1.8: tăng tốc siêu cực chậm, êm như mây trôi
+      targetSpeed = -(MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.8));
     } else if(y > vh - EDGE_ZONE){
       const ratio = Math.min(1, (y - (vh - EDGE_ZONE)) / EDGE_ZONE);
-      targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.7);
+      targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.8);
     }
 
-    // Smoothing 0.25 → chuyển tốc độ siêu êm, cực mượt
-    autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.25;
+    // Smoothing 0.22 → chuyển tốc độ siêu êm, cực mượt
+    autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.22;
 
-    if(Math.abs(autoScrollVelocity) > 0.15){
+    if(Math.abs(autoScrollVelocity) > 0.12){
       window.scrollBy(0, autoScrollVelocity);
     } else if(targetSpeed === 0){
       autoScrollVelocity = 0;
