@@ -73,7 +73,6 @@
         .fade-in { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .slide-in-up { animation: slideInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
-        /* ============ DEVTOOLS WARNING ============ */
         #devtools-warning {
             display: none;
             position: fixed;
@@ -97,7 +96,6 @@
         .warning-bar { width: 280px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; position: relative; }
         .warning-bar::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, #F59E0B, #EF4444, #F59E0B, transparent); animation: wave 1.5s linear infinite; background-size: 200% 100%; }
 
-        /* ============ START SCREEN ============ */
         #start-screen {
             display: flex;
             flex-direction: column;
@@ -188,7 +186,6 @@
         .btn-mode .mode-title { font-weight: 700; font-size: 1.2rem; display: block; }
         .btn-mode .mode-desc { font-size: 0.85rem; font-weight: 400; opacity: 0.8; display: block; }
 
-        /* ============ MAIN LAYOUT ============ */
         #main-screen {
             display: none;
             flex: 1;
@@ -200,7 +197,6 @@
         }
         @media (min-width: 992px) { #main-screen { flex-direction: row; padding: 30px; } }
 
-        /* ============ SIDEBAR ============ */
         #sidebar {
             width: 100%;
             background: var(--bg-card);
@@ -277,7 +273,6 @@
         .q-btn.correct-ans { background: var(--success-bg); border-color: var(--success); color: var(--success); }
         .q-btn.wrong-ans { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
 
-        /* ============ CONTENT ============ */
         #content { flex: 1; display: flex; flex-direction: column; gap: 20px; }
         .question-card {
             background: var(--bg-card);
@@ -318,7 +313,6 @@
             margin-bottom: 25px; line-height: 1.7;
         }
 
-        /* ============ IMAGE ============ */
         .question-image-container {
             width: 100%; max-width: 600px;
             margin: 0 auto 25px;
@@ -363,7 +357,6 @@
         }
         .question-image-container img:hover { filter: brightness(1.05); }
 
-        /* ============ OPTIONS ============ */
         .options-list { display: flex; flex-direction: column; gap: 12px; }
         .option-item {
             display: flex; align-items: flex-start; gap: 14px;
@@ -422,7 +415,6 @@
         }
         .option-label { flex: 1; cursor: pointer; font-weight: 500; padding-right: 32px; }
 
-        /* ============ MATRIX ============ */
         .matrix-grid { display: flex; flex-direction: column; gap: 15px; }
         .matrix-row {
             display: flex; flex-direction: column; gap: 12px;
@@ -452,7 +444,6 @@
         .matrix-option:hover { border-color: var(--primary); background: var(--primary-light); transform: scale(1.03); }
         .matrix-option input { accent-color: var(--primary); cursor: pointer; width: 16px; height: 16px; }
 
-        /* ============ MATCHING ============ */
         .match-container { display: flex; flex-direction: column; gap: 20px; }
         .match-instruction {
             font-size: 0.9rem; color: var(--text-sub);
@@ -567,7 +558,6 @@
         }
         .drop-slot .placed-chip .remove-x:hover { background: rgba(255,255,255,0.6); }
 
-        /* ============ BUTTONS ============ */
         .actions { display: flex; gap: 15px; margin-top: auto; padding-top: 20px; justify-content: flex-end; flex-wrap: wrap; }
         .btn {
             padding: 13px 28px;
@@ -594,7 +584,6 @@
         .btn-success { background: linear-gradient(135deg, var(--success), #059669); color: white; box-shadow: 0 4px 15px rgba(16,185,129,0.35); }
         .btn-success:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(16,185,129,0.45); }
 
-        /* ============ FEEDBACK ============ */
         .feedback-box {
             margin-top: 25px;
             padding: 20px;
@@ -623,7 +612,6 @@
         .feedback-box.wrong .feedback-title::before { content: '✗'; background: var(--danger); }
         .explanation-text { color: var(--text-main); font-size: 0.95rem; line-height: 1.7; }
 
-        /* ============ RESULT ============ */
         #result-screen {
             display: none;
             flex-direction: column;
@@ -674,7 +662,9 @@
         .result-stats strong { color: var(--primary); font-weight: 800; }
         .footer { text-align: center; padding: 20px; font-size: 0.85rem; color: var(--text-sub); opacity: 0.4; margin-top: auto; width: 100%; }
 
-        /* ============ IMAGE MODAL ============ */
+        /* ============================================================
+           IMAGE MODAL - MOBILE-FIRST PINCH ZOOM
+           ============================================================ */
         #image-modal {
             display: none;
             position: fixed;
@@ -684,9 +674,10 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            touch-action: none;
             opacity: 0;
             transition: opacity 0.3s ease;
+            /* Critical for pinch zoom on mobile */
+            touch-action: none;
             -webkit-user-select: none;
             user-select: none;
             overscroll-behavior: none;
@@ -704,10 +695,11 @@
             align-items: center;
             overflow: hidden;
             cursor: grab;
+            /* CRITICAL: touch-action none prevents browser zoom/scroll */
             touch-action: none;
-            user-select: none;
-            -webkit-user-select: none;
             -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
         #image-modal .modal-image-wrapper.grabbing {
@@ -999,33 +991,33 @@
         let appState = { mode: 'practice', currentQuestionIndex: 0, userAnswers: {}, isChecked: {}, shuffledRightMaps: {}, isReview: false };
 
         /* ============================================================
-           IMAGE MODAL STATE - Smooth zoom
+           IMAGE MODAL - Robust pinch/touch handling
            ============================================================ */
         const imageModalState = {
             scale: 1.0,
             translateX: 0,
             translateY: 0,
-            isDragging: false,
-            startX: 0,
-            startY: 0,
-            lastTranslateX: 0,
-            lastTranslateY: 0,
-            pointers: new Map(),
-            initialDistance: 0,
-            initialScale: 1.0,
-            initialTranslateX: 0,
-            initialTranslateY: 0,
-            initialMidpointX: 0,
-            initialMidpointY: 0,
             targetScale: 1.0,
             targetTranslateX: 0,
             targetTranslateY: 0,
             animationId: null,
+            // Touch tracking
+            activePointers: new Map(),
+            isDragging: false,
+            lastTouchX: 0,
+            lastTouchY: 0,
+            // Pinch tracking
+            pinchStartDist: 0,
+            pinchStartScale: 1,
+            pinchStartMidX: 0,
+            pinchStartMidY: 0,
+            pinchStartTx: 0,
+            pinchStartTy: 0,
         };
 
         const MIN_SCALE = 1.0;
         const MAX_SCALE = 6.0;
-        const SMOOTH_FACTOR = 0.22;
+        const SMOOTH_FACTOR = 0.25;
 
         function openImageModal(src) {
             const modal = document.getElementById('image-modal');
@@ -1037,6 +1029,7 @@
             imageModalState.targetScale = 1.0;
             imageModalState.targetTranslateX = 0;
             imageModalState.targetTranslateY = 0;
+            imageModalState.activePointers.clear();
             applyImageTransform();
             updateZoomPercentage();
             modal.classList.add('show');
@@ -1051,6 +1044,7 @@
                 cancelAnimationFrame(imageModalState.animationId);
                 imageModalState.animationId = null;
             }
+            imageModalState.activePointers.clear();
         }
 
         function resetImageZoom() {
@@ -1069,14 +1063,13 @@
 
         function startImageAnimation() {
             if (imageModalState.animationId) return;
-
             const animate = () => {
                 const s = imageModalState;
                 const dxS = s.targetScale - s.scale;
                 const dxX = s.targetTranslateX - s.translateX;
-                const dxY = s.targetTranslateY - s.translateY;
+                const dy = s.targetTranslateY - s.translateY;
 
-                if (Math.abs(dxS) < 0.0008 && Math.abs(dxX) < 0.15 && Math.abs(dxY) < 0.15) {
+                if (Math.abs(dxS) < 0.001 && Math.abs(dxX) < 0.2 && Math.abs(dy) < 0.2) {
                     s.scale = s.targetScale;
                     s.translateX = s.targetTranslateX;
                     s.translateY = s.targetTranslateY;
@@ -1084,23 +1077,13 @@
                     s.animationId = null;
                     return;
                 }
-
                 s.scale += dxS * SMOOTH_FACTOR;
                 s.translateX += dxX * SMOOTH_FACTOR;
-                s.translateY += dxY * SMOOTH_FACTOR;
-
+                s.translateY += dy * SMOOTH_FACTOR;
                 applyImageTransform();
                 s.animationId = requestAnimationFrame(animate);
             };
-
             imageModalState.animationId = requestAnimationFrame(animate);
-        }
-
-        function setImageTarget(scale, tx, ty) {
-            imageModalState.targetScale = scale;
-            imageModalState.targetTranslateX = tx;
-            imageModalState.targetTranslateY = ty;
-            startImageAnimation();
         }
 
         function updateZoomPercentage() {
@@ -1114,29 +1097,19 @@
             }
         }
 
-        function clampTranslationValues(scale, tx, ty) {
+        function clampValues(scale, tx, ty) {
             const wrapper = document.getElementById('modal-image-wrapper');
             const img = document.getElementById('modal-image');
             if (!wrapper || !img) return { tx, ty };
             if (scale <= MIN_SCALE) return { tx: 0, ty: 0 };
-
-            const naturalWidth = img.naturalWidth;
-            const naturalHeight = img.naturalHeight;
-            if (naturalWidth === 0 || naturalHeight === 0) return { tx, ty };
-
-            const containerWidth = wrapper.clientWidth;
-            const containerHeight = wrapper.clientHeight;
-
-            const fitRatio = Math.min(containerWidth / naturalWidth, containerHeight / naturalHeight);
-            const baseDisplayedWidth = naturalWidth * fitRatio;
-            const baseDisplayedHeight = naturalHeight * fitRatio;
-
-            const displayedWidth = baseDisplayedWidth * scale;
-            const displayedHeight = baseDisplayedHeight * scale;
-
-            const maxTx = Math.max(0, (displayedWidth - containerWidth) / 2);
-            const maxTy = Math.max(0, (displayedHeight - containerHeight) / 2);
-
+            const nw = img.naturalWidth, nh = img.naturalHeight;
+            if (!nw || !nh) return { tx, ty };
+            const cw = wrapper.clientWidth, ch = wrapper.clientHeight;
+            const fitRatio = Math.min(cw / nw, ch / nh);
+            const dw = nw * fitRatio * scale;
+            const dh = nh * fitRatio * scale;
+            const maxTx = Math.max(0, (dw - cw) / 2);
+            const maxTy = Math.max(0, (dh - ch) / 2);
             return {
                 tx: Math.min(Math.max(tx, -maxTx), maxTx),
                 ty: Math.min(Math.max(ty, -maxTy), maxTy),
@@ -1146,35 +1119,25 @@
         function zoomAtPoint(factor, containerX, containerY) {
             const wrapper = document.getElementById('modal-image-wrapper');
             if (!wrapper) return;
-
-            const containerWidth = wrapper.clientWidth;
-            const containerHeight = wrapper.clientHeight;
-
-            const cx = containerX - containerWidth / 2;
-            const cy = containerY - containerHeight / 2;
-
+            const cw = wrapper.clientWidth, ch = wrapper.clientHeight;
+            const cx = containerX - cw / 2;
+            const cy = containerY - ch / 2;
             const oldScale = imageModalState.targetScale;
             let newScale = oldScale * factor;
             newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
-
             if (Math.abs(newScale - oldScale) < 0.0001) return;
-
             const px = (cx - imageModalState.targetTranslateX) / oldScale;
             const py = (cy - imageModalState.targetTranslateY) / oldScale;
-
             let newTx = cx - px * newScale;
             let newTy = cy - py * newScale;
-
-            const clamped = clampTranslationValues(newScale, newTx, newTy);
-            newTx = clamped.tx;
-            newTy = clamped.ty;
-
-            if (newScale <= MIN_SCALE) {
-                newTx = 0;
-                newTy = 0;
-            }
-
-            setImageTarget(newScale, newTx, newTy);
+            const c = clampValues(newScale, newTx, newTy);
+            newTx = c.tx;
+            newTy = c.ty;
+            if (newScale <= MIN_SCALE) { newTx = 0; newTy = 0; }
+            imageModalState.targetScale = newScale;
+            imageModalState.targetTranslateX = newTx;
+            imageModalState.targetTranslateY = newTy;
+            startImageAnimation();
             updateZoomPercentage();
         }
 
@@ -1188,127 +1151,98 @@
             const wrapper = document.getElementById('modal-image-wrapper');
             if (!wrapper) return;
 
-            // Prevent all default touch behaviors that can interfere
-            wrapper.addEventListener('touchstart', (e) => {
-                if (e.touches.length > 1) e.preventDefault();
-            }, { passive: false });
-
-            wrapper.addEventListener('touchmove', (e) => {
-                if (e.touches.length > 1) e.preventDefault();
-            }, { passive: false });
-
-            // iOS Safari gesture events
-            ['gesturestart', 'gesturechange', 'gestureend'].forEach(evt => {
-                wrapper.addEventListener(evt, (e) => e.preventDefault(), { passive: false });
-            });
-
-            // Mouse wheel zoom at cursor
-            wrapper.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                const rect = wrapper.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-
-                let factor;
-                if (e.deltaMode === 0) {
-                    factor = Math.exp(-e.deltaY * 0.0018);
-                } else if (e.deltaMode === 1) {
-                    factor = Math.exp(-e.deltaY * 0.06);
-                } else {
-                    factor = Math.exp(-e.deltaY * 0.4);
-                }
-
-                factor = Math.min(Math.max(factor, 0.75), 1.33);
-                zoomAtPoint(factor, mouseX, mouseY);
-            }, { passive: false });
-
-            // Pointer events
+            // === POINTER EVENTS (works for both mouse and touch) ===
             wrapper.addEventListener('pointerdown', (e) => {
-                if (e.pointerType === 'mouse' && e.button !== 0) return;
                 e.preventDefault();
 
-                imageModalState.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+                // Track pointer
+                imageModalState.activePointers.set(e.pointerId, {
+                    x: e.clientX,
+                    y: e.clientY,
+                });
 
+                // Stop any running animation
                 if (imageModalState.animationId) {
                     cancelAnimationFrame(imageModalState.animationId);
                     imageModalState.animationId = null;
                 }
+                // Sync targets to current values for immediate response
                 imageModalState.targetScale = imageModalState.scale;
                 imageModalState.targetTranslateX = imageModalState.translateX;
                 imageModalState.targetTranslateY = imageModalState.translateY;
 
-                if (imageModalState.pointers.size === 1) {
+                if (imageModalState.activePointers.size === 1) {
+                    // === START DRAG ===
                     imageModalState.isDragging = true;
-                    imageModalState.startX = e.clientX;
-                    imageModalState.startY = e.clientY;
-                    imageModalState.lastTranslateX = imageModalState.translateX;
-                    imageModalState.lastTranslateY = imageModalState.translateY;
+                    imageModalState.lastTouchX = e.clientX;
+                    imageModalState.lastTouchY = e.clientY;
                     wrapper.classList.add('grabbing');
                     try { wrapper.setPointerCapture(e.pointerId); } catch(err) {}
-                } else if (imageModalState.pointers.size === 2) {
+                } else if (imageModalState.activePointers.size === 2) {
+                    // === START PINCH ===
                     imageModalState.isDragging = false;
-                    const pointers = Array.from(imageModalState.pointers.values());
-                    const dx = pointers[0].x - pointers[1].x;
-                    const dy = pointers[0].y - pointers[1].y;
-                    imageModalState.initialDistance = Math.sqrt(dx * dx + dy * dy);
-                    imageModalState.initialScale = imageModalState.scale;
-                    imageModalState.initialTranslateX = imageModalState.translateX;
-                    imageModalState.initialTranslateY = imageModalState.translateY;
+                    const pts = Array.from(imageModalState.activePointers.values());
+                    const dx = pts[0].x - pts[1].x;
+                    const dy = pts[0].y - pts[1].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
 
                     const rect = wrapper.getBoundingClientRect();
-                    const midX = (pointers[0].x + pointers[1].x) / 2 - rect.left;
-                    const midY = (pointers[0].y + pointers[1].y) / 2 - rect.top;
-                    imageModalState.initialMidpointX = midX - rect.width / 2;
-                    imageModalState.initialMidpointY = midY - rect.height / 2;
+                    const midX = (pts[0].x + pts[1].x) / 2 - rect.left - rect.width / 2;
+                    const midY = (pts[0].y + pts[1].y) / 2 - rect.top - rect.height / 2;
+
+                    imageModalState.pinchStartDist = dist;
+                    imageModalState.pinchStartScale = imageModalState.scale;
+                    imageModalState.pinchStartMidX = midX;
+                    imageModalState.pinchStartMidY = midY;
+                    imageModalState.pinchStartTx = imageModalState.translateX;
+                    imageModalState.pinchStartTy = imageModalState.translateY;
                 }
             });
 
             wrapper.addEventListener('pointermove', (e) => {
-                if (!imageModalState.pointers.has(e.pointerId)) return;
+                if (!imageModalState.activePointers.has(e.pointerId)) return;
                 e.preventDefault();
-                imageModalState.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
-                if (imageModalState.pointers.size === 1 && imageModalState.isDragging) {
-                    const dx = e.clientX - imageModalState.startX;
-                    const dy = e.clientY - imageModalState.startY;
-                    const newTx = imageModalState.lastTranslateX + dx;
-                    const newTy = imageModalState.lastTranslateY + dy;
+                // Update pointer
+                imageModalState.activePointers.set(e.pointerId, {
+                    x: e.clientX,
+                    y: e.clientY,
+                });
 
-                    const clamped = clampTranslationValues(imageModalState.scale, newTx, newTy);
-                    imageModalState.translateX = clamped.tx;
-                    imageModalState.translateY = clamped.ty;
-                    imageModalState.targetTranslateX = clamped.tx;
-                    imageModalState.targetTranslateY = clamped.ty;
+                if (imageModalState.activePointers.size === 1 && imageModalState.isDragging) {
+                    // === DRAG ===
+                    const dx = e.clientX - imageModalState.lastTouchX;
+                    const dy = e.clientY - imageModalState.lastTouchY;
+                    const newTx = imageModalState.translateX + dx;
+                    const newTy = imageModalState.translateY + dy;
+                    const c = clampValues(imageModalState.scale, newTx, newTy);
+                    imageModalState.translateX = c.tx;
+                    imageModalState.translateY = c.ty;
                     imageModalState.targetScale = imageModalState.scale;
+                    imageModalState.targetTranslateX = c.tx;
+                    imageModalState.targetTranslateY = c.ty;
                     applyImageTransform();
-                } else if (imageModalState.pointers.size === 2) {
-                    const pointers = Array.from(imageModalState.pointers.values());
-                    const dx = pointers[0].x - pointers[1].x;
-                    const dy = pointers[0].y - pointers[1].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    imageModalState.lastTouchX = e.clientX;
+                    imageModalState.lastTouchY = e.clientY;
+                } else if (imageModalState.activePointers.size === 2) {
+                    // === PINCH ZOOM ===
+                    const pts = Array.from(imageModalState.activePointers.values());
+                    const dx = pts[0].x - pts[1].x;
+                    const dy = pts[0].y - pts[1].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (imageModalState.initialDistance > 0) {
-                        let newScale = imageModalState.initialScale * (distance / imageModalState.initialDistance);
+                    if (imageModalState.pinchStartDist > 0) {
+                        let newScale = imageModalState.pinchStartScale * (dist / imageModalState.pinchStartDist);
                         newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
 
-                        const rect = wrapper.getBoundingClientRect();
-                        const midX = (pointers[0].x + pointers[1].x) / 2 - rect.left;
-                        const midY = (pointers[0].y + pointers[1].y) / 2 - rect.top;
-                        const cx = midX - rect.width / 2;
-                        const cy = midY - rect.height / 2;
+                        const ratio = newScale / imageModalState.pinchStartScale;
+                        let newTx = imageModalState.pinchStartTx * ratio;
+                        let newTy = imageModalState.pinchStartTy * ratio;
+                        const c = clampValues(newScale, newTx, newTy);
+                        newTx = c.tx;
+                        newTy = c.ty;
 
-                        const ratio = newScale / imageModalState.initialScale;
-                        let newTx = cx - (imageModalState.initialMidpointX - imageModalState.initialTranslateX) * ratio;
-                        let newTy = cy - (imageModalState.initialMidpointY - imageModalState.initialTranslateY) * ratio;
-
-                        const clamped = clampTranslationValues(newScale, newTx, newTy);
-                        newTx = clamped.tx;
-                        newTy = clamped.ty;
-
-                        if (newScale <= MIN_SCALE) {
-                            newTx = 0;
-                            newTy = 0;
-                        }
+                        if (newScale <= MIN_SCALE) { newTx = 0; newTy = 0; }
 
                         imageModalState.scale = newScale;
                         imageModalState.translateX = newTx;
@@ -1323,61 +1257,81 @@
             });
 
             const endPointer = (e) => {
-                if (!imageModalState.pointers.has(e.pointerId)) return;
-                imageModalState.pointers.delete(e.pointerId);
+                if (!imageModalState.activePointers.has(e.pointerId)) return;
+                imageModalState.activePointers.delete(e.pointerId);
 
-                if (imageModalState.pointers.size === 0) {
+                if (imageModalState.activePointers.size === 0) {
                     imageModalState.isDragging = false;
                     wrapper.classList.remove('grabbing');
+                    // Sync targets
                     imageModalState.targetScale = imageModalState.scale;
                     imageModalState.targetTranslateX = imageModalState.translateX;
                     imageModalState.targetTranslateY = imageModalState.translateY;
-                } else if (imageModalState.pointers.size === 1) {
-                    const remaining = Array.from(imageModalState.pointers.values())[0];
+                } else if (imageModalState.activePointers.size === 1) {
+                    // Continue dragging with remaining pointer
+                    const remaining = Array.from(imageModalState.activePointers.values())[0];
                     imageModalState.isDragging = true;
-                    imageModalState.startX = remaining.x;
-                    imageModalState.startY = remaining.y;
-                    imageModalState.lastTranslateX = imageModalState.translateX;
-                    imageModalState.lastTranslateY = imageModalState.translateY;
+                    imageModalState.lastTouchX = remaining.x;
+                    imageModalState.lastTouchY = remaining.y;
                 }
             };
 
             wrapper.addEventListener('pointerup', endPointer);
             wrapper.addEventListener('pointercancel', endPointer);
 
-            // Double-tap zoom
-            let lastTap = 0;
-            wrapper.addEventListener('touchend', (e) => {
+            // === DOUBLE TAP ZOOM ===
+            let lastTapTime = 0;
+            let lastTapX = 0, lastTapY = 0;
+            wrapper.addEventListener('pointerup', (e) => {
+                if (e.pointerType === 'mouse') return;
                 const now = Date.now();
-                if (now - lastTap < 300 && imageModalState.pointers.size === 0) {
-                    e.preventDefault();
+                if (now - lastTapTime < 300 &&
+                    Math.abs(e.clientX - lastTapX) < 30 &&
+                    Math.abs(e.clientY - lastTapY) < 30) {
                     const rect = wrapper.getBoundingClientRect();
-                    const touch = e.changedTouches[0];
-                    const touchX = touch.clientX - rect.left;
-                    const touchY = touch.clientY - rect.top;
-
-                    if (imageModalState.targetScale < 2.0) {
-                        zoomAtPoint(2.0 / imageModalState.targetScale, touchX, touchY);
+                    const tx = e.clientX - rect.left;
+                    const ty = e.clientY - rect.top;
+                    if (imageModalState.targetScale < 1.9) {
+                        zoomAtPoint(2.0 / imageModalState.targetScale, tx, ty);
                     } else {
                         resetImageZoom();
                     }
+                    lastTapTime = 0;
+                } else {
+                    lastTapTime = now;
+                    lastTapX = e.clientX;
+                    lastTapY = e.clientY;
                 }
-                lastTap = now;
             });
 
+            // === MOUSE WHEEL ZOOM ===
+            wrapper.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const rect = wrapper.getBoundingClientRect();
+                const mx = e.clientX - rect.left;
+                const my = e.clientY - rect.top;
+                let factor;
+                if (e.deltaMode === 0) factor = Math.exp(-e.deltaY * 0.0018);
+                else if (e.deltaMode === 1) factor = Math.exp(-e.deltaY * 0.06);
+                else factor = Math.exp(-e.deltaY * 0.4);
+                factor = Math.min(Math.max(factor, 0.75), 1.33);
+                zoomAtPoint(factor, mx, my);
+            }, { passive: false });
+
+            // === RESIZE ===
             window.addEventListener('resize', () => {
                 if (document.getElementById('image-modal').classList.contains('show')) {
-                    const clamped = clampTranslationValues(imageModalState.scale, imageModalState.translateX, imageModalState.translateY);
-                    imageModalState.translateX = clamped.tx;
-                    imageModalState.translateY = clamped.ty;
-                    imageModalState.targetTranslateX = clamped.tx;
-                    imageModalState.targetTranslateY = clamped.ty;
+                    const c = clampValues(imageModalState.scale, imageModalState.translateX, imageModalState.translateY);
+                    imageModalState.translateX = c.tx;
+                    imageModalState.translateY = c.ty;
+                    imageModalState.targetTranslateX = c.tx;
+                    imageModalState.targetTranslateY = c.ty;
                     applyImageTransform();
                 }
             });
         }
 
-        /* ============ EXISTING FUNCTIONS ============ */
+        /* ============ APP LOGIC ============ */
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1800,101 +1754,4 @@
         document.addEventListener('dragstart', e => { if (e.target.tagName !== 'DIV' || !e.target.classList.contains('drag-chip')) e.preventDefault(); });
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); showWarning(); return false; }
-            if (e.ctrlKey && e.shiftKey && 'IJCSijcs'.includes(e.key)) { e.preventDefault(); showWarning(); return false; }
-            if (e.ctrlKey && 'UuSs'.includes(e.key)) { e.preventDefault(); showWarning(); return false; }
-            if (e.metaKey && e.altKey && 'IJCSijcs'.includes(e.key)) { e.preventDefault(); showWarning(); return false; }
-        });
-
-        let warningTimer = null;
-        function showWarning() {
-            const w = document.getElementById('devtools-warning');
-            w.classList.add('show');
-            if (warningTimer) clearTimeout(warningTimer);
-            warningTimer = setTimeout(() => w.classList.remove('show'), 2500);
-        }
-
-        let devtoolsOpen = false;
-        setInterval(() => {
-            const w = window.outerWidth - window.innerWidth;
-            const h = window.outerHeight - window.innerHeight;
-            const isOpen = w > 160 || h > 160;
-            if (isOpen && !devtoolsOpen) {
-                devtoolsOpen = true;
-                showWarning();
-            } else if (!isOpen) {
-                devtoolsOpen = false;
-            }
-        }, 800);
-
-        document.addEventListener('keydown', function(e) {
-            const tag = document.activeElement.tagName;
-            const inputType = document.activeElement.type;
-            if (tag === 'TEXTAREA' || (tag === 'INPUT' && inputType === 'text')) return;
-
-            if (e.key === 'Escape') {
-                if (document.getElementById('image-modal').classList.contains('show')) {
-                    closeImageModal();
-                }
-                return;
-            }
-
-            if (e.key === 'ArrowLeft') {
-                if (appState.currentQuestionIndex > 0) {
-                    e.preventDefault();
-                    prevQuestion();
-                }
-                return;
-            }
-            if (e.key === 'ArrowRight') {
-                if (appState.currentQuestionIndex < questions.length - 1) {
-                    e.preventDefault();
-                    nextQuestion();
-                }
-                return;
-            }
-            if (e.key === 'Enter') {
-                if (tag === 'BUTTON') return;
-
-                if (appState.isReview) {
-                    if (appState.currentQuestionIndex < questions.length - 1) {
-                        e.preventDefault();
-                        nextQuestion();
-                    } else {
-                        e.preventDefault();
-                        resetApp();
-                    }
-                    return;
-                }
-
-                if (appState.mode === 'practice') {
-                    if (!appState.isChecked[currentQuestionId()]) {
-                        e.preventDefault();
-                        checkAnswer();
-                    } else {
-                        if (appState.currentQuestionIndex < questions.length - 1) {
-                            e.preventDefault();
-                            nextQuestion();
-                        } else {
-                            e.preventDefault();
-                            calculateResult();
-                        }
-                    }
-                } else {
-                    if (appState.currentQuestionIndex < questions.length - 1) {
-                        e.preventDefault();
-                        nextQuestion();
-                    } else {
-                        e.preventDefault();
-                        calculateResult();
-                    }
-                }
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initImageModalEvents();
-        });
-    </script>
-</body>
-</html>
+            if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); show
