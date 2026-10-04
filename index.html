@@ -44,8 +44,10 @@ body{
 @keyframes bounceIn{0%{transform:scale(.3);opacity:0}50%{transform:scale(1.05)}70%{transform:scale(.95)}100%{transform:scale(1);opacity:1}}
 @keyframes ringPulse{0%{box-shadow:0 0 0 0 var(--primary-glow)}70%{box-shadow:0 0 0 20px rgba(79,70,229,0)}100%{box-shadow:0 0 0 0 rgba(79,70,229,0)}}
 @keyframes slideInRight{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
-@keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes logoutPop{0%{transform:scale(1)}30%{transform:scale(.85) rotate(-15deg)}60%{transform:scale(1.15) rotate(8deg)}100%{transform:scale(1) rotate(0deg)}}
+@keyframes inputFlash{0%{background:#fff;border-color:var(--primary)}40%{background:#E0E7FF;border-color:var(--accent)}100%{background:#fff;border-color:var(--border)}}
+@keyframes sparkle{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:1;transform:scale(1.1)}}
+@keyframes hintFade{0%{opacity:0;transform:translateY(-4px)}100%{opacity:1;transform:translateY(0)}}
 
 .fade-in{animation:fadeIn .5s cubic-bezier(.4,0,.2,1) forwards}
 .slide-in-up{animation:slideInUp .5s cubic-bezier(.4,0,.2,1) forwards}
@@ -102,11 +104,13 @@ body{
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .profile-card > p{color:var(--text-sub);font-size:.95rem;margin-bottom:26px}
-.profile-field{text-align:left;margin-bottom:16px}
+.profile-field{text-align:left;margin-bottom:16px;position:relative}
 .profile-field label{
   display:block;font-size:.82rem;font-weight:600;color:var(--text-sub);
   margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase;
+  transition:color .3s ease;
 }
+.profile-field.has-focus label{color:var(--primary)}
 .profile-field input{
   width:100%;padding:14px 16px;font-size:.95rem;
   border:2px solid var(--border);border-radius:12px;background:#fff;
@@ -118,6 +122,20 @@ body{
   box-shadow:0 0 0 4px rgba(79,70,229,.12);
 }
 .profile-field input::placeholder{color:#9CA3AF}
+.profile-field input.formatted{
+  animation:inputFlash .7s cubic-bezier(.4,0,.2,1);
+}
+.field-hint{
+  display:block;font-size:.72rem;color:var(--text-sub);
+  margin-top:6px;font-weight:500;
+  opacity:0;height:0;overflow:hidden;
+  transition:opacity .3s ease,height .3s ease;
+}
+.profile-field.has-value .field-hint{
+  opacity:.85;height:auto;animation:hintFade .35s ease;
+}
+.field-hint .check{color:var(--success);font-weight:700;margin-right:3px}
+
 .btn-profile{
   width:100%;padding:16px;margin-top:12px;
   background:linear-gradient(135deg,var(--primary),var(--accent));
@@ -662,17 +680,20 @@ body{
     <div class="profile-avatar" id="profile-avatar">?</div>
     <h2>Chào Mừng Bạn!</h2>
     <p>Vui lòng nhập thông tin để bắt đầu ôn tập</p>
-    <div class="profile-field">
+    <div class="profile-field" id="field-name">
       <label>Họ và tên</label>
-      <input type="text" id="p-name" placeholder="VD: Nguyễn Quang Huy" maxlength="40" autocomplete="off">
+      <input type="text" id="p-name" placeholder="VD: Nguyễn Văn A" maxlength="40" autocomplete="off">
+      <span class="field-hint" id="hint-name"></span>
     </div>
-    <div class="profile-field">
+    <div class="profile-field" id="field-class">
       <label>Lớp</label>
       <input type="text" id="p-class" placeholder="VD: 11A1" maxlength="20" autocomplete="off">
+      <span class="field-hint" id="hint-class"></span>
     </div>
-    <div class="profile-field">
+    <div class="profile-field" id="field-group">
       <label>Tổ</label>
       <input type="text" id="p-group" placeholder="VD: Tổ 3" maxlength="20" autocomplete="off">
+      <span class="field-hint" id="hint-group"></span>
     </div>
     <button class="btn-profile" id="p-submit" onclick="saveProfile()">Bắt Đầu Ôn Tập →</button>
     <button class="btn-profile btn-profile-clear" id="p-clear" onclick="clearProfileCache()">
@@ -684,7 +705,6 @@ body{
 
 <!-- ============ START SCREEN ============ -->
 <div id="start-screen">
-  <!-- Nút đăng xuất góc phải trên -->
   <button class="logout-corner" onclick="logout()" title="Đăng xuất" aria-label="Đăng xuất" id="logout-corner-btn">
     <span class="lc-icon">
       <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -888,9 +908,137 @@ explanation:'Mở bảng Info → Chọn tab File → Bấm nút Protect → Ch�
 ];
 
 /* ============================================================
-   PROFILE SYSTEM
+   PROFILE SYSTEM + AUTO-FORMAT
    ============================================================ */
 let userProfile = { name:'', className:'', group:'' };
+
+/* --- Format helpers --- */
+function formatName(str){
+  // "nguyễn văn a" → "Nguyễn Văn A"
+  return str
+    .trim()
+    .replace(/\s+/g, ' ')
+    .split(' ')
+    .map(w => w ? w.charAt(0).toLocaleUpperCase('vi-VN') + w.slice(1).toLocaleLowerCase('vi-VN') : '')
+    .join(' ');
+}
+function formatClass(str){
+  // "7a1" → "7A1" (uppercase toàn bộ)
+  return str.trim().replace(/\s+/g, ' ').toLocaleUpperCase('vi-VN');
+}
+function formatGroup(str){
+  // "tổ 1" → "Tổ 1"; "to 1" → "Tổ 1" (không tự đổi "to" thành "tổ", chỉ viết hoa chữ đầu)
+  return str
+    .trim()
+    .replace(/\s+/g, ' ')
+    .split(' ')
+    .map(w => w ? w.charAt(0).toLocaleUpperCase('vi-VN') + w.slice(1).toLocaleLowerCase('vi-VN') : '')
+    .join(' ');
+}
+
+/* --- Apply formatter to an input + flash animation + hint --- */
+function applyFormatToInput(inputId, formatter, hintId, hintBuilder){
+  const input = document.getElementById(inputId);
+  if(!input) return;
+  const before = input.value;
+  const after = formatter(before);
+
+  // Update hint
+  const field = input.closest('.profile-field');
+  const hint = document.getElementById(hintId);
+  if(after){
+    field.classList.add('has-value');
+    if(hint) hint.innerHTML = hintBuilder(after);
+  } else {
+    field.classList.remove('has-value');
+    if(hint) hint.textContent = '';
+  }
+
+  if(before !== after && after !== ''){
+    input.value = after;
+    input.classList.remove('formatted');
+    void input.offsetWidth;
+    input.classList.add('formatted');
+    setTimeout(()=> input.classList.remove('formatted'), 750);
+  }
+}
+
+/* --- Input events: live hint + blur format --- */
+(function setupProfileInputs(){
+  const nameInput = document.getElementById('p-name');
+  const classInput = document.getElementById('p-class');
+  const groupInput = document.getElementById('p-group');
+
+  // Live hint khi gõ
+  nameInput.addEventListener('input', ()=>{
+    updateProfileAvatar();
+    const val = nameInput.value;
+    const f = val ? formatName(val) : '';
+    const field = nameInput.closest('.profile-field');
+    const hint = document.getElementById('hint-name');
+    if(f){
+      field.classList.add('has-value');
+      hint.innerHTML = `<span class="check">✓</span>${f}`;
+    } else {
+      field.classList.remove('has-value');
+      hint.textContent = '';
+    }
+  });
+  classInput.addEventListener('input', ()=>{
+    const val = classInput.value;
+    const f = val ? formatClass(val) : '';
+    const field = classInput.closest('.profile-field');
+    const hint = document.getElementById('hint-class');
+    if(f){
+      field.classList.add('has-value');
+      hint.innerHTML = `<span class="check">✓</span>Lớp ${f}`;
+    } else {
+      field.classList.remove('has-value');
+      hint.textContent = '';
+    }
+  });
+  groupInput.addEventListener('input', ()=>{
+    const val = groupInput.value;
+    const f = val ? formatGroup(val) : '';
+    const field = groupInput.closest('.profile-field');
+    const hint = document.getElementById('hint-group');
+    if(f){
+      field.classList.add('has-value');
+      hint.innerHTML = `<span class="check">✓</span>${f}`;
+    } else {
+      field.classList.remove('has-value');
+      hint.textContent = '';
+    }
+  });
+
+  // Blur: format chính thức + flash
+  nameInput.addEventListener('blur', ()=>{
+    applyFormatToInput('p-name', formatName, 'hint-name', v => `<span class="check">✓</span>${v}`);
+    updateProfileAvatar();
+  });
+  classInput.addEventListener('blur', ()=>{
+    applyFormatToInput('p-class', formatClass, 'hint-class', v => `<span class="check">✓</span>Lớp ${v}`);
+  });
+  groupInput.addEventListener('blur', ()=>{
+    applyFormatToInput('p-group', formatGroup, 'hint-group', v => `<span class="check">✓</span>${v}`);
+  });
+
+  // Focus: highlight label
+  [nameInput, classInput, groupInput].forEach(inp=>{
+    inp.addEventListener('focus', ()=> inp.closest('.profile-field').classList.add('has-focus'));
+    inp.addEventListener('blur', ()=> inp.closest('.profile-field').classList.remove('has-focus'));
+  });
+
+  // Enter navigation
+  nameInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); classInput.focus(); }});
+  classInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); groupInput.focus(); }});
+  groupInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); groupInput.blur(); saveProfile(); }});
+
+  // Khởi tạo hint nếu có sẵn dữ liệu
+  if(nameInput.value) nameInput.dispatchEvent(new Event('input'));
+  if(classInput.value) classInput.dispatchEvent(new Event('input'));
+  if(groupInput.value) groupInput.dispatchEvent(new Event('input'));
+})();
 
 (function initProfileFromStorage(){
   try{
@@ -905,30 +1053,49 @@ let userProfile = { name:'', className:'', group:'' };
       if(userProfile.name){
         document.getElementById('p-submit').textContent = 'Tiếp Tục →';
       }
+      // Trigger hint cập nhật
+      document.getElementById('p-name').dispatchEvent(new Event('input'));
+      document.getElementById('p-class').dispatchEvent(new Event('input'));
+      document.getElementById('p-group').dispatchEvent(new Event('input'));
     }
   }catch(e){}
 })();
 
 function updateProfileAvatar(){
   const name = document.getElementById('p-name').value.trim();
-  const letter = name ? name.charAt(0).toUpperCase() : '?';
+  const letter = name ? name.charAt(0).toLocaleUpperCase('vi-VN') : '?';
   document.getElementById('profile-avatar').textContent = letter;
 }
 
-document.getElementById('p-name').addEventListener('input', updateProfileAvatar);
-document.getElementById('p-name').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('p-class').focus(); });
-document.getElementById('p-class').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('p-group').focus(); });
-document.getElementById('p-group').addEventListener('keydown', e=>{ if(e.key==='Enter') saveProfile(); });
-
 function saveProfile(){
-  const name = document.getElementById('p-name').value.trim();
-  const cls = document.getElementById('p-class').value.trim();
-  const grp = document.getElementById('p-group').value.trim();
+  const nameRaw = document.getElementById('p-name').value;
+  const classRaw = document.getElementById('p-class').value;
+  const groupRaw = document.getElementById('p-group').value;
+
+  // Format lại chính thức trước khi lưu (đề phòng user chưa blur)
+  const name = formatName(nameRaw);
+  const cls = formatClass(classRaw);
+  const grp = formatGroup(groupRaw);
+
+  // Update input hiển thị
+  document.getElementById('p-name').value = name;
+  document.getElementById('p-class').value = cls;
+  document.getElementById('p-group').value = grp;
+
   if(!name || !cls || !grp){
     const card = document.querySelector('.profile-card');
     card.style.animation = 'none';
     void card.offsetWidth;
     card.style.animation = 'shake .5s ease';
+    // Highlight field trống
+    [['p-name', name], ['p-class', cls], ['p-group', grp]].forEach(([id, val])=>{
+      const inp = document.getElementById(id);
+      if(!val){
+        inp.style.borderColor = 'var(--danger)';
+        inp.style.animation = 'shake .4s ease';
+        setTimeout(()=>{ inp.style.borderColor=''; inp.style.animation=''; }, 700);
+      }
+    });
     return;
   }
   userProfile = { name, className: cls, group: grp };
@@ -946,6 +1113,13 @@ function clearProfileCache(){
   document.getElementById('p-group').value = '';
   updateProfileAvatar();
   document.getElementById('p-submit').textContent = 'Bắt Đầu Ôn Tập →';
+  // Reset hint
+  ['name','class','group'].forEach(k=>{
+    const field = document.getElementById('field-'+k);
+    field.classList.remove('has-value');
+    const hint = document.getElementById('hint-'+k);
+    if(hint) hint.textContent = '';
+  });
   const card = document.querySelector('.profile-card');
   card.style.animation = 'none';
   void card.offsetWidth;
@@ -955,7 +1129,6 @@ function clearProfileCache(){
 function logout(){
   if(!confirm('Bạn có chắc muốn đăng xuất?\nDữ liệu tên/lớp/tổ sẽ bị xóa và bạn cần nhập lại.')) return;
 
-  // Animation cho nút đăng xuất góc phải
   const cornerBtn = document.getElementById('logout-corner-btn');
   if(cornerBtn){
     cornerBtn.classList.add('logout-active');
@@ -970,6 +1143,14 @@ function logout(){
     updateProfileAvatar();
     document.getElementById('p-submit').textContent = 'Bắt Đầu Ôn Tập →';
 
+    // Reset hint
+    ['name','class','group'].forEach(k=>{
+      const field = document.getElementById('field-'+k);
+      if(field) field.classList.remove('has-value');
+      const hint = document.getElementById('hint-'+k);
+      if(hint) hint.textContent = '';
+    });
+
     // reset app state
     appState.userAnswers = {};
     appState.isChecked = {};
@@ -979,7 +1160,6 @@ function logout(){
     document.getElementById('question-grid').innerHTML = '';
     document.getElementById('question-card').innerHTML = '';
 
-    // show profile
     document.getElementById('profile-screen').style.display = 'flex';
     document.getElementById('start-screen').style.display = 'none';
     document.getElementById('main-screen').style.display = 'none';
@@ -990,7 +1170,7 @@ function logout(){
 }
 
 function applyProfileToUI(){
-  const letter = userProfile.name.charAt(0).toUpperCase();
+  const letter = userProfile.name.charAt(0).toLocaleUpperCase('vi-VN');
   document.getElementById('user-mini-avatar').textContent = letter;
   document.getElementById('sidebar-avatar').textContent = letter;
   document.getElementById('user-name-display').textContent = userProfile.name;
