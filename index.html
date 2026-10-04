@@ -1754,4 +1754,101 @@
         document.addEventListener('dragstart', e => { if (e.target.tagName !== 'DIV' || !e.target.classList.contains('drag-chip')) e.preventDefault(); });
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); show
+            if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); showWarning(); return false; }
+            if (e.ctrlKey && e.shiftKey && 'IJCSijcs'.includes(e.key)) { e.preventDefault(); showWarning(); return false; }
+            if (e.ctrlKey && 'UuSs'.includes(e.key)) { e.preventDefault(); showWarning(); return false; }
+            if (e.metaKey && e.altKey && 'IJCSijcs'.includes(e.key)) { e.preventDefault(); showWarning(); return false; }
+        });
+
+        let warningTimer = null;
+        function showWarning() {
+            const w = document.getElementById('devtools-warning');
+            w.classList.add('show');
+            if (warningTimer) clearTimeout(warningTimer);
+            warningTimer = setTimeout(() => w.classList.remove('show'), 2500);
+        }
+
+        let devtoolsOpen = false;
+        setInterval(() => {
+            const w = window.outerWidth - window.innerWidth;
+            const h = window.outerHeight - window.innerHeight;
+            const isOpen = w > 160 || h > 160;
+            if (isOpen && !devtoolsOpen) {
+                devtoolsOpen = true;
+                showWarning();
+            } else if (!isOpen) {
+                devtoolsOpen = false;
+            }
+        }, 800);
+
+        document.addEventListener('keydown', function(e) {
+            const tag = document.activeElement.tagName;
+            const inputType = document.activeElement.type;
+            if (tag === 'TEXTAREA' || (tag === 'INPUT' && inputType === 'text')) return;
+
+            if (e.key === 'Escape') {
+                if (document.getElementById('image-modal').classList.contains('show')) {
+                    closeImageModal();
+                }
+                return;
+            }
+
+            if (e.key === 'ArrowLeft') {
+                if (appState.currentQuestionIndex > 0) {
+                    e.preventDefault();
+                    prevQuestion();
+                }
+                return;
+            }
+            if (e.key === 'ArrowRight') {
+                if (appState.currentQuestionIndex < questions.length - 1) {
+                    e.preventDefault();
+                    nextQuestion();
+                }
+                return;
+            }
+            if (e.key === 'Enter') {
+                if (tag === 'BUTTON') return;
+
+                if (appState.isReview) {
+                    if (appState.currentQuestionIndex < questions.length - 1) {
+                        e.preventDefault();
+                        nextQuestion();
+                    } else {
+                        e.preventDefault();
+                        resetApp();
+                    }
+                    return;
+                }
+
+                if (appState.mode === 'practice') {
+                    if (!appState.isChecked[currentQuestionId()]) {
+                        e.preventDefault();
+                        checkAnswer();
+                    } else {
+                        if (appState.currentQuestionIndex < questions.length - 1) {
+                            e.preventDefault();
+                            nextQuestion();
+                        } else {
+                            e.preventDefault();
+                            calculateResult();
+                        }
+                    }
+                } else {
+                    if (appState.currentQuestionIndex < questions.length - 1) {
+                        e.preventDefault();
+                        nextQuestion();
+                    } else {
+                        e.preventDefault();
+                        calculateResult();
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initImageModalEvents();
+        });
+    </script>
+</body>
+</html>
