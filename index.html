@@ -2055,8 +2055,8 @@ function initMatchingDrag(q){
 }
 
 /* ============================================================
-   DRAG & AUTO-SCROLL — TỐC ĐỘ VỪA PHẢI
-   MAX 400 px/frame: không quá nhanh, không quá chậm
+   DRAG & AUTO-SCROLL — TỐC ĐỘ CHẬM RÃI
+   MAX 220 px/frame: chậm hơn nữa, từ từ, không vọt
    ============================================================ */
 let dragContext = null;
 let autoScrollRAF = null;
@@ -2110,10 +2110,10 @@ function startDrag(e){
 }
 
 function startAutoScroll(){
-  /* TỐC ĐỘ VỪA PHẢI — không quá nhanh, không quá chậm */
-  const EDGE_ZONE = 190;        // vùng nhạy ở mép
-  const MAX_SPEED = 400;        // tốc độ tối đa vừa phải
-  const MIN_SPEED_START = 2.5;  // khởi đầu nhẹ nhàng
+  /* TỐC ĐỘ CHẬM RÃI — từ từ, không vọt, không sốc */
+  const EDGE_ZONE = 170;        // vùng nhạy nhỏ hơn
+  const MAX_SPEED = 220;        // tốc độ tối đa chậm (bằng ~50% bản trước)
+  const MIN_SPEED_START = 1.2;  // khởi đầu rất nhẹ nhàng
 
   function tick(){
     if(!dragContext){ autoScrollRAF = null; autoScrollVelocity = 0; return; }
@@ -2123,15 +2123,15 @@ function startAutoScroll(){
 
     if(y < EDGE_ZONE){
       const ratio = Math.min(1, (EDGE_ZONE - y) / EDGE_ZONE);
-      // pow 1.15: lên tốc độ mượt, không vọt
-      targetSpeed = -(MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.15));
+      // pow 1.35: lên tốc độ chậm rãi, rất từ từ
+      targetSpeed = -(MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.35));
     } else if(y > vh - EDGE_ZONE){
       const ratio = Math.min(1, (y - (vh - EDGE_ZONE)) / EDGE_ZONE);
-      targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.15);
+      targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.35);
     }
 
-    // Smoothing 0.55 → chuyển tốc độ êm, mượt mà
-    autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.55;
+    // Smoothing 0.42 → chuyển tốc độ êm ái, mượt mà
+    autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.42;
 
     if(Math.abs(autoScrollVelocity) > 0.3){
       window.scrollBy(0, autoScrollVelocity);
