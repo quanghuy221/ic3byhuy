@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   🎨 DESIGN SYSTEM — MOBILE OPTIMIZED PREMIUM
+   🎨 DESIGN SYSTEM — PREMIUM CHILL EDITION
    ============================================================ */
 :root{
   --primary:#6366F1;
@@ -74,7 +74,7 @@ body{
 ::-webkit-scrollbar-thumb{background:rgba(148,163,184,.45);border-radius:10px}
 
 /* ============================================================
-   ✨ KEYFRAMES — CHỈ TRANSFORM + OPACITY (GPU)
+   ✨ KEYFRAMES
    ============================================================ */
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeInUp{from{opacity:0;transform:translate3d(0,14px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
@@ -96,7 +96,7 @@ body{
 @keyframes correctFlash{0%{box-shadow:0 0 0 0 rgba(16,185,129,.55)}100%{box-shadow:0 0 0 16px rgba(16,185,129,0)}}
 @keyframes wrongFlash{0%{box-shadow:0 0 0 0 rgba(244,63,94,.55)}100%{box-shadow:0 0 0 16px rgba(244,63,94,0)}}
 @keyframes barSlide{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-@keyframes focusGlow{0%,100%{box-shadow:0 0 0 4px var(--primary-soft)}50%{box-shadow:0 0 0 6px var(--primary-soft)}}
+@keyframes questionIn{from{opacity:0;transform:translate3d(0,10px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 
 .fade-in{animation:fadeIn .3s var(--ease-out) both}
 
@@ -105,8 +105,7 @@ body{
    ============================================================ */
 #devtools-warning{
   display:none;position:fixed;inset:0;
-  background:#0F172A;
-  color:#fff;z-index:99999;
+  background:#0F172A;color:#fff;z-index:99999;
   justify-content:center;align-items:center;text-align:center;
   flex-direction:column;padding:30px;
 }
@@ -129,10 +128,8 @@ body{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   min-height:100vh;padding:20px;position:relative;overflow:hidden;
 }
-#profile-screen::before,
-#profile-screen::after{
-  content:'';position:absolute;pointer-events:none;
-  border-radius:50%;
+#profile-screen::before,#profile-screen::after{
+  content:'';position:absolute;pointer-events:none;border-radius:50%;
 }
 #profile-screen::before{
   width:500px;height:500px;
@@ -195,13 +192,9 @@ body{
   border:2px solid var(--border);border-radius:12px;
   background:#fff;color:var(--text-main);
   outline:none;
-  /* Quan trọng: chỉ transition 2 thuộc tính nhẹ */
   transition:border-color var(--t) var(--ease),box-shadow var(--t) var(--ease);
   font-weight:500;
   -webkit-appearance:none;appearance:none;
-  /* Loại bỏ các tính năng gây lag trên mobile */
-  will-change:auto;
-  transform:translateZ(0);
 }
 .profile-field input::placeholder{color:var(--text-muted);font-weight:400}
 .profile-field input:focus{
@@ -215,11 +208,8 @@ body{
   margin-top:5px;font-weight:600;
   opacity:0;max-height:0;overflow:hidden;
   transition:opacity var(--t) var(--ease),max-height var(--t) var(--ease);
-  will-change:auto;
 }
-.profile-field.has-value .field-hint{
-  opacity:1;max-height:22px;
-}
+.profile-field.has-value .field-hint{opacity:1;max-height:22px}
 .field-hint .check{color:var(--success);font-weight:800;margin-right:4px}
 
 .btn-profile{
@@ -258,10 +248,8 @@ body{
   min-height:100vh;padding:80px 20px 20px;text-align:center;
   position:relative;overflow:hidden;
 }
-#start-screen::before,
-#start-screen::after{
-  content:'';position:absolute;pointer-events:none;
-  border-radius:50%;
+#start-screen::before,#start-screen::after{
+  content:'';position:absolute;pointer-events:none;border-radius:50%;
 }
 #start-screen::before{
   width:520px;height:520px;
@@ -521,7 +509,10 @@ body{
   font-size:.86rem;padding:0;
   box-shadow:var(--shadow-xs);
   -webkit-tap-highlight-color:transparent;
+  outline:none;
 }
+.q-btn:focus{outline:none}
+.q-btn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
 .q-btn:active{transform:scale(.94)}
 @media (hover:hover){
   .q-btn:hover{
@@ -852,7 +843,9 @@ body{
   display:flex;align-items:center;justify-content:center;gap:8px;
   position:relative;overflow:hidden;
   -webkit-tap-highlight-color:transparent;
+  outline:none;
 }
+.btn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
 .btn:active{transform:scale(.97)}
 .btn-primary{
   background:linear-gradient(135deg,var(--primary),var(--primary-2));
@@ -1113,7 +1106,7 @@ body{
   </button>
   <div class="start-logo">IC3</div>
   <h1>Ôn Tập IC3 GS6 Level 2</h1>
-  <p class="subtitle">IC3 GS6 Level 2 · Images Uploaded!</p>
+  <p class="subtitle">IC3 GS6 Level 2 · UI Update soon!</p>
   <div class="user-chip" id="user-chip">
     <div class="mini-avatar" id="user-mini-avatar">Q</div>
     <div class="user-info">
@@ -1230,7 +1223,7 @@ const icons = {
 };
 
 /* ============================================================
-   QUESTIONS DATA — giữ nguyên 45 câu
+   QUESTIONS DATA
    ============================================================ */
 const originalQuestions = [
 {id:1,type:'multiple',question:'Mẹ của bạn thị lực kém. Mỗi khi nhận được điện thoại hoặc thiết bị máy tính mới, cô ấy sẽ yêu cầu bạn định cấu hình cài đặt để giúp cô ấy xem dễ dàng hơn. Bạn nên thay đổi hai cài đặt nào để giúp thiết bị của mẹ bạn dễ xem hơn? (Chọn 2)',options:['Cỡ chữ (Font size)','Âm lượng (Volume)','Màu sắc (Colors)','Nhạc chuông (Ring tones)'],correct:[0,2],explanation:'Cỡ chữ giúp điều chỉnh kích thước văn bản. Màu sắc giúp thay đổi độ tương phản, hỗ trợ người thị lực kém.'},
@@ -1307,7 +1300,7 @@ explanation:'Mở bảng Info → Chọn tab File → Bấm nút Protect → Ch�
 ];
 
 /* ============================================================
-   PROFILE SYSTEM + AUTO-FORMAT (DEBOUNCED INPUT)
+   PROFILE SYSTEM + AUTO-FORMAT (DEBOUNCED)
    ============================================================ */
 let userProfile = { name:'', className:'', group:'' };
 
@@ -1362,7 +1355,6 @@ function applyFormatToInput(inputId, formatter, hintId, hintBuilder){
   const classInput = document.getElementById('p-class');
   const groupInput = document.getElementById('p-group');
 
-  /* DEBOUNCE: chỉ chạy format sau khi user ngừng gõ 150ms → không lag trên mobile */
   function debounce(fn, delay){
     let timer = null;
     return function(...args){
@@ -1403,7 +1395,6 @@ function applyFormatToInput(inputId, formatter, hintId, hintBuilder){
   classInput.addEventListener('input', updateClassHint, { passive:true });
   groupInput.addEventListener('input', updateGroupHint, { passive:true });
 
-  /* Blur: format tức thì */
   nameInput.addEventListener('blur', ()=>{
     applyFormatToInput('p-name', formatName, 'hint-name', v => `<span class="check">✓</span>${v}`);
     updateProfileAvatar();
@@ -1436,15 +1427,19 @@ function applyFormatToInput(inputId, formatter, hintId, hintBuilder){
       document.getElementById('p-group').value = userProfile.group;
       updateProfileAvatar();
       if(userProfile.name) document.getElementById('p-submit').textContent = 'Tiếp Tục →';
-      // Set hint tĩnh, không dispatch event
       ['name','class','group'].forEach(k=>{
         const field = document.getElementById('field-'+k);
         const hint = document.getElementById('hint-'+k);
-        if(!userProfile[k==='name'?'name':k==='class'?'className':'group']) return;
-        field.classList.add('has-value');
-        if(k === 'name') hint.innerHTML = `<span class="check">✓</span>${userProfile.name}`;
-        else if(k === 'class') hint.innerHTML = `<span class="check">✓</span>Lớp ${userProfile.className}`;
-        else hint.innerHTML = `<span class="check">✓</span>${userProfile.group}`;
+        if(k === 'name' && userProfile.name){
+          field.classList.add('has-value');
+          hint.innerHTML = `<span class="check">✓</span>${userProfile.name}`;
+        } else if(k === 'class' && userProfile.className){
+          field.classList.add('has-value');
+          hint.innerHTML = `<span class="check">✓</span>Lớp ${userProfile.className}`;
+        } else if(k === 'group' && userProfile.group){
+          field.classList.add('has-value');
+          hint.innerHTML = `<span class="check">✓</span>${userProfile.group}`;
+        }
       });
     }
   }catch(e){}
@@ -1872,6 +1867,7 @@ function renderSidebar(){
     btn.className = 'q-btn';
     btn.textContent = index + 1;
     btn.dataset.idx = index;
+    btn.type = 'button';
     if(index === appState.currentQuestionIndex) btn.classList.add('active');
     if(appState.isReview || (appState.mode === 'practice' && appState.isChecked[q.id])){
       btn.classList.add(checkQuestionCorrectness(q.id) ? 'correct-ans' : 'wrong-ans');
@@ -1882,11 +1878,17 @@ function renderSidebar(){
   grid.appendChild(frag);
 }
 
+/* ✅ FIX: Click q-btn → chuyển câu + BLUR để Enter hoạt động đúng */
 document.getElementById('question-grid').addEventListener('click', e=>{
   const btn = e.target.closest('.q-btn');
   if(!btn) return;
   const idx = parseInt(btn.dataset.idx);
-  if(!isNaN(idx)){ appState.currentQuestionIndex = idx; renderQuestion(); }
+  if(!isNaN(idx)){
+    appState.currentQuestionIndex = idx;
+    renderQuestion();
+  }
+  /* Blur ngay để không giữ focus → Enter sau đó sẽ trigger action thay vì button */
+  btn.blur();
 });
 
 function checkQuestionCorrectness(qId){
@@ -1969,26 +1971,26 @@ function renderQuestion(){
   }
 
   html += `<div class="actions">`;
-  if(index > 0) html += `<button class="btn btn-secondary" onclick="prevQuestion()">Câu Trước</button>`;
+  if(index > 0) html += `<button type="button" class="btn btn-secondary" onclick="prevQuestion()">Câu Trước</button>`;
   if(!isReviewMode){
     if(appState.mode === 'practice'){
-      if(!isChecked) html += `<button class="btn btn-primary" onclick="checkAnswer()">Kiểm Tra</button>`;
-      if(index < questions.length - 1) html += `<button class="btn btn-secondary" onclick="nextQuestion()">Câu Tiếp Theo</button>`;
-      else html += `<button class="btn btn-success" onclick="calculateResult()">Hoàn Thành</button>`;
+      if(!isChecked) html += `<button type="button" class="btn btn-primary" onclick="checkAnswer()">Kiểm Tra</button>`;
+      if(index < questions.length - 1) html += `<button type="button" class="btn btn-secondary" onclick="nextQuestion()">Câu Tiếp Theo</button>`;
+      else html += `<button type="button" class="btn btn-success" onclick="calculateResult()">Hoàn Thành</button>`;
     } else {
-      if(index < questions.length - 1) html += `<button class="btn btn-primary" onclick="nextQuestion()">Câu Tiếp Theo</button>`;
-      else html += `<button class="btn btn-success" onclick="calculateResult()">Nộp Bài</button>`;
+      if(index < questions.length - 1) html += `<button type="button" class="btn btn-primary" onclick="nextQuestion()">Câu Tiếp Theo</button>`;
+      else html += `<button type="button" class="btn btn-success" onclick="calculateResult()">Nộp Bài</button>`;
     }
   } else {
-    if(index < questions.length - 1) html += `<button class="btn btn-primary" onclick="nextQuestion()">Câu Tiếp Theo</button>`;
-    else html += `<button class="btn btn-success" onclick="resetApp()">Quay Lại Menu</button>`;
+    if(index < questions.length - 1) html += `<button type="button" class="btn btn-primary" onclick="nextQuestion()">Câu Tiếp Theo</button>`;
+    else html += `<button type="button" class="btn btn-success" onclick="resetApp()">Quay Lại Menu</button>`;
   }
   html += `</div>`;
 
   card.innerHTML = html;
   card.style.animation = 'none';
   void card.offsetWidth;
-  card.style.animation = 'fadeIn .22s var(--ease-out)';
+  card.style.animation = 'questionIn .25s var(--ease-out)';
 
   if(q.type === 'matching') initMatchingDrag(q);
   const img = card.querySelector('.clickable-image');
@@ -2054,7 +2056,7 @@ function initMatchingDrag(q){
 }
 
 /* ============================================================
-   DRAG & AUTO-SCROLL — TỐC ĐỘ VỪA PHẢI + MƯỢT
+   DRAG & AUTO-SCROLL — TỐC ĐỘ VỪA PHẢI
    ============================================================ */
 let dragContext = null;
 let autoScrollRAF = null;
@@ -2077,7 +2079,6 @@ function startDrag(e){
   document.body.appendChild(ghost);
   chip.classList.add('dragging');
 
-  /* CACHE rect slot */
   const slotEls = document.querySelectorAll(`.drop-slot[data-qid="${qId}"]`);
   const scrollX = window.scrollX, scrollY = window.scrollY;
   const slots = [];
@@ -2109,7 +2110,7 @@ function startDrag(e){
 }
 
 function startAutoScroll(){
-  /* TỐC ĐỘ VỪA PHẢI: MAX 550px/frame, cong mượt, phản hồi nhanh nhưng không sốc */
+  /* TỐC ĐỘ VỪA PHẢI */
   const EDGE_ZONE = 200;
   const MAX_SPEED = 550;
   const MIN_SPEED_START = 3;
@@ -2128,7 +2129,6 @@ function startAutoScroll(){
       targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.1);
     }
 
-    /* Smoothing vừa phải: 0.65 → mượt mà không giật */
     autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.65;
 
     if(Math.abs(autoScrollVelocity) > 0.3){
@@ -2335,18 +2335,27 @@ setInterval(()=>{
 }, 800);
 
 /* ============================================================
-   KEYBOARD NAV
+   KEYBOARD NAV — ✅ FIX: Enter hoạt động đúng sau khi click q-btn
    ============================================================ */
 document.addEventListener('keydown', function(e){
   const tag = document.activeElement.tagName;
   const inputType = document.activeElement.type;
+  const activeEl = document.activeElement;
+
+  /* Bỏ qua khi đang nhập liệu */
   if(tag === 'TEXTAREA' || (tag === 'INPUT' && (inputType === 'text' || !inputType))) return;
 
   if(e.key === 'Escape'){
     if(document.getElementById('image-modal').classList.contains('show')) closeImageModal();
     return;
   }
+
   if(!questions.length) return;
+
+  /* Chỉ xử lý khi màn hình main đang mở */
+  const mainVisible = document.getElementById('main-screen').style.display !== 'none';
+  if(!mainVisible) return;
+
   if(e.key === 'ArrowLeft'){
     if(appState.currentQuestionIndex > 0){ e.preventDefault(); prevQuestion(); }
     return;
@@ -2355,8 +2364,23 @@ document.addEventListener('keydown', function(e){
     if(appState.currentQuestionIndex < questions.length - 1){ e.preventDefault(); nextQuestion(); }
     return;
   }
+
   if(e.key === 'Enter'){
-    if(tag === 'BUTTON') return;
+    /* ✅ FIX:
+       - Nếu đang focus vào BUTTON là action button (Kiểm Tra, Tiếp Theo...) → để browser tự click, không xử lý
+       - Nếu đang focus vào BUTTON là q-btn (mục lục) → blur nó và VẪN xử lý Enter như bình thường
+       - Nếu không focus vào button nào → xử lý bình thường
+    */
+    if(tag === 'BUTTON'){
+      if(activeEl && activeEl.classList && activeEl.classList.contains('q-btn')){
+        /* q-btn: blur để không chặn action, rồi xử lý tiếp */
+        activeEl.blur();
+      } else {
+        /* Action button khác → để browser tự trigger click */
+        return;
+      }
+    }
+
     if(appState.isReview){
       if(appState.currentQuestionIndex < questions.length - 1){ e.preventDefault(); nextQuestion(); }
       else { e.preventDefault(); resetApp(); }
