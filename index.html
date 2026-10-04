@@ -341,9 +341,7 @@
             font-weight: 500;
             letter-spacing: 0.2px;
         }
-        .question-image-container:hover::after {
-            opacity: 1;
-        }
+        .question-image-container:hover::after { opacity: 1; }
         .question-image-container:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-xl);
@@ -357,6 +355,7 @@
         }
         .question-image-container img:hover { filter: brightness(1.05); }
 
+        /* ============ OPTIONS - Red outline for wrong, green outline for correct ============ */
         .options-list { display: flex; flex-direction: column; gap: 12px; }
         .option-item {
             display: flex; align-items: flex-start; gap: 14px;
@@ -374,8 +373,18 @@
             transform: translateX(6px);
         }
         .option-item.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
-        .option-item.correct { border-color: var(--success); background: var(--success-bg); animation: pulse 0.4s ease; }
-        .option-item.wrong { border-color: var(--danger); background: var(--danger-bg); animation: shake 0.5s ease; }
+        .option-item.correct { 
+            border-color: var(--success); 
+            border-width: 3px;
+            background: var(--success-bg); 
+            animation: pulse 0.4s ease; 
+        }
+        .option-item.wrong { 
+            border-color: var(--danger); 
+            border-width: 3px;
+            background: var(--danger-bg); 
+            animation: shake 0.5s ease; 
+        }
         .option-item.correct::after {
             content: '✓';
             position: absolute;
@@ -444,6 +453,7 @@
         .matrix-option:hover { border-color: var(--primary); background: var(--primary-light); transform: scale(1.03); }
         .matrix-option input { accent-color: var(--primary); cursor: pointer; width: 16px; height: 16px; }
 
+        /* ============ MATCHING - With drag auto-scroll on mobile ============ */
         .match-container { display: flex; flex-direction: column; gap: 20px; }
         .match-instruction {
             font-size: 0.9rem; color: var(--text-sub);
@@ -531,8 +541,19 @@
         }
         .drop-slot:hover { border-color: var(--primary); background: var(--primary-light); }
         .drop-slot.filled { border-style: solid; border-color: var(--success); background: var(--success-bg); }
-        .drop-slot.correct-drop { border-color: var(--success); background: var(--success-bg); }
-        .drop-slot.wrong-drop { border-color: var(--danger); background: var(--danger-bg); animation: shake 0.5s ease; }
+        .drop-slot.correct-drop { 
+            border-color: var(--success); 
+            border-width: 3px;
+            border-style: solid;
+            background: var(--success-bg); 
+        }
+        .drop-slot.wrong-drop { 
+            border-color: var(--danger); 
+            border-width: 3px;
+            border-style: solid;
+            background: var(--danger-bg); 
+            animation: shake 0.5s ease; 
+        }
         .drop-slot.drop-active { border-color: var(--primary); background: var(--primary-light); border-style: solid; transform: scale(1.02); }
         .drop-slot .placeholder { color: var(--text-sub); font-size: 0.85rem; opacity: 0.6; }
         .drop-slot .placed-chip {
@@ -662,9 +683,7 @@
         .result-stats strong { color: var(--primary); font-weight: 800; }
         .footer { text-align: center; padding: 20px; font-size: 0.85rem; color: var(--text-sub); opacity: 0.4; margin-top: auto; width: 100%; }
 
-        /* ============================================================
-           IMAGE MODAL - MOBILE-FIRST PINCH ZOOM
-           ============================================================ */
+        /* ============ IMAGE MODAL ============ */
         #image-modal {
             display: none;
             position: fixed;
@@ -676,38 +695,27 @@
             overflow: hidden;
             opacity: 0;
             transition: opacity 0.3s ease;
-            /* Critical for pinch zoom on mobile */
             touch-action: none;
             -webkit-user-select: none;
             user-select: none;
             overscroll-behavior: none;
         }
-        #image-modal.show {
-            display: flex;
-            opacity: 1;
-        }
+        #image-modal.show { display: flex; opacity: 1; }
         #image-modal .modal-image-wrapper {
             position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
             overflow: hidden;
             cursor: grab;
-            /* CRITICAL: touch-action none prevents browser zoom/scroll */
             touch-action: none;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
-        #image-modal .modal-image-wrapper.grabbing {
-            cursor: grabbing;
-        }
+        #image-modal .modal-image-wrapper.grabbing { cursor: grabbing; }
         #image-modal img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 100%; max-height: 100%;
             object-fit: contain;
             transform-origin: center center;
             will-change: transform;
@@ -740,21 +748,14 @@
             line-height: 1;
             touch-action: manipulation;
         }
-        #image-modal .modal-close:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg) scale(1.1);
-        }
-        #image-modal .modal-close:active {
-            transform: rotate(90deg) scale(0.95);
-        }
+        #image-modal .modal-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg) scale(1.1); }
+        #image-modal .modal-close:active { transform: rotate(90deg) scale(0.95); }
         #image-modal .modal-controls {
             position: absolute;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex; align-items: center; gap: 8px;
             z-index: 10;
             background: rgba(0,0,0,0.55);
             padding: 8px;
@@ -772,8 +773,7 @@
             color: white;
             width: 48px; height: 48px;
             border-radius: 50%;
-            font-size: 22px;
-            font-weight: 500;
+            font-size: 22px; font-weight: 500;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -796,8 +796,7 @@
         }
         #image-modal .zoom-percentage {
             color: white;
-            font-size: 0.95rem;
-            font-weight: 700;
+            font-size: 0.95rem; font-weight: 700;
             min-width: 80px;
             text-align: center;
             padding: 0 14px;
@@ -811,9 +810,7 @@
             font-variant-numeric: tabular-nums;
             transition: background 0.2s ease;
         }
-        #image-modal .zoom-percentage.pulse {
-            animation: zoomPop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        #image-modal .zoom-percentage.pulse { animation: zoomPop 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 
         @media (max-width: 600px) {
             .actions { flex-direction: column; }
@@ -955,16 +952,16 @@
             { id: 13, type: 'multiple', question: 'Hai tài nguyên nào có thể dạy bạn cách sử dụng một tính năng trong chương trình phần mềm? (Chọn hai)', options: ['Diễn đàn trực tuyến dành riêng để thảo luận về chương trình', 'Hướng dẫn cài đặt kèm theo phần mềm', 'Lệnh Help có trong chương trình', 'Đường dây điện thoại Hỗ trợ Kỹ thuật do nhà xuất bản phần mềm cung cấp'], correct: [0, 2], explanation: 'Diễn đàn trực tuyến và lệnh Help là nguồn tài nguyên phổ biến để học cách sử dụng phần mềm.' },
             { id: 14, type: 'multiple', question: 'Hai tài nguyên nào là tài nguyên cộng đồng có thể dạy bạn sử dụng một tính năng trong chương trình phần mềm? (Chọn hai)', options: ['Blogs', 'Wikipedia', 'Diễn đàn (Forums)', 'Hướng dẫn cài đặt (Installation instructions)'], correct: [0, 2], explanation: 'Blogs và Diễn đàn là tài nguyên cộng đồng, nơi người dùng chia sẻ kinh nghiệm.' },
             { id: 15, type: 'multiple', question: 'Bạn đang tìm kiếm hình ảnh trên Google. Cụ thể, bạn đang tìm kiếm clip art về một con thỏ mà bạn có thể sử dụng trên một trang web mà không cần liên hệ với họa sĩ để xin phép. Hai bộ lọc nào sẽ thu hẹp kết quả tìm kiếm của bạn để chỉ hiển thị clip art có sẵn để sử dụng mà không có sự cho phép của họa sĩ? (Chọn hai)', options: ['Thời gian (Time)', 'Quyền sử dụng (Usage Rights)', 'Màu sắc (Color)', 'Thể loại (Type)'], correct: [1, 3], explanation: 'Bộ lọc Quyền sử dụng và Thể loại giúp tìm hình ảnh miễn phí bản quyền.' },
-            { id: 16, type: 'single', question: 'Bạn muốn giảm độ sáng của màn hình trên máy tính. Nhấp vào tính năng cho phép bạn điều chỉnh cài đặt độ sáng trên máy tính Windows này.', options: ['Display', 'System', 'Devices', 'Network & Internet', 'Personalization'], correct: [0], explanation: 'Trong Windows, độ sáng màn hình được điều chỉnh trong System -> Display.', image: 'anh1.png' },
+            { id: 16, type: 'single', question: 'Bạn muốn giảm độ sáng của màn hình trên máy tính. Nhấp vào tính năng cho phép bạn điều chỉnh cài đặt độ sáng trên máy tính Windows này.', options: ['Display', 'System', 'Devices', 'Network & Internet', 'Personalization'], correct: [0], explanation: 'Trong Windows 10, độ sáng màn hình được điều chỉnh trong System -> Display.', image: 'anh1.png' },
             { id: 17, type: 'single', question: 'Bạn muốn thay đổi độ tương phản của màn hình trên máy tính. Nhấp vào tính năng sẽ cho phép bạn điều chỉnh cài đặt độ tương phản trên máy tính Windows này.', options: ['System', 'Devices', 'Ease of Access', 'Update & Security'], correct: [2], explanation: 'Độ tương phản (High contrast) được điều chỉnh trong Ease of Access.', image: 'anh2.png' },
             { id: 18, type: 'single', question: 'Bạn đang sử dụng điện thoại Android và muốn thay đổi độ tương phản. Nhấp vào tính năng sẽ cho phép bạn điều chỉnh độ tương phản trên điện thoại này.', options: ['Accessibility', 'Display', 'Sound', 'Battery'], correct: [0], explanation: 'Trên Android, độ tương phản được điều chỉnh trong Accessibility (Trợ năng).', image: 'anh3.png' },
             { id: 19, type: 'matrix', question: 'Giáo viên của bạn đã giao cho bạn một nhiệm vụ để xác nhận quan điểm của kết quả tìm kiếm và tạo tác kỹ thuật số. Đối với mỗi tuyên bố về quan điểm xác thực, hãy chọn Đúng (Yes) nếu tuyên bố đúng hoặc Sai (No) nếu tuyên bố sai.', rows: ['Những câu chuyện được tải bởi mạng lưới truyền thông luôn luôn thể hiện cả hai mặt và một góc nhìn bình đẳng', 'Một khuynh hướng cảm tính ủng hộ hình đăng xã hội, chủ nghĩa tự do và các ý tưởng cách mạng', 'Thành kiến của cánh hữu ủng hộ các doanh nghiệp tư do, quyền sở hữu tư nhân và các ý tưởng bảo thủ về mặt xã hội', 'Tất cả các câu chuyện đăng trên internet đều có quan điểm trung lập'], correct: [1, 0, 0, 1], explanation: 'Truyền thông có thể có khuynh hướng (thành kiến tự do hoặc bảo thủ), nhưng không phải luôn thể hiện cả hai mặt bình đẳng và không phải tất cả câu chuyện đều trung lập.' },
             { id: 20, type: 'matrix', question: 'Trong khi nghiên cứu một chủ đề bạn không biết gì, kết quả tìm kiếm của bạn mang lại một số bài báo thuyết phục. Làm thế nào để bạn biết liệu bất kỳ bài báo nào trong số này là thiên vị? Đối với mỗi phát biểu về việc đánh giá sự thiên vị của kết quả tìm kiếm, chọn Đúng (Yes) nếu nó là không thiên vị hoặc Sai (No) nếu nó thiên vị.', rows: ['Tác giả của bài báo đưa ra những lập luận ngang nhau của cả hai quan điểm', 'Bài báo đã được đăng trên một tạp chí uy tín, được đánh giá chuyên nghiệp', 'Kiểm tra các bài viết trên mediabiasfactcheck.com hoặc newsfactsnetwork.com', 'Kiểm tra ác độ thịnh hành của bài viết và số lượt thích trên mạng xã hội', 'Bài báo đã được xuất bản bởi một trong những nguồn truyền thông được liệt kê trên biểu đồ thiên vị truyền thông (Media Bias Chart)'], correct: [0, 0, 0, 1, 0], explanation: 'Đánh giá dựa trên lập luận, nguồn uy tín, fact-check, và biểu đồ thiên vị. Số lượt thích không đánh giá được tính xác thực.' },
-            { id: 21, type: 'matrix', question: 'Bạn đang tìm kiếm các dữ kiện để hỗ trợ một bài thuyết trình mà bạn đang xây dựng cho lớp khoa học của mình. Bạn tìm thấy một nghiên cứu của khoa học liên quan đến chủ đề của bạn. Làm thế nào để bạn biết liệu nghiên cứu có đáng tin cậy hay không? Đối với mỗi tuyên bố, hãy chọn Đúng (Yes) nếu bạn nên cân nhắc khi xác định độ tin cậy của nghiên cứu hoặc Sai (No) nếu không.', rows: ['Chuyên môn và uy tín của nhà báo', 'Có bao nhiêu người đã chia sẻ nghiên cứu trên mạng xã hội', 'Bạn có thể tìm và truy cập các nguồn', 'Nhà báo sử dụng kính địa phương'], correct: [0, 1, 0, 1], explanation: 'Cần xem xét chuyên môn, uy tín và khả năng truy cập nguồn. Số lượt chia sẻ và kính địa phương không quyết định độ tin cậy.' },
+            { id: 21, type: 'matrix', question: 'Bạn đang tìm kiếm các dữ kiện để hỗ trợ một bài thuyết trình mà bạn đang xây dựng cho lớp khoa học của mình. Bạn tìm thấy một nghiên cứu của khoa học liên quan đến chủ đề của bạn. Làm thế nào để bạn biết liệu nghiên cứu có đáng tin cậy hay không? Đối với mỗi tuyên bố, hãy chọn Đúng (Yes) nếu bạn nên cân nhắc khi xác định độ tin cậy của nghiên cứu hoặc Sai (No) nếu không.', rows: ['Chuyên môn và uy tín của nhà báo', 'Có bao nhiêu người đã chia sẻ nghiên cứu trên mạng xã hội', 'Bạn có thể tìm và truy cập các nguồn', 'Nhà báo sử dụng kính địa phương'], correct: [0, 1, 0, 0], explanation: 'Cần xem xét chuyên môn, uy tín và khả năng truy cập nguồn. Số lượt chia sẻ và kính địa phương không quyết định độ tin cậy.' },
             { id: 22, type: 'matrix', question: 'Khi điền vào biểu mẫu, điều nào sau đây là đúng? Đối với mỗi tuyên bố về việc điền vào biểu mẫu, hãy chọn Đúng (Yes) nếu tuyên bố là đúng hoặc Sai (No) nếu sai.', rows: ['Khi được chọn trong nhiều hộp kiểm, bạn chỉ có thể chọn một', 'Nếu bạn giữ phím Ctrl, bạn có thể chọn nhiều mục từ danh sách thả xuống', 'Sau khi điền vào biểu mẫu, câu trả lời của bạn sẽ không được ghi lại cho đến khi bạn nhấp vào nút gửi', 'Khi được chọn nhiều radio trong bộ chọn, nếu bạn giữ phím Ctrl, bạn có thể chọn nhiều hơn một'], correct: [1, 0, 0, 1], explanation: 'Hộp kiểm cho phép chọn nhiều. Giữ Ctrl để chọn nhiều mục. Dữ liệu chỉ được ghi khi nhấn Gửi. Nút radio chỉ cho phép chọn một.' },
             { id: 23, type: 'multiple', question: 'Một dự án khoa học cấp lớp yêu cầu bạn và một đối tác tạo một báo cáo về hệ Mặt trời của chúng ta. Bạn và đối tác của bạn đã thu thập thông tin và sắp xếp nó theo hướng dẫn, nhưng nội dung chưa được định dạng. Tài liệu bây giờ cần được cấu trúc. Bạn phải sử dụng hai tính năng nào trong Microsoft Word để cấu trúc tài liệu? (Chọn 2)', options: ['References Tab', 'Styles Gallery', 'Navigation Pane', 'Page Setup'], correct: [0, 1], explanation: 'References Tab và Styles Gallery giúp cấu trúc tài liệu, tạo mục lục và định dạng tiêu đề.' },
-            { id: 24, type: 'matching', question: 'Bạn đang chuẩn bị một bản trình bày slide cho lớp Lịch sử Hoa Kỳ của mình. Thứ tự các bước khuyên nghị bạn nên thực hiện để tạo bản trình bày slide là gì? Kéo thả các bước vào đúng thứ tự.', pairs: [ { left: 'Tạo tiêu đề', right: 'Bước 1', icon: 'blog' }, { left: 'Nhập một dàn ý vào bản trình bày', right: 'Bước 2', icon: 'body' }, { left: 'Áp dụng quá trình chuyển đổi (Transitions)', right: 'Bước 3', icon: 'device' }, { left: 'Tạo một dàn ý có cấu trúc', right: 'Bước 4', icon: 'subject' }, { left: 'Áp dụng bố cục trang chiếu cho nội dung', right: 'Bước 5', icon: 'prtscr' }, { left: 'Thêm đồ họa, biểu đồ và hoạt ảnh', right: 'Bước 6', icon: 'caps' }, { left: 'Chọn một thiết kế', right: 'Bước 7', icon: 'priority' } ], correct: [0, 1, 2, 3, 4, 5, 6], explanation: 'Thứ tự: Tạo tiêu đề -> Nhập dàn ý -> Áp dụng quá trình chuyển đổi -> Tạo dàn ý có cấu trúc -> Áp dụng bố cục -> Thêm hiệu ứng -> Chọn thiết kế.' },
-            { id: 25, type: 'matching', question: 'Bạn đang chuẩn bị một số làm việc bảng tính để giữ số liệu thống kê về người chơi cho đội bóng mềm của mình. Thứ tự các bước khuyên nghị là gì? Kéo thả các bước vào đúng thứ tự.', pairs: [ { left: 'Tạo một trang tính', right: 'Bước 1', icon: 'blog' }, { left: 'Tạo tiêu đề cột cho Người chơi, Lượt truy cập, Lượt chạy và Lỗi', right: 'Bước 2', icon: 'subject' }, { left: 'Điền tên vào cột Người chơi', right: 'Bước 3', icon: 'caps' }, { left: 'Sao chép trang tính cho mỗi trò chơi', right: 'Bước 4', icon: 'body' } ], correct: [0, 1, 2, 3], explanation: 'Thứ tự: Tạo trang tính -> Tạo tiêu đề cột -> Điền tên -> Sao chép trang tính cho các trò chơi khác.' },
+            { id: 24, type: 'matching', question: 'Bạn đang chuẩn bị một bản trình bày slide cho lớp Lịch sử Hoa Kỳ của mình. Thứ tự các bước khuyên nghị bạn nên thực hiện để tạo bản trình bày slide là gì? Kéo thả các bước vào đúng thứ tự.', pairs: [ { left: 'Tạo tiêu đề', right: 'Bước 1', icon: 'blog' }, { left: 'Nhập một dàn ý vào bản trình bày', right: 'Bước 2', icon: 'body' }, { left: 'Áp dụng quá trình chuyển đổi (Transitions)', right: 'Bước 7', icon: 'device' }, { left: 'Tạo một dàn ý có cấu trúc', right: 'Bước 4', icon: 'subject' }, { left: 'Áp dụng bố cục trang chiếu cho nội dung', right: 'Bước 5', icon: 'prtscr' }, { left: 'Thêm đồ họa, biểu đồ và hoạt ảnh', right: 'Bước 6', icon: 'caps' }, { left: 'Chọn một thiết kế', right: 'Bước 3', icon: 'priority' } ], correct: [0, 1, 6, 3, 4, 5, 2], explanation: 'Thứ tự: Tạo tiêu đề -> Nhập dàn ý -> Tạo dàn ý có cấu trúc -> Áp dụng bố cục -> Chọn thiết kế -> Thêm hiệu ứng -> Áp dụng chuyển đổi.' },
+            { id: 25, type: 'matching', question: 'Bạn đang chuẩn bị một số làm việc bảng tính để giữ số liệu thống kê về người chơi cho đội bóng mềm của mình. Thứ tự các bước khuyên nghị là gì? Kéo thả các bước vào đúng thứ tự.', pairs: [ { left: 'Tạo một trang tính', right: 'Bước 4', icon: 'blog' }, { left: 'Tạo tiêu đề cột cho Người chơi, Lượt truy cập, Lượt chạy và Lỗi', right: 'Bước 2', icon: 'subject' }, { left: 'Điền tên vào cột Người chơi', right: 'Bước 1', icon: 'caps' }, { left: 'Sao chép trang tính cho mỗi trò chơi', right: 'Bước 3', icon: 'body' } ], correct: [3, 1, 0, 2], explanation: 'Thứ tự: Điền tên vào cột Người chơi -> Tạo tiêu đề cột -> Sao chép trang tính cho mỗi trò chơi -> Tạo một trang tính.' },
             { id: 26, type: 'single', question: 'Một người bạn đã yêu cầu bạn cắt bỏ hình ảnh của họ ở bên cạnh một bức ảnh trước khi bạn đăng bức ảnh lên mạng xã hội. Bạn khởi chạy phần mềm chỉnh sửa ảnh của mình và tải ảnh. Tính năng nào trong chương trình sửa ảnh sẽ cắt bỏ những phần không mong muốn của hình ảnh?', options: ['Cut', 'Erase', 'Crop', 'Trim'], correct: [2], explanation: 'Crop (Cắt xén) là quá trình cắt bỏ các phần không mong muốn để tạo ra một khung hình mới.' },
             { id: 27, type: 'matching', question: 'Kết hợp từng kỹ năng bàn phím với kết quả của nó. Kéo thả kết quả vào đúng kỹ năng.', pairs: [ { left: 'Làm cho mỗi chữ cái viết hoa', right: 'Caps Lock', icon: 'caps' }, { left: 'Tạo thụt lề', right: 'Tab', icon: 'tab' }, { left: 'Chèn ký hiệu @', right: 'Shift + 2', icon: 'shift' }, { left: 'Chụp ảnh màn hình', right: 'PrtScn', icon: 'prtscr' } ], correct: [0, 1, 2, 3], explanation: 'Caps Lock viết hoa, Tab thụt lề, Shift+2 tạo @, PrtScn chụp màn hình.' },
             { id: 28, type: 'multiple', question: 'Hai câu lệnh nào phân biệt giữa tập tin chỉ đọc (Read-only) và đọc-ghi (Read-Write)? (Chọn hai)', options: ['Các tập tin được đặt thành chỉ đọc (Read only) theo mặc định', 'Một tập tin được đặt thành chỉ đọc (Read only) có thể được xem nhưng không được sửa đổi', 'Tập tin được đặt thành chỉ đọc (Read only) được bảo vệ khỏi bị sao chép', 'Người dùng khác (Other) có thể thay đổi tập tin thành Đọc-Ghi (Read-Write)'], correct: [1, 3], explanation: 'Read-only chỉ cho phép xem, không sửa đổi. Người dùng khác có thể thay đổi quyền thành Read-Write.' },
@@ -975,15 +972,15 @@
             { id: 33, type: 'matching', question: 'Ghép nối từng hình thức giao tiếp với tình huống phù hợp nhất. Kéo thả các tình huống vào đúng hình thức.', pairs: [ { left: 'Blog post', right: 'Chia sẻ suy nghĩ hàng ngày của bạn trong nhật ký trực tuyến', icon: 'blog' }, { left: 'Text message', right: 'Cho anh trai của bạn biết nơi sẽ đón bạn', icon: 'text' }, { left: 'Email message', right: 'Yêu cầu hoàn lại tiền từ một công ty', icon: 'email' }, { left: 'Forum post', right: 'Đặt câu hỏi cho một nhóm thảo luận trò chơi', icon: 'forum' } ], correct: [0, 1, 2, 3], explanation: 'Blog: chia sẻ suy nghĩ. Text: nhắn tin nhanh. Email: liên hệ công việc. Forum: thảo luận nhóm.' },
             { id: 34, type: 'matching', question: 'Xác định các trường của một Email. Kéo thả các chức năng vào đúng trường tương ứng.', pairs: [ { left: 'Cc', right: 'Danh sách những người nhận được biết khác', icon: 'cc' }, { left: 'Body', right: 'Phần nội dung email', icon: 'body' }, { left: 'Low - Normal - High', right: 'Các đánh dấu mức độ quan trọng của thư', icon: 'priority' }, { left: 'Bcc', right: 'Gửi bản sao đến những người nhận ẩn danh khác', icon: 'bcc' }, { left: 'Subject', right: 'Chủ đề của email', icon: 'subject' } ], correct: [0, 1, 2, 3, 4], explanation: 'Cc: danh sách người nhận được biết. Body: nội dung. Low-Normal-High: mức độ quan trọng. Bcc: ẩn danh. Subject: chủ đề.' },
             { id: 35, type: 'single', question: 'Thanh toán kỹ thuật số hoạt động như thế nào?', options: ['Thanh toán kỹ thuật số sẽ yêu cầu liên kết với tài khoản ngân hàng hoặc thẻ tín dụng', 'Thanh toán kỹ thuật số sẽ yêu cầu người dùng đăng ký', 'Thanh toán kỹ thuật số tương tự như séc điện tử', 'Thanh toán kỹ thuật số giống như một I.O.U'], correct: [0], explanation: 'Thanh toán kỹ thuật số yêu cầu liên kết với tài khoản ngân hàng hoặc thẻ tín dụng để thực hiện giao dịch.' },
-            { id: 36, type: 'single', question: 'Mối quan tâm bảo mật chính của mua hàng trong ứng dụng là gì?', options: ['Hàng hóa sẽ không được chuyển đến đúng địa chỉ', 'Các nhà phát triển ứng dụng ăn cắp thông tin thẻ tín dụng', 'Không có lỗi ngại về bảo mật', 'Trẻ em có quyền sử dụng điện thoại thông minh'], correct: [1], explanation: 'Rủi ro chính là các nhà phát triển ứng dụng ăn cắp thông tin thẻ tín dụng của người dùng.' },
+            { id: 36, type: 'single', question: 'Mối quan tâm bảo mật chính của mua hàng trong ứng dụng là gì?', options: ['Hàng hóa sẽ không được chuyển đến đúng địa chỉ', 'Các nhà phát triển ứng dụng ăn cắp thông tin thẻ tín dụng', 'Không có lỗi ngại về bảo mật', 'Trẻ em có quyền sử dụng điện thoại thông minh'], correct: [3], explanation: 'Mối quan tâm bảo mật chính là quyền của trẻ em khi sử dụng điện thoại thông minh trong mua hàng trong ứng dụng.' },
             { id: 37, type: 'matching', question: 'Đối sánh dịch vụ truyền thông trực tuyến với ví dụ của nó. Kéo thả các thẻ vào đúng danh mục dịch vụ.', pairs: [ { left: 'Netflix, Disney+, Hulu, Amazon Prime', right: 'Truyền trực tuyến phim (Streaming Movies)', icon: 'netflix' }, { left: 'Spotify, Kodi, Web Browsers', right: 'Trình phát đa phương tiện (Media Players)', icon: 'spotify' }, { left: 'Roku, Amazon Firestick, Apple TV, Chromecast', right: 'Thiết bị phát trực tuyến (Streaming Devices)', icon: 'device' } ], correct: [0, 1, 2], explanation: 'Netflix/Disney là dịch vụ phim. Spotify/Kodi là trình phát. Roku/Chromecast là thiết bị phát.' },
-            { id: 38, type: 'multiple', question: 'Bạn đang cộng tác với sáu người khác trong một dự án. Mỗi người đều làm việc tại một văn phòng đặt tại một quốc gia khác nhau. Hai ở châu Á, một ở châu Phi, hai ở Mỹ Latinh và một ở bởi phía đông Hoa Kỳ. Hai công cụ cộng tác nào sẽ hiệu quả nhất để gửi thông tin qua lại cho những đồng nghiệp này? (Chọn hai)', options: ['Email', 'Text Messaging', 'Video Conference', 'Phone Call'], correct: [0, 2], explanation: 'Email và Video Conference là hiệu quả nhất cho làm việc từ xa, khác múi giờ.' },
+            { id: 38, type: 'multiple', question: 'Bạn đang cộng tác với sáu người khác trong một dự án. Mỗi người đều làm việc tại một văn phòng đặt tại một quốc gia khác nhau. Hai ở châu Á, một ở châu Phi, hai ở Mỹ Latinh và một ở bởi phía đông Hoa Kỳ. Hai công cụ cộng tác nào sẽ hiệu quả nhất để gửi thông tin qua lại cho những đồng nghiệp này? (Chọn hai)', options: ['Email', 'Text Messaging', 'Video Conference', 'Phone Call'], correct: [0, 1], explanation: 'Email và Text Messaging là hiệu quả nhất cho làm việc từ xa, khác múi giờ.' },
             { id: 39, type: 'multiple', question: 'Một hội đồng phỏng vấn cần sàng lọc những người lọt vào vòng chung kết cho một vị trí cấp giám đốc trong công ty của họ. Các thành viên của ủy ban nằm trong cùng một văn phòng. Các ứng cử viên cho vị trí này nằm ở các bang khác nhau. Hai công cụ hợp tác nào sẽ hiệu quả nhất để thực hiện các cuộc phỏng vấn này? (Chọn hai)', options: ['Text Message', 'Phone Call', 'Video Conference', 'Email'], correct: [1, 2], explanation: 'Phone Call và Video Conference giúp phỏng vấn trực tiếp từ xa hiệu quả.' },
             { id: 40, type: 'matrix', question: 'Có rất nhiều lợi ích khi công tác nhóm. Đối với mỗi tuyên bố về sự cộng tác, hãy chọn Đúng (Yes) nếu đó là một lợi ích hoặc Sai (No) nếu không phải.', rows: ['Tăng khả năng sáng tạo và tư duy vượt trội', 'Làm giảm năng suất của nhân viên', 'Tăng khả năng học tập', 'Phạm vi địa lý lớn hơn'], correct: [0, 1, 0, 0], explanation: 'Cộng tác tăng sáng tạo, học tập, phạm vi địa lý. Không làm giảm năng suất.' },
-            { id: 41, type: 'matrix', question: 'Giữa công việc ở trường, chơi game và mạng xã hội, bạn dành 4-6 giờ mỗi ngày để sử dụng máy tính xách tay và đăng bài trên mạng xã hội từ điện thoại của mình. Bạn lo ngại về nguy cơ sức khỏe. Đối với mỗi tuyên bố về rủi ro sức khỏe khi sử dụng công nghệ kỹ thuật số, hãy chọn Đúng (Yes) nếu đó là tuyên bố đúng hoặc Sai (No) nếu sai.', rows: ['Để tránh mỏi mắt, bạn nên chớp mắt thường xuyên và nghỉ "20-20-20"', 'Để giúp tránh rối loạn giấc ngủ, trước khi đi ngủ, hãy sạc điện thoại ở nơi bạn không thể tiếp cận và vô tình nghe thấy', 'Để tránh nghiện mạng xã hội, bạn nên dành thời gian của mình giữa ít nhất 3-5 trang mạng xã hội', 'Để chống lại tình trạng lười vận động, hãy mua một chiếc đồng hồ thế dục để đeo đến trường'], correct: [0, 0, 1, 0], explanation: 'Quy tắc 20-20-20 và sạc xa giường là đúng. Dành thời gian cho 3-5 trang mạng xã hội là sai. Đeo đồng hồ thế dục là đúng.' },
+            { id: 41, type: 'matrix', question: 'Giữa công việc ở trường, chơi game và mạng xã hội, bạn dành 4-6 giờ mỗi ngày để sử dụng máy tính xách tay và đăng bài trên mạng xã hội từ điện thoại của mình. Bạn lo ngại về nguy cơ sức khỏe. Đối với mỗi tuyên bố về rủi ro sức khỏe khi sử dụng công nghệ kỹ thuật số, hãy chọn Đúng (Yes) nếu đó là tuyên bố đúng hoặc Sai (No) nếu sai.', rows: ['Để tránh mỏi mắt, bạn nên chớp mắt thường xuyên và nghỉ "20-20-20"', 'Để giúp tránh rối loạn giấc ngủ, trước khi đi ngủ, hãy sạc điện thoại ở nơi bạn không thể tiếp cận và vô tình nghe thấy', 'Để tránh nghiện mạng xã hội, bạn nên dành thời gian của mình giữa ít nhất 3-5 trang mạng xã hội', 'Để chống lại tình trạng lười vận động, hãy mua một chiếc đồng hồ thế dục để đeo đến trường'], correct: [0, 0, 1, 1], explanation: 'Quy tắc 20-20-20 và sạc xa giường là đúng. Dành thời gian cho 3-5 trang mạng xã hội là sai. Đeo đồng hồ thế dục là sai.' },
             { id: 42, type: 'multiple', question: 'Hai ví dụ nào về việc catfishing? (Chọn hai)', options: ['Lưu hành truyền cười và meme hài hước trực tuyến', 'Tạo một hồ sơ hư cấu trên một trang web hẹn hò', 'Đưa người dùng vào một cuộc tranh cãi trên các trang web truyền thông xã hội', 'Giả làm người khác trên mạng xã hội'], correct: [1, 3], explanation: 'Catfishing là tạo hồ sơ giả mạo hoặc giả làm người khác trên mạng xã hội.' },
             { id: 43, type: 'matrix', question: 'Bạn bè của bạn đang trêu chọc bạn. Họ nói rằng bạn có tất cả các triệu chứng của FOMO. Đối với mỗi tuyên bố về FOMO, hãy chọn Đúng (Yes) nếu tuyên bố là đúng hoặc Sai (No) nếu tuyên bố sai.', rows: ['FOMO là một chứng rối loạn do theo khủng hoảng trong khi sử dụng mạng xã hội', 'FOMO là "cảm giác bỏ lỡ"', 'Mặc dù FOMO không được coi là một rối loạn sức khỏe tâm thần, nó được gây ra bởi một nhóm cảm xúc rất thực và mang lại những tác động thực sự'], correct: [1, 0, 0], explanation: 'FOMO không phải là rối loạn tâm thần chính thức. Nó là cảm giác bỏ lỡ và gây ra tác động thực tế.' },
-            { id: 44, type: 'matrix', question: 'Giải thích khi nào thì việc chặn truy cập camera là thích hợp và cần thiết. Đối với mỗi câu lệnh, hãy chọn Đúng (Yes) nếu phù hợp hoặc Sai (No) nếu không phù hợp.', rows: ['Bạn là người tích cực tham gia một khóa học trực tuyến', 'Bạn đang xem một cách thụ động một bài giảng trực tuyến với hàng trăm người xem khác', 'Bất cứ lúc nào một ứng dụng yêu cầu quyền truy cập vào máy ảnh của bạn và không có lý do gì để cần nó'], correct: [1, 1, 0], explanation: 'Chặn camera khi tham gia lớp học hoặc xem thụ động là không cần thiết. Chặn khi ứng dụng yêu cầu vô lý là cần thiết.' },
+            { id: 44, type: 'matrix', question: 'Giải thích khi nào thì việc chặn truy cập camera là thích hợp và cần thiết. Đối với mỗi câu lệnh, hãy chọn Đúng (Yes) nếu phù hợp hoặc Sai (No) nếu không phù hợp.', rows: ['Bạn là người tích cực tham gia một khóa học trực tuyến', 'Bạn đang xem một cách thụ động một bài giảng trực tuyến với hàng trăm người xem khác', 'Bất cứ lúc nào một ứng dụng yêu cầu quyền truy cập vào máy ảnh của bạn và không có lý do gì để cần nó'], correct: [1, 0, 0], explanation: 'Chặn camera khi tham gia lớp học là cần thiết. Xem thụ động và chặn khi yêu cầu vô lý cũng cần thiết.' },
             { id: 45, type: 'matrix', question: 'Xác định các tùy chọn tập tin bảo vệ bằng mật khẩu. Đối với mỗi câu lệnh, hãy chọn Đúng (Yes) nếu nó là một tùy chọn hoặc Sai (No) nếu nó không phải là một tùy chọn.', rows: ['Trong Microsoft Excel, bạn có các lựa chọn để bảo vệ bằng mật khẩu chi các phần của sổ làm việc hoặc toàn bộ sổ làm việc', 'Trong Adobe, bạn có thể bảo vệ bằng mật khẩu khi mở tài liệu .pdf', 'Trong Windows 10 và các phiên bản mới hơn, bạn có thể bảo vệ các tập tin và thư mục riêng lẻ bằng mật khẩu'], correct: [0, 0, 1], explanation: 'Excel và Adobe cho phép đặt mật khẩu. Windows 10 không hỗ trợ đặt mật khẩu cho từng thư mục riêng lẻ mặc định.' }
         ];
 
@@ -991,28 +988,17 @@
         let appState = { mode: 'practice', currentQuestionIndex: 0, userAnswers: {}, isChecked: {}, shuffledRightMaps: {}, isReview: false };
 
         /* ============================================================
-           IMAGE MODAL - Robust pinch/touch handling
+           IMAGE MODAL
            ============================================================ */
         const imageModalState = {
-            scale: 1.0,
-            translateX: 0,
-            translateY: 0,
-            targetScale: 1.0,
-            targetTranslateX: 0,
-            targetTranslateY: 0,
+            scale: 1.0, translateX: 0, translateY: 0,
+            targetScale: 1.0, targetTranslateX: 0, targetTranslateY: 0,
             animationId: null,
-            // Touch tracking
             activePointers: new Map(),
             isDragging: false,
-            lastTouchX: 0,
-            lastTouchY: 0,
-            // Pinch tracking
-            pinchStartDist: 0,
-            pinchStartScale: 1,
-            pinchStartMidX: 0,
-            pinchStartMidY: 0,
-            pinchStartTx: 0,
-            pinchStartTy: 0,
+            lastTouchX: 0, lastTouchY: 0,
+            pinchStartDist: 0, pinchStartScale: 1,
+            pinchStartTx: 0, pinchStartTy: 0,
         };
 
         const MIN_SCALE = 1.0;
@@ -1068,7 +1054,6 @@
                 const dxS = s.targetScale - s.scale;
                 const dxX = s.targetTranslateX - s.translateX;
                 const dy = s.targetTranslateY - s.translateY;
-
                 if (Math.abs(dxS) < 0.001 && Math.abs(dxX) < 0.2 && Math.abs(dy) < 0.2) {
                     s.scale = s.targetScale;
                     s.translateX = s.targetTranslateX;
@@ -1151,49 +1136,30 @@
             const wrapper = document.getElementById('modal-image-wrapper');
             if (!wrapper) return;
 
-            // === POINTER EVENTS (works for both mouse and touch) ===
             wrapper.addEventListener('pointerdown', (e) => {
                 e.preventDefault();
-
-                // Track pointer
-                imageModalState.activePointers.set(e.pointerId, {
-                    x: e.clientX,
-                    y: e.clientY,
-                });
-
-                // Stop any running animation
+                imageModalState.activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
                 if (imageModalState.animationId) {
                     cancelAnimationFrame(imageModalState.animationId);
                     imageModalState.animationId = null;
                 }
-                // Sync targets to current values for immediate response
                 imageModalState.targetScale = imageModalState.scale;
                 imageModalState.targetTranslateX = imageModalState.translateX;
                 imageModalState.targetTranslateY = imageModalState.translateY;
 
                 if (imageModalState.activePointers.size === 1) {
-                    // === START DRAG ===
                     imageModalState.isDragging = true;
                     imageModalState.lastTouchX = e.clientX;
                     imageModalState.lastTouchY = e.clientY;
                     wrapper.classList.add('grabbing');
                     try { wrapper.setPointerCapture(e.pointerId); } catch(err) {}
                 } else if (imageModalState.activePointers.size === 2) {
-                    // === START PINCH ===
                     imageModalState.isDragging = false;
                     const pts = Array.from(imageModalState.activePointers.values());
                     const dx = pts[0].x - pts[1].x;
                     const dy = pts[0].y - pts[1].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    const rect = wrapper.getBoundingClientRect();
-                    const midX = (pts[0].x + pts[1].x) / 2 - rect.left - rect.width / 2;
-                    const midY = (pts[0].y + pts[1].y) / 2 - rect.top - rect.height / 2;
-
-                    imageModalState.pinchStartDist = dist;
+                    imageModalState.pinchStartDist = Math.sqrt(dx * dx + dy * dy);
                     imageModalState.pinchStartScale = imageModalState.scale;
-                    imageModalState.pinchStartMidX = midX;
-                    imageModalState.pinchStartMidY = midY;
                     imageModalState.pinchStartTx = imageModalState.translateX;
                     imageModalState.pinchStartTy = imageModalState.translateY;
                 }
@@ -1202,15 +1168,9 @@
             wrapper.addEventListener('pointermove', (e) => {
                 if (!imageModalState.activePointers.has(e.pointerId)) return;
                 e.preventDefault();
-
-                // Update pointer
-                imageModalState.activePointers.set(e.pointerId, {
-                    x: e.clientX,
-                    y: e.clientY,
-                });
+                imageModalState.activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
                 if (imageModalState.activePointers.size === 1 && imageModalState.isDragging) {
-                    // === DRAG ===
                     const dx = e.clientX - imageModalState.lastTouchX;
                     const dy = e.clientY - imageModalState.lastTouchY;
                     const newTx = imageModalState.translateX + dx;
@@ -1225,25 +1185,20 @@
                     imageModalState.lastTouchX = e.clientX;
                     imageModalState.lastTouchY = e.clientY;
                 } else if (imageModalState.activePointers.size === 2) {
-                    // === PINCH ZOOM ===
                     const pts = Array.from(imageModalState.activePointers.values());
                     const dx = pts[0].x - pts[1].x;
                     const dy = pts[0].y - pts[1].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-
                     if (imageModalState.pinchStartDist > 0) {
                         let newScale = imageModalState.pinchStartScale * (dist / imageModalState.pinchStartDist);
                         newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
-
                         const ratio = newScale / imageModalState.pinchStartScale;
                         let newTx = imageModalState.pinchStartTx * ratio;
                         let newTy = imageModalState.pinchStartTy * ratio;
                         const c = clampValues(newScale, newTx, newTy);
                         newTx = c.tx;
                         newTy = c.ty;
-
                         if (newScale <= MIN_SCALE) { newTx = 0; newTy = 0; }
-
                         imageModalState.scale = newScale;
                         imageModalState.translateX = newTx;
                         imageModalState.translateY = newTy;
@@ -1259,16 +1214,13 @@
             const endPointer = (e) => {
                 if (!imageModalState.activePointers.has(e.pointerId)) return;
                 imageModalState.activePointers.delete(e.pointerId);
-
                 if (imageModalState.activePointers.size === 0) {
                     imageModalState.isDragging = false;
                     wrapper.classList.remove('grabbing');
-                    // Sync targets
                     imageModalState.targetScale = imageModalState.scale;
                     imageModalState.targetTranslateX = imageModalState.translateX;
                     imageModalState.targetTranslateY = imageModalState.translateY;
                 } else if (imageModalState.activePointers.size === 1) {
-                    // Continue dragging with remaining pointer
                     const remaining = Array.from(imageModalState.activePointers.values())[0];
                     imageModalState.isDragging = true;
                     imageModalState.lastTouchX = remaining.x;
@@ -1279,15 +1231,11 @@
             wrapper.addEventListener('pointerup', endPointer);
             wrapper.addEventListener('pointercancel', endPointer);
 
-            // === DOUBLE TAP ZOOM ===
-            let lastTapTime = 0;
-            let lastTapX = 0, lastTapY = 0;
+            let lastTapTime = 0, lastTapX = 0, lastTapY = 0;
             wrapper.addEventListener('pointerup', (e) => {
                 if (e.pointerType === 'mouse') return;
                 const now = Date.now();
-                if (now - lastTapTime < 300 &&
-                    Math.abs(e.clientX - lastTapX) < 30 &&
-                    Math.abs(e.clientY - lastTapY) < 30) {
+                if (now - lastTapTime < 300 && Math.abs(e.clientX - lastTapX) < 30 && Math.abs(e.clientY - lastTapY) < 30) {
                     const rect = wrapper.getBoundingClientRect();
                     const tx = e.clientX - rect.left;
                     const ty = e.clientY - rect.top;
@@ -1304,7 +1252,6 @@
                 }
             });
 
-            // === MOUSE WHEEL ZOOM ===
             wrapper.addEventListener('wheel', (e) => {
                 e.preventDefault();
                 const rect = wrapper.getBoundingClientRect();
@@ -1318,7 +1265,6 @@
                 zoomAtPoint(factor, mx, my);
             }, { passive: false });
 
-            // === RESIZE ===
             window.addEventListener('resize', () => {
                 if (document.getElementById('image-modal').classList.contains('show')) {
                     const c = clampValues(imageModalState.scale, imageModalState.translateX, imageModalState.translateY);
@@ -1343,7 +1289,6 @@
         function prepareQuestions(mode) {
             questions = JSON.parse(JSON.stringify(originalQuestions));
             appState.shuffledRightMaps = {};
-
             if (mode === 'test') {
                 shuffleArray(questions);
                 questions.forEach(q => {
@@ -1354,7 +1299,6 @@
                     }
                 });
             }
-
             questions.forEach(q => {
                 if (q.type === 'matching') {
                     const rightItems = q.pairs.map((p, i) => ({ text: p.right, originalIndex: i, icon: p.icon }));
@@ -1371,11 +1315,9 @@
             appState.isChecked = {};
             appState.isReview = false;
             prepareQuestions(mode);
-
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('main-screen').style.display = 'flex';
             document.getElementById('result-screen').style.display = 'none';
-
             renderSidebar();
             renderQuestion();
             updateProgress();
@@ -1415,11 +1357,7 @@
                 const btn = document.createElement('button');
                 btn.className = 'q-btn';
                 btn.textContent = index + 1;
-                btn.onclick = (e) => { 
-                    e.preventDefault();
-                    appState.currentQuestionIndex = index; 
-                    renderQuestion(); 
-                };
+                btn.onclick = (e) => { e.preventDefault(); appState.currentQuestionIndex = index; renderQuestion(); };
                 if (index === appState.currentQuestionIndex) btn.classList.add('active');
                 if (appState.isReview || (appState.mode === 'practice' && appState.isChecked[q.id])) {
                     btn.classList.add(checkQuestionCorrectness(q.id) ? 'correct-ans' : 'wrong-ans');
@@ -1432,7 +1370,6 @@
             const q = questions.find(q => q.id === qId);
             const userAns = appState.userAnswers[qId];
             if (!userAns) return false;
-
             if (q.type === 'matching') {
                 for (let i = 0; i < q.pairs.length; i++) {
                     if (userAns[i] === undefined || userAns[i] !== q.correct[i]) return false;
@@ -1455,7 +1392,6 @@
             const q = questions[index];
             const card = document.getElementById('question-card');
             document.querySelectorAll('.q-btn').forEach((btn, i) => btn.classList.toggle('active', i === index));
-
             const isReviewMode = appState.isReview;
             const isChecked = appState.isChecked[q.id] || isReviewMode;
 
@@ -1476,13 +1412,8 @@
                     if (isSelected) cls += ' selected';
                     if (isChecked) {
                         const isCorrectOpt = q.correct.includes(optIndex);
-                        if (isCorrectOpt && isSelected) {
-                            cls += ' correct';
-                        } else if (isCorrectOpt && !isSelected) {
-                            cls += ' correct';
-                        } else if (!isCorrectOpt && isSelected) {
-                            cls += ' wrong';
-                        }
+                        if (isCorrectOpt) cls += ' correct';
+                        else if (isSelected) cls += ' wrong';
                     }
                     html += `<label class="${cls}"><input type="${q.type === 'single' ? 'radio' : 'checkbox'}" name="q_${q.id}" ${isSelected ? 'checked' : ''} ${isChecked ? 'disabled' : ''} onchange="handleOptionChange(${q.id}, ${optIndex}, '${q.type}')"><span class="option-label">${opt}</span></label>`;
                 });
@@ -1492,7 +1423,13 @@
                 q.rows.forEach((row, rowIndex) => {
                     const userAns = appState.userAnswers[q.id] || [];
                     const sel = userAns[rowIndex];
-                    html += `<div class="matrix-row"><div class="matrix-statement">${row}</div><div class="matrix-options"><label class="matrix-option"><input type="radio" name="q_${q.id}_r_${rowIndex}" value="0" ${sel === 0 ? 'checked' : ''} ${isChecked ? 'disabled' : ''} onchange="handleMatrixChange(${q.id}, ${rowIndex}, 0)"> Đúng</label><label class="matrix-option"><input type="radio" name="q_${q.id}_r_${rowIndex}" value="1" ${sel === 1 ? 'checked' : ''} ${isChecked ? 'disabled' : ''} onchange="handleMatrixChange(${q.id}, ${rowIndex}, 1)"> Sai</label></div></div>`;
+                    const correctVal = q.correct[rowIndex];
+                    const isWrongRow = isChecked && sel !== undefined && sel !== correctVal;
+                    const isCorrectRow = isChecked && sel !== undefined && sel === correctVal;
+                    let rowCls = 'matrix-row';
+                    if (isWrongRow) rowCls += ' row-wrong';
+                    if (isCorrectRow) rowCls += ' row-correct';
+                    html += `<div class="${rowCls}"><div class="matrix-statement">${row}</div><div class="matrix-options"><label class="matrix-option ${isChecked && correctVal === 0 ? 'opt-correct' : ''} ${isChecked && sel === 0 && correctVal !== 0 ? 'opt-wrong' : ''}"><input type="radio" name="q_${q.id}_r_${rowIndex}" value="0" ${sel === 0 ? 'checked' : ''} ${isChecked ? 'disabled' : ''} onchange="handleMatrixChange(${q.id}, ${rowIndex}, 0)"> Đúng</label><label class="matrix-option ${isChecked && correctVal === 1 ? 'opt-correct' : ''} ${isChecked && sel === 1 && correctVal !== 1 ? 'opt-wrong' : ''}"><input type="radio" name="q_${q.id}_r_${rowIndex}" value="1" ${sel === 1 ? 'checked' : ''} ${isChecked ? 'disabled' : ''} onchange="handleMatrixChange(${q.id}, ${rowIndex}, 1)"> Sai</label></div></div>`;
                 });
                 html += `</div>`;
             } else if (q.type === 'matching') {
@@ -1505,9 +1442,7 @@
             }
 
             html += `<div class="actions">`;
-            if (index > 0) {
-                html += `<button class="btn btn-secondary" onclick="prevQuestion()">Câu Trước</button>`;
-            }
+            if (index > 0) html += `<button class="btn btn-secondary" onclick="prevQuestion()">Câu Trước</button>`;
             if (!isReviewMode) {
                 if (appState.mode === 'practice') {
                     if (!isChecked) html += `<button class="btn btn-primary" onclick="checkAnswer()">Kiểm Tra</button>`;
@@ -1529,19 +1464,13 @@
             card.classList.add('fade-in');
 
             if (q.type === 'matching') initMatchingDrag(q);
-
             const img = card.querySelector('.clickable-image');
-            if (img) {
-                img.addEventListener('click', function() {
-                    openImageModal(this.dataset.src);
-                });
-            }
+            if (img) img.addEventListener('click', function() { openImageModal(this.dataset.src); });
         }
 
         function renderMatching(q, isChecked) {
             const userAns = appState.userAnswers[q.id] || {};
             const shuffled = appState.shuffledRightMaps[q.id];
-
             const placedOriginals = new Set(Object.values(userAns).map(v => parseInt(v)));
             const poolItems = shuffled.filter(item => !placedOriginals.has(item.originalIndex));
 
@@ -1559,7 +1488,6 @@
                 const placed = userAns[i];
                 let slotContent = '';
                 let slotCls = 'drop-slot';
-
                 if (placed !== undefined && placed !== '') {
                     const placedItem = shuffled.find(it => it.originalIndex === parseInt(placed));
                     if (placedItem) {
@@ -1575,14 +1503,11 @@
                 } else {
                     slotContent = `<span class="placeholder">Kéo thả vào đây</span>`;
                 }
-
                 const iconSvg = icons[pair.icon] || icons.hdmi;
-
                 rowsHtml += `<div class="match-row" data-row="${i}"><div class="match-left-visual"><div class="match-icon">${iconSvg}</div><div class="match-left-text">${pair.left}</div></div><div class="${slotCls}" data-qid="${q.id}" data-row="${i}">${slotContent}</div></div>`;
             });
 
             const instruction = isChecked ? '' : '<div class="match-instruction">Kéo thả các thẻ vào ô trống tương ứng. Nhấn nút × để gỡ.</div>';
-
             return `<div class="match-container">${instruction}<div class="match-pool" data-qid="${q.id}">${poolHtml}</div><div class="match-rows">${rowsHtml}</div></div>`;
         }
 
@@ -1603,6 +1528,7 @@
         }
 
         let dragContext = null;
+        let autoScrollRAF = null;
 
         function startDrag(e) {
             if (appState.isChecked[currentQuestionId()] || appState.isReview) return;
@@ -1610,7 +1536,6 @@
             const chip = e.currentTarget;
             const qId = parseInt(chip.dataset.qid);
             const original = parseInt(chip.dataset.original);
-
             const rect = chip.getBoundingClientRect();
             const ghost = chip.cloneNode(true);
             ghost.className = 'drag-ghost';
@@ -1620,21 +1545,37 @@
             ghost.style.width = rect.width + 'px';
             document.body.appendChild(ghost);
             chip.classList.add('dragging');
-
-            dragContext = { chip, ghost, qId, original, startX: e.clientX, startY: e.clientY, rect };
-
+            dragContext = { chip, ghost, qId, original, startX: e.clientX, startY: e.clientY, rect, lastClientY: e.clientY };
             document.addEventListener('pointermove', onDragMove, { passive: false });
             document.addEventListener('pointerup', onDragEnd);
             document.addEventListener('pointercancel', onDragEnd);
+            startAutoScroll();
+        }
+
+        function startAutoScroll() {
+            const EDGE = 100;
+            const SPEED = 12;
+            function tick() {
+                if (!dragContext) { autoScrollRAF = null; return; }
+                const y = dragContext.lastClientY;
+                const vh = window.innerHeight;
+                if (y < EDGE) {
+                    window.scrollBy(0, -SPEED);
+                } else if (y > vh - EDGE) {
+                    window.scrollBy(0, SPEED);
+                }
+                autoScrollRAF = requestAnimationFrame(tick);
+            }
+            if (!autoScrollRAF) autoScrollRAF = requestAnimationFrame(tick);
         }
 
         function onDragMove(e) {
             if (!dragContext) return;
             e.preventDefault();
+            dragContext.lastClientY = e.clientY;
             const dx = e.clientX - dragContext.startX;
             const dy = e.clientY - dragContext.startY;
             dragContext.ghost.style.transform = `translate(${dx}px, ${dy}px) rotate(-3deg) scale(1.05)`;
-
             const el = document.elementFromPoint(e.clientX, e.clientY);
             const slot = el ? el.closest('.drop-slot') : null;
             document.querySelectorAll('.drop-slot.drop-active').forEach(s => s.classList.remove('drop-active'));
@@ -1650,14 +1591,13 @@
             document.removeEventListener('pointermove', onDragMove);
             document.removeEventListener('pointerup', onDragEnd);
             document.removeEventListener('pointercancel', onDragEnd);
-
+            if (autoScrollRAF) { cancelAnimationFrame(autoScrollRAF); autoScrollRAF = null; }
             const el = document.elementFromPoint(e.clientX, e.clientY);
             const slot = el ? el.closest('.drop-slot') : null;
             dragContext.ghost.remove();
             dragContext.chip.classList.remove('dragging');
             document.querySelectorAll('.drop-slot.drop-active').forEach(s => s.classList.remove('drop-active'));
             document.querySelectorAll('.match-row.drop-active').forEach(s => s.classList.remove('drop-active'));
-
             if (slot && parseInt(slot.dataset.qid) === dragContext.qId && !slot.classList.contains('filled')) {
                 const rowIndex = parseInt(slot.dataset.row);
                 const current = appState.userAnswers[dragContext.qId] || {};
@@ -1671,9 +1611,7 @@
             dragContext = null;
         }
 
-        function currentQuestionId() {
-            return questions[appState.currentQuestionIndex]?.id;
-        }
+        function currentQuestionId() { return questions[appState.currentQuestionIndex]?.id; }
 
         function handleOptionChange(qId, optIndex, type) {
             if (appState.isChecked[qId] || appState.isReview) return;
@@ -1685,7 +1623,7 @@
             }
             updateProgress();
             const card = document.getElementById('question-card');
-            card.querySelectorAll('.option-item').forEach((opt, i) => {
+            card.querySelectorAll('.option-item').forEach((opt) => {
                 const input = opt.querySelector('input');
                 opt.classList.toggle('selected', input.checked);
             });
@@ -1701,8 +1639,7 @@
 
         function checkAnswer() {
             if (appState.isReview) return;
-            const qId = currentQuestionId();
-            appState.isChecked[qId] = true;
+            appState.isChecked[currentQuestionId()] = true;
             renderSidebar();
             renderQuestion();
         }
@@ -1726,14 +1663,12 @@
             questions.forEach(q => { if (checkQuestionCorrectness(q.id)) correctCount++; });
             const score = correctCount * 10;
             const percentage = Math.round((correctCount / questions.length) * 100);
-
             document.getElementById('main-screen').style.display = 'none';
             document.getElementById('result-screen').style.display = 'flex';
             document.getElementById('score-text').textContent = percentage + '%';
             document.getElementById('correct-count').textContent = correctCount;
             document.getElementById('total-score').textContent = score;
             document.getElementById('score-circle').style.background = `conic-gradient(var(--primary) ${percentage}%, var(--border) ${percentage}%)`;
-
             const iconEl = document.getElementById('result-icon');
             const msgEl = document.getElementById('result-message');
             if (score === 450) {
@@ -1773,12 +1708,8 @@
             const w = window.outerWidth - window.innerWidth;
             const h = window.outerHeight - window.innerHeight;
             const isOpen = w > 160 || h > 160;
-            if (isOpen && !devtoolsOpen) {
-                devtoolsOpen = true;
-                showWarning();
-            } else if (!isOpen) {
-                devtoolsOpen = false;
-            }
+            if (isOpen && !devtoolsOpen) { devtoolsOpen = true; showWarning(); }
+            else if (!isOpen) { devtoolsOpen = false; }
         }, 800);
 
         document.addEventListener('keydown', function(e) {
@@ -1787,61 +1718,33 @@
             if (tag === 'TEXTAREA' || (tag === 'INPUT' && inputType === 'text')) return;
 
             if (e.key === 'Escape') {
-                if (document.getElementById('image-modal').classList.contains('show')) {
-                    closeImageModal();
-                }
+                if (document.getElementById('image-modal').classList.contains('show')) closeImageModal();
                 return;
             }
-
             if (e.key === 'ArrowLeft') {
-                if (appState.currentQuestionIndex > 0) {
-                    e.preventDefault();
-                    prevQuestion();
-                }
+                if (appState.currentQuestionIndex > 0) { e.preventDefault(); prevQuestion(); }
                 return;
             }
             if (e.key === 'ArrowRight') {
-                if (appState.currentQuestionIndex < questions.length - 1) {
-                    e.preventDefault();
-                    nextQuestion();
-                }
+                if (appState.currentQuestionIndex < questions.length - 1) { e.preventDefault(); nextQuestion(); }
                 return;
             }
             if (e.key === 'Enter') {
                 if (tag === 'BUTTON') return;
-
                 if (appState.isReview) {
-                    if (appState.currentQuestionIndex < questions.length - 1) {
-                        e.preventDefault();
-                        nextQuestion();
-                    } else {
-                        e.preventDefault();
-                        resetApp();
-                    }
+                    if (appState.currentQuestionIndex < questions.length - 1) { e.preventDefault(); nextQuestion(); }
+                    else { e.preventDefault(); resetApp(); }
                     return;
                 }
-
                 if (appState.mode === 'practice') {
-                    if (!appState.isChecked[currentQuestionId()]) {
-                        e.preventDefault();
-                        checkAnswer();
-                    } else {
-                        if (appState.currentQuestionIndex < questions.length - 1) {
-                            e.preventDefault();
-                            nextQuestion();
-                        } else {
-                            e.preventDefault();
-                            calculateResult();
-                        }
+                    if (!appState.isChecked[currentQuestionId()]) { e.preventDefault(); checkAnswer(); }
+                    else {
+                        if (appState.currentQuestionIndex < questions.length - 1) { e.preventDefault(); nextQuestion(); }
+                        else { e.preventDefault(); calculateResult(); }
                     }
                 } else {
-                    if (appState.currentQuestionIndex < questions.length - 1) {
-                        e.preventDefault();
-                        nextQuestion();
-                    } else {
-                        e.preventDefault();
-                        calculateResult();
-                    }
+                    if (appState.currentQuestionIndex < questions.length - 1) { e.preventDefault(); nextQuestion(); }
+                    else { e.preventDefault(); calculateResult(); }
                 }
             }
         });
