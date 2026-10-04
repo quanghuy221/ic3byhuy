@@ -8,9 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   🎨 DESIGN SYSTEM — PREMIUM CHILL EDITION
-   ============================================================ */
 :root{
   --primary:#6366F1;
   --primary-2:#8B5CF6;
@@ -73,9 +70,6 @@ body{
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(148,163,184,.45);border-radius:10px}
 
-/* ============================================================
-   ✨ KEYFRAMES
-   ============================================================ */
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeInUp{from{opacity:0;transform:translate3d(0,14px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 @keyframes slideInUp{from{opacity:0;transform:translate3d(0,20px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
@@ -100,9 +94,6 @@ body{
 
 .fade-in{animation:fadeIn .3s var(--ease-out) both}
 
-/* ============================================================
-   🛡️ DEVTOOLS WARNING
-   ============================================================ */
 #devtools-warning{
   display:none;position:fixed;inset:0;
   background:#0F172A;color:#fff;z-index:99999;
@@ -121,9 +112,6 @@ body{
   animation:barSlide 1.5s linear infinite;
 }
 
-/* ============================================================
-   👤 PROFILE SCREEN
-   ============================================================ */
 #profile-screen{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   min-height:100vh;padding:20px;position:relative;overflow:hidden;
@@ -240,9 +228,6 @@ body{
   stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
 }
 
-/* ============================================================
-   🏠 START SCREEN
-   ============================================================ */
 #start-screen{
   display:none;flex-direction:column;align-items:center;justify-content:center;
   min-height:100vh;padding:80px 20px 20px;text-align:center;
@@ -404,9 +389,6 @@ body{
 .btn-mode .mode-title{font-weight:800;font-size:1.15rem;display:block;letter-spacing:-.01em;position:relative;z-index:1}
 .btn-mode .mode-desc{font-size:.8rem;font-weight:500;opacity:.75;display:block;position:relative;z-index:1}
 
-/* ============================================================
-   📚 MAIN SCREEN
-   ============================================================ */
 #main-screen{
   display:none;flex:1;max-width:1440px;margin:0 auto;width:100%;
   padding:16px;gap:16px;flex-direction:column;
@@ -614,7 +596,6 @@ body{
   object-fit:contain;max-height:400px;cursor:pointer;
 }
 
-/* OPTIONS */
 .options-list{display:flex;flex-direction:column;gap:10px}
 .option-item{
   display:flex;align-items:flex-start;gap:13px;
@@ -674,7 +655,6 @@ body{
 }
 .option-label{flex:1;cursor:pointer;font-weight:500;padding-right:30px}
 
-/* MATRIX */
 .matrix-grid{display:flex;flex-direction:column;gap:12px}
 .matrix-row{
   display:flex;flex-direction:column;gap:10px;
@@ -715,7 +695,6 @@ body{
 .matrix-option.opt-correct{border-color:var(--success);border-width:3px;background:var(--success-bg)}
 .matrix-option.opt-wrong{border-color:var(--danger);border-width:3px;background:var(--danger-bg)}
 
-/* MATCHING */
 .match-container{display:flex;flex-direction:column;gap:16px}
 .match-instruction{
   font-size:.85rem;color:var(--text-sub);
@@ -830,7 +809,6 @@ body{
 }
 .drop-slot .placed-chip .remove-x:active{background:rgba(255,255,255,.55);transform:scale(1.15)}
 
-/* ACTIONS */
 .actions{
   display:flex;gap:11px;margin-top:auto;padding-top:18px;
   justify-content:flex-end;flex-wrap:wrap;
@@ -869,7 +847,6 @@ body{
   .btn-success:hover{transform:translateY(-2px);box-shadow:0 10px 22px -6px rgba(16,185,129,.5)}
 }
 
-/* FEEDBACK */
 .feedback-box{
   margin-top:20px;padding:18px;
   border-radius:var(--r);
@@ -895,9 +872,6 @@ body{
 .explanation-text{color:var(--text-main);font-size:.92rem;line-height:1.7;font-weight:500}
 .explanation-text strong{color:var(--primary);font-weight:800}
 
-/* ============================================================
-   🏆 RESULT SCREEN
-   ============================================================ */
 #result-screen{
   display:none;flex-direction:column;align-items:center;justify-content:center;
   min-height:100vh;padding:20px;text-align:center;
@@ -950,9 +924,6 @@ body{
   font-weight:500;letter-spacing:.02em;
 }
 
-/* ============================================================
-   🖼️ IMAGE MODAL
-   ============================================================ */
 #image-modal{
   display:none;position:fixed;inset:0;
   background:rgba(2,6,23,.97);
@@ -1035,9 +1006,6 @@ body{
 }
 #image-modal .zoom-percentage.pulse{animation:zoomPop .25s var(--ease)}
 
-/* ============================================================
-   📱 RESPONSIVE
-   ============================================================ */
 @media(max-width:600px){
   .actions{flex-direction:column}
   .btn{width:100%}
@@ -1067,7 +1035,6 @@ body{
   <div class="warning-bar"></div>
 </div>
 
-<!-- PROFILE SCREEN -->
 <div id="profile-screen">
   <div class="profile-card">
     <div class="profile-avatar" id="profile-avatar">?</div>
@@ -1096,7 +1063,6 @@ body{
   </div>
 </div>
 
-<!-- START SCREEN -->
 <div id="start-screen">
   <button class="logout-corner" onclick="logout()" title="Đăng xuất" id="logout-corner-btn">
     <span class="lc-icon">
@@ -1126,7 +1092,6 @@ body{
   </div>
 </div>
 
-<!-- MAIN SCREEN -->
 <div id="main-screen">
   <aside id="sidebar">
     <div class="sidebar-user">
@@ -1153,7 +1118,6 @@ body{
   </main>
 </div>
 
-<!-- RESULT SCREEN -->
 <div id="result-screen">
   <div class="result-card">
     <h2 style="color:var(--primary);margin-bottom:16px;font-weight:900;letter-spacing:-.02em">Kết Quả Bài Làm</h2>
@@ -1169,7 +1133,6 @@ body{
   </div>
 </div>
 
-<!-- IMAGE MODAL -->
 <div id="image-modal">
   <div class="modal-image-wrapper" id="modal-image-wrapper">
     <img id="modal-image" src="" alt="Zoomed Image" draggable="false">
@@ -1192,9 +1155,6 @@ body{
 <div class="footer">By Quang Huy</div>
 
 <script>
-/* ============================================================
-   ICONS
-   ============================================================ */
 const icons = {
   hdmi:'<svg viewBox="0 0 24 24"><path d="M2 8h20v8H2z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 11h2v2H6zm5 0h2v2h-2zm5 0h2v2h-2z"/></svg>',
   audio:'<svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3zm14.5 2c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>',
@@ -1222,9 +1182,6 @@ const icons = {
   device:'<svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>'
 };
 
-/* ============================================================
-   QUESTIONS DATA
-   ============================================================ */
 const originalQuestions = [
 {id:1,type:'multiple',question:'Mẹ của bạn thị lực kém. Mỗi khi nhận được điện thoại hoặc thiết bị máy tính mới, cô ấy sẽ yêu cầu bạn định cấu hình cài đặt để giúp cô ấy xem dễ dàng hơn. Bạn nên thay đổi hai cài đặt nào để giúp thiết bị của mẹ bạn dễ xem hơn? (Chọn 2)',options:['Cỡ chữ (Font size)','Âm lượng (Volume)','Màu sắc (Colors)','Nhạc chuông (Ring tones)'],correct:[0,2],explanation:'Cỡ chữ giúp điều chỉnh kích thước văn bản. Màu sắc giúp thay đổi độ tương phản, hỗ trợ người thị lực kém.'},
 {id:2,type:'multiple',question:'Hai tính năng nào cho phép bạn kiểm soát việc hiển thị thông tin cụ thể trên lịch cá nhân của mình? (Chọn 2)',options:['Giữ riêng tư (Keep private)','Lọc theo danh mục sự kiện (Filter by event category)','Tắt lịch (Disable calendar)','Chia sẻ (Share)'],correct:[0,1],explanation:'Giữ riêng tư bảo vệ thông tin. Lọc theo danh mục cho phép sắp xếp và xem sự kiện theo danh mục cụ thể.'},
@@ -1300,7 +1257,7 @@ explanation:'Mở bảng Info → Chọn tab File → Bấm nút Protect → Ch�
 ];
 
 /* ============================================================
-   PROFILE SYSTEM + AUTO-FORMAT (DEBOUNCED)
+   PROFILE SYSTEM
    ============================================================ */
 let userProfile = { name:'', className:'', group:'' };
 
@@ -1545,9 +1502,6 @@ function goToStartScreen(){
   document.getElementById('start-screen').style.display = 'flex';
 }
 
-/* ============================================================
-   APP STATE
-   ============================================================ */
 let questions = [];
 let appState = {
   mode:'practice',
@@ -1783,9 +1737,6 @@ function initImageModalEvents(){
   }, { passive:true });
 }
 
-/* ============================================================
-   APP LOGIC
-   ============================================================ */
 function shuffleArray(array){
   for(let i = array.length - 1; i > 0; i--){
     const j = Math.floor(Math.random() * (i + 1));
@@ -1878,7 +1829,6 @@ function renderSidebar(){
   grid.appendChild(frag);
 }
 
-/* Click q-btn → chuyển câu + BLUR để Enter hoạt động đúng */
 document.getElementById('question-grid').addEventListener('click', e=>{
   const btn = e.target.closest('.q-btn');
   if(!btn) return;
@@ -2055,8 +2005,8 @@ function initMatchingDrag(q){
 }
 
 /* ============================================================
-   DRAG & AUTO-SCROLL — TỐC ĐỘ CHẬM RÃI NHẤT
-   MAX 130 px/frame: chậm hơn nữa, cuộn êm ái, từ từ
+   DRAG & AUTO-SCROLL — SIÊU CHẬM RÃI
+   MAX 80 px/frame: cực chậm, êm ái, không vọt
    ============================================================ */
 let dragContext = null;
 let autoScrollRAF = null;
@@ -2110,10 +2060,10 @@ function startDrag(e){
 }
 
 function startAutoScroll(){
-  /* TỐC ĐỘ CHẬM RÃI NHẤT — từ từ, êm ái, không sốc */
-  const EDGE_ZONE = 160;        // vùng nhạy nhỏ
-  const MAX_SPEED = 130;        // tốc độ tối đa chậm (giảm ~40% bản trước)
-  const MIN_SPEED_START = 0.8;  // khởi đầu rất nhẹ
+  /* 🐌 TỐC ĐỘ SIÊU CHẬM RÃI — từ từ, êm ái, không vọt */
+  const EDGE_ZONE = 155;        // vùng nhạy nhỏ
+  const MAX_SPEED = 80;         // tốc độ tối đa cực chậm (giảm ~40% bản trước)
+  const MIN_SPEED_START = 0.5;  // khởi đầu rất rất nhẹ
 
   function tick(){
     if(!dragContext){ autoScrollRAF = null; autoScrollVelocity = 0; return; }
@@ -2123,17 +2073,17 @@ function startAutoScroll(){
 
     if(y < EDGE_ZONE){
       const ratio = Math.min(1, (EDGE_ZONE - y) / EDGE_ZONE);
-      // pow 1.5: tăng tốc rất từ từ
-      targetSpeed = -(MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.5));
+      // pow 1.6: tăng tốc siêu chậm, cực êm
+      targetSpeed = -(MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.6));
     } else if(y > vh - EDGE_ZONE){
       const ratio = Math.min(1, (y - (vh - EDGE_ZONE)) / EDGE_ZONE);
-      targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.5);
+      targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.6);
     }
 
-    // Smoothing 0.35 → chuyển tốc độ siêu êm, cực mượt
-    autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.35;
+    // Smoothing 0.3 → chuyển tốc độ siêu êm, cực mượt
+    autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.3;
 
-    if(Math.abs(autoScrollVelocity) > 0.25){
+    if(Math.abs(autoScrollVelocity) > 0.2){
       window.scrollBy(0, autoScrollVelocity);
     } else if(targetSpeed === 0){
       autoScrollVelocity = 0;
@@ -2303,9 +2253,6 @@ function calculateResult(){
   }
 }
 
-/* ============================================================
-   PROTECTION
-   ============================================================ */
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('selectstart', e => { if(e.target.tagName !== 'INPUT') e.preventDefault(); });
 document.addEventListener('dragstart', e => {
@@ -2336,9 +2283,6 @@ setInterval(()=>{
   else if(!isOpen){ devtoolsOpen = false; }
 }, 800);
 
-/* ============================================================
-   KEYBOARD NAV
-   ============================================================ */
 document.addEventListener('keydown', function(e){
   const tag = document.activeElement.tagName;
   const inputType = document.activeElement.type;
