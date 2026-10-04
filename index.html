@@ -908,32 +908,44 @@ explanation:'Mở bảng Info → Chọn tab File → Bấm nút Protect → Ch�
 ];
 
 /* ============================================================
-   PROFILE SYSTEM + AUTO-FORMAT
+   PROFILE SYSTEM + AUTO-FORMAT (NÂNG CẤP)
    ============================================================ */
 let userProfile = { name:'', className:'', group:'' };
 
-/* --- Format helpers --- */
+/* --- Format helpers (nâng cấp) --- */
+function capitalizeWord(w){
+  if(!w) return '';
+  return w.charAt(0).toLocaleUpperCase('vi-VN') + w.slice(1).toLocaleLowerCase('vi-VN');
+}
+
 function formatName(str){
-  // "nguyễn văn a" → "Nguyễn Văn A"
   return str
     .trim()
-    .replace(/\s+/g, ' ')
+    .replace(/[-,._]+/g, ' ')     // đổi dấu - , . _ thành space
+    .replace(/\s+/g, ' ')         // gộp space dư
     .split(' ')
-    .map(w => w ? w.charAt(0).toLocaleUpperCase('vi-VN') + w.slice(1).toLocaleLowerCase('vi-VN') : '')
+    .map(capitalizeWord)
+    .filter(Boolean)
     .join(' ');
 }
+
 function formatClass(str){
-  // "7a1" → "7A1" (uppercase toàn bộ)
-  return str.trim().replace(/\s+/g, ' ').toLocaleUpperCase('vi-VN');
+  let s = str.trim().replace(/\s+/g, ' ');
+  // Bỏ prefix "lớp", "lop", "class" nếu có
+  s = s.replace(/^(lớp|lop|class)\s+/i, '');
+  return s.toLocaleUpperCase('vi-VN');
 }
+
 function formatGroup(str){
-  // "tổ 1" → "Tổ 1"; "to 1" → "Tổ 1" (không tự đổi "to" thành "tổ", chỉ viết hoa chữ đầu)
-  return str
-    .trim()
-    .replace(/\s+/g, ' ')
-    .split(' ')
-    .map(w => w ? w.charAt(0).toLocaleUpperCase('vi-VN') + w.slice(1).toLocaleLowerCase('vi-VN') : '')
-    .join(' ');
+  let s = str.trim().replace(/\s+/g, ' ');
+  // Nếu chỉ nhập số hoặc 1 chữ cái (1, 2, A, B...) → tự thêm "Tổ "
+  if(/^\d+$/.test(s) || /^[a-zA-Z]$/.test(s)){
+    return 'Tổ ' + s.toLocaleUpperCase('vi-VN');
+  }
+  // Bỏ prefix "tổ", "to" nếu có rồi ghép lại chuẩn
+  s = s.replace(/^(tổ|to)\s+/i, '');
+  if(!s) return '';
+  return 'Tổ ' + capitalizeWord(s);
 }
 
 /* --- Apply formatter to an input + flash animation + hint --- */
@@ -943,7 +955,6 @@ function applyFormatToInput(inputId, formatter, hintId, hintBuilder){
   const before = input.value;
   const after = formatter(before);
 
-  // Update hint
   const field = input.closest('.profile-field');
   const hint = document.getElementById(hintId);
   if(after){
@@ -1033,11 +1044,6 @@ function applyFormatToInput(inputId, formatter, hintId, hintBuilder){
   nameInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); classInput.focus(); }});
   classInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); groupInput.focus(); }});
   groupInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); groupInput.blur(); saveProfile(); }});
-
-  // Khởi tạo hint nếu có sẵn dữ liệu
-  if(nameInput.value) nameInput.dispatchEvent(new Event('input'));
-  if(classInput.value) classInput.dispatchEvent(new Event('input'));
-  if(groupInput.value) groupInput.dispatchEvent(new Event('input'));
 })();
 
 (function initProfileFromStorage(){
@@ -1072,7 +1078,7 @@ function saveProfile(){
   const classRaw = document.getElementById('p-class').value;
   const groupRaw = document.getElementById('p-group').value;
 
-  // Format lại chính thức trước khi lưu (đề phòng user chưa blur)
+  // Format lại chính thức trước khi lưu
   const name = formatName(nameRaw);
   const cls = formatClass(classRaw);
   const grp = formatGroup(groupRaw);
@@ -1087,7 +1093,6 @@ function saveProfile(){
     card.style.animation = 'none';
     void card.offsetWidth;
     card.style.animation = 'shake .5s ease';
-    // Highlight field trống
     [['p-name', name], ['p-class', cls], ['p-group', grp]].forEach(([id, val])=>{
       const inp = document.getElementById(id);
       if(!val){
@@ -1113,7 +1118,6 @@ function clearProfileCache(){
   document.getElementById('p-group').value = '';
   updateProfileAvatar();
   document.getElementById('p-submit').textContent = 'Bắt Đầu Ôn Tập →';
-  // Reset hint
   ['name','class','group'].forEach(k=>{
     const field = document.getElementById('field-'+k);
     field.classList.remove('has-value');
@@ -1143,7 +1147,6 @@ function logout(){
     updateProfileAvatar();
     document.getElementById('p-submit').textContent = 'Bắt Đầu Ôn Tập →';
 
-    // Reset hint
     ['name','class','group'].forEach(k=>{
       const field = document.getElementById('field-'+k);
       if(field) field.classList.remove('has-value');
@@ -1151,7 +1154,6 @@ function logout(){
       if(hint) hint.textContent = '';
     });
 
-    // reset app state
     appState.userAnswers = {};
     appState.isChecked = {};
     appState.isReview = false;
