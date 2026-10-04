@@ -355,7 +355,7 @@
         }
         .question-image-container img:hover { filter: brightness(1.05); }
 
-        /* ============ OPTIONS - Red outline for wrong, green outline for correct ============ */
+        /* ============ OPTIONS ============ */
         .options-list { display: flex; flex-direction: column; gap: 12px; }
         .option-item {
             display: flex; align-items: flex-start; gap: 14px;
@@ -373,18 +373,8 @@
             transform: translateX(6px);
         }
         .option-item.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
-        .option-item.correct { 
-            border-color: var(--success); 
-            border-width: 3px;
-            background: var(--success-bg); 
-            animation: pulse 0.4s ease; 
-        }
-        .option-item.wrong { 
-            border-color: var(--danger); 
-            border-width: 3px;
-            background: var(--danger-bg); 
-            animation: shake 0.5s ease; 
-        }
+        .option-item.correct { border-color: var(--success); border-width: 3px; background: var(--success-bg); animation: pulse 0.4s ease; }
+        .option-item.wrong { border-color: var(--danger); border-width: 3px; background: var(--danger-bg); animation: shake 0.5s ease; }
         .option-item.correct::after {
             content: '✓';
             position: absolute;
@@ -424,6 +414,7 @@
         }
         .option-label { flex: 1; cursor: pointer; font-weight: 500; padding-right: 32px; }
 
+        /* ============ MATRIX ============ */
         .matrix-grid { display: flex; flex-direction: column; gap: 15px; }
         .matrix-row {
             display: flex; flex-direction: column; gap: 12px;
@@ -434,6 +425,8 @@
             transition: var(--transition);
         }
         .matrix-row:hover { border-color: #A5B4FC; box-shadow: 0 4px 12px rgba(79,70,229,0.08); }
+        .matrix-row.row-correct { border-color: var(--success); border-width: 3px; background: var(--success-bg); }
+        .matrix-row.row-wrong { border-color: var(--danger); border-width: 3px; background: var(--danger-bg); }
         @media (min-width: 600px) {
             .matrix-row { flex-direction: row; align-items: center; justify-content: space-between; }
             .matrix-statement { flex: 1; margin-right: 20px; }
@@ -452,8 +445,10 @@
         }
         .matrix-option:hover { border-color: var(--primary); background: var(--primary-light); transform: scale(1.03); }
         .matrix-option input { accent-color: var(--primary); cursor: pointer; width: 16px; height: 16px; }
+        .matrix-option.opt-correct { border-color: var(--success); border-width: 3px; background: var(--success-bg); }
+        .matrix-option.opt-wrong { border-color: var(--danger); border-width: 3px; background: var(--danger-bg); }
 
-        /* ============ MATCHING - With drag auto-scroll on mobile ============ */
+        /* ============ MATCHING ============ */
         .match-container { display: flex; flex-direction: column; gap: 20px; }
         .match-instruction {
             font-size: 0.9rem; color: var(--text-sub);
@@ -541,19 +536,8 @@
         }
         .drop-slot:hover { border-color: var(--primary); background: var(--primary-light); }
         .drop-slot.filled { border-style: solid; border-color: var(--success); background: var(--success-bg); }
-        .drop-slot.correct-drop { 
-            border-color: var(--success); 
-            border-width: 3px;
-            border-style: solid;
-            background: var(--success-bg); 
-        }
-        .drop-slot.wrong-drop { 
-            border-color: var(--danger); 
-            border-width: 3px;
-            border-style: solid;
-            background: var(--danger-bg); 
-            animation: shake 0.5s ease; 
-        }
+        .drop-slot.correct-drop { border-color: var(--success); border-width: 3px; border-style: solid; background: var(--success-bg); }
+        .drop-slot.wrong-drop { border-color: var(--danger); border-width: 3px; border-style: solid; background: var(--danger-bg); animation: shake 0.5s ease; }
         .drop-slot.drop-active { border-color: var(--primary); background: var(--primary-light); border-style: solid; transform: scale(1.02); }
         .drop-slot .placeholder { color: var(--text-sub); font-size: 0.85rem; opacity: 0.6; }
         .drop-slot .placed-chip {
@@ -1553,16 +1537,23 @@
         }
 
         function startAutoScroll() {
-            const EDGE = 100;
-            const SPEED = 12;
+            const EDGE_TOP = 120;
+            const EDGE_BOTTOM = 120;
+            const MAX_SPEED = 45;
             function tick() {
                 if (!dragContext) { autoScrollRAF = null; return; }
                 const y = dragContext.lastClientY;
                 const vh = window.innerHeight;
-                if (y < EDGE) {
-                    window.scrollBy(0, -SPEED);
-                } else if (y > vh - EDGE) {
-                    window.scrollBy(0, SPEED);
+                let speed = 0;
+                if (y < EDGE_TOP) {
+                    const dist = EDGE_TOP - y;
+                    speed = -Math.min(MAX_SPEED, Math.round(dist * 0.5));
+                } else if (y > vh - EDGE_BOTTOM) {
+                    const dist = y - (vh - EDGE_BOTTOM);
+                    speed = Math.min(MAX_SPEED, Math.round(dist * 0.5));
+                }
+                if (speed !== 0) {
+                    window.scrollBy(0, speed);
                 }
                 autoScrollRAF = requestAnimationFrame(tick);
             }
