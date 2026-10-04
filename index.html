@@ -1256,9 +1256,6 @@ explanation:'Mở bảng Info → Chọn tab File → Bấm nút Protect → Ch�
 {id:45,type:'matrix',question:'Xác định các tùy chọn tập tin bảo vệ bằng mật khẩu. Đối với mỗi câu lệnh, hãy chọn Đúng (Yes) nếu nó là một tùy chọn hoặc Sai (No) nếu nó không phải là một tùy chọn.',rows:['Trong Microsoft Excel, bạn có các lựa chọn để bảo vệ bằng mật khẩu chi các phần của sổ làm việc hoặc toàn bộ sổ làm việc','Trong Adobe, bạn có thể bảo vệ bằng mật khẩu khi mở tài liệu .pdf','Trong Windows 10 và các phiên bản mới hơn, bạn có thể bảo vệ các tập tin và thư mục riêng lẻ bằng mật khẩu'],correct:[0,0,1],explanation:'Excel và Adobe cho phép đặt mật khẩu. Windows 10 không hỗ trợ đặt mật khẩu cho từng thư mục riêng lẻ mặc định.'}
 ];
 
-/* ============================================================
-   PROFILE SYSTEM
-   ============================================================ */
 let userProfile = { name:'', className:'', group:'' };
 
 function capitalizeWord(w){
@@ -1512,9 +1509,6 @@ let appState = {
   isReview:false
 };
 
-/* ============================================================
-   IMAGE MODAL
-   ============================================================ */
 const imageModalState = {
   scale:1.0, tx:0, ty:0,
   activePointers:new Map(),
@@ -2005,8 +1999,8 @@ function initMatchingDrag(q){
 }
 
 /* ============================================================
-   DRAG & AUTO-SCROLL — SIÊU CHẬM RÃI
-   MAX 80 px/frame: cực chậm, êm ái, không vọt
+   DRAG & AUTO-SCROLL — CỰC KỲ CHẬM RÃI 🐌🐌🐌
+   MAX 45 px/frame: siêu chậm, êm ái, như trượt trên băng
    ============================================================ */
 let dragContext = null;
 let autoScrollRAF = null;
@@ -2060,10 +2054,10 @@ function startDrag(e){
 }
 
 function startAutoScroll(){
-  /* 🐌 TỐC ĐỘ SIÊU CHẬM RÃI — từ từ, êm ái, không vọt */
-  const EDGE_ZONE = 155;        // vùng nhạy nhỏ
-  const MAX_SPEED = 80;         // tốc độ tối đa cực chậm (giảm ~40% bản trước)
-  const MIN_SPEED_START = 0.5;  // khởi đầu rất rất nhẹ
+  /* 🐌🐌🐌 TỐC ĐỘ CỰC KỲ CHẬM RÃI */
+  const EDGE_ZONE = 150;        // vùng nhạy
+  const MAX_SPEED = 45;         // tốc độ tối đa cực chậm (giảm ~45% bản trước)
+  const MIN_SPEED_START = 0.3;  // khởi đầu siêu rất nhẹ
 
   function tick(){
     if(!dragContext){ autoScrollRAF = null; autoScrollVelocity = 0; return; }
@@ -2073,17 +2067,17 @@ function startAutoScroll(){
 
     if(y < EDGE_ZONE){
       const ratio = Math.min(1, (EDGE_ZONE - y) / EDGE_ZONE);
-      // pow 1.6: tăng tốc siêu chậm, cực êm
-      targetSpeed = -(MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.6));
+      // pow 1.7: tăng tốc siêu chậm, cực êm, như trượt nhẹ
+      targetSpeed = -(MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.7));
     } else if(y > vh - EDGE_ZONE){
       const ratio = Math.min(1, (y - (vh - EDGE_ZONE)) / EDGE_ZONE);
-      targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.6);
+      targetSpeed = MIN_SPEED_START + (MAX_SPEED - MIN_SPEED_START) * Math.pow(ratio, 1.7);
     }
 
-    // Smoothing 0.3 → chuyển tốc độ siêu êm, cực mượt
-    autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.3;
+    // Smoothing 0.25 → chuyển tốc độ siêu êm, cực mượt
+    autoScrollVelocity += (targetSpeed - autoScrollVelocity) * 0.25;
 
-    if(Math.abs(autoScrollVelocity) > 0.2){
+    if(Math.abs(autoScrollVelocity) > 0.15){
       window.scrollBy(0, autoScrollVelocity);
     } else if(targetSpeed === 0){
       autoScrollVelocity = 0;
